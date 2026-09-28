@@ -22,16 +22,16 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var data = new FormData(form);
-    var edad = (data.get('edad') || '').trim();
-    var cantidad = (data.get('cantidad') || '').trim();
-    var edadesInvitados = (data.get('edadesInvitados') || '').trim();
+    var tipo = (data.get('tipo') || '').trim();
     var fecha = (data.get('fecha') || '').trim();
+    var fechaVisita = (data.get('fechaVisita') || '').trim();
+    var comentarios = (data.get('comentarios') || '').trim();
 
     var lineas = ['¡Hola! Quiero consultar por un cumpleaños en Casa Lamarca.'];
-    lineas.push('- Cumple: ' + edad);
-    lineas.push('- Invitados: ' + cantidad);
-    if(edadesInvitados) lineas.push('- Edades de los invitados: ' + edadesInvitados);
-    if(fecha) lineas.push('- Fecha posible: ' + fecha);
+    if(tipo) lineas.push('- Cumpleaños de: ' + tipo);
+    if(fecha) lineas.push('- Fecha posible del evento: ' + fecha);
+    if(fechaVisita) lineas.push('- Fecha posible para la visita: ' + fechaVisita);
+    if(comentarios) lineas.push('- Comentarios: ' + comentarios);
 
     var mensaje = encodeURIComponent(lineas.join('\n'));
     window.open('https://wa.me/5491123788557?text=' + mensaje, '_blank', 'noopener');

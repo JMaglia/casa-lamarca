@@ -416,6 +416,50 @@ blockquote.pull{
 .mini-form .btns{ margin-top: 20px; }
 .mini-form .btns button.btn{ margin-top: 0; }
 
+/* ============ FORM + FOTO (cumpleaños / alquilá el espacio → WhatsApp, con foto al lado) ============ */
+.form-split{ display:flex; gap: clamp(28px, 4vw, 48px); align-items:flex-start; }
+@media (max-width: 860px){ .form-split{ flex-direction:column; } }
+.form-split-form{ flex:1; min-width:0; display:flex; flex-direction:column; gap:24px; }
+.form-split-form .mini-form{ max-width:none; }
+.form-split-photo{ flex:0.85; min-width:0; position:sticky; top:24px; }
+@media (max-width: 860px){ .form-split-photo{ position:static; width:100%; } }
+
+.field-stack{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; margin-top:6px; }
+@media (max-width: 620px){ .field-stack{ grid-template-columns:1fr; } }
+.field-stack .span-2{ grid-column: 1 / -1; }
+.field-stack label{ display:flex; flex-direction:column; gap:7px; font-size:0.82rem; font-weight:700; color:var(--ink-soft); }
+.field-stack .field{ position:relative; }
+.field-stack input, .field-stack select, .field-stack textarea{
+  font-family:'Karla', sans-serif; font-size:0.96rem; font-weight:400; color:var(--ink);
+  background: var(--surface); border:1px solid var(--line); border-radius: var(--radius);
+  padding: 12px 13px; width:100%; box-sizing:border-box; appearance:none;
+}
+.field-stack select{ padding-right:36px; cursor:pointer; }
+.field-stack textarea{ resize:none; font-family:inherit; line-height:1.5; }
+.field-stack input:focus, .field-stack select:focus, .field-stack textarea:focus{ outline:2px solid var(--sage); outline-offset:1px; }
+.field-stack input::placeholder, .field-stack textarea::placeholder{ color:var(--muted); }
+.field-stack .caret{
+  position:absolute; right:13px; top:41px; width:0; height:0;
+  border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid var(--sage);
+  pointer-events:none;
+}
+
+.form-photo{
+  position:relative; overflow:hidden; border-radius:var(--radius); aspect-ratio: 4/5;
+  background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--sage) 55%, var(--sage-deep)) 0%, var(--sage-deep) 62%);
+  display:flex; align-items:flex-end;
+}
+@media (max-width: 860px){ .form-photo{ aspect-ratio: 16/9; } }
+.form-photo svg{
+  position:absolute; top:38%; left:50%; transform:translate(-50%,-50%);
+  width:52px; height:52px; opacity:.5; stroke:#fff; fill:none; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round;
+}
+.form-photo-caption{
+  position:relative; z-index:2; width:100%; box-sizing:border-box;
+  padding: 60px 22px 20px; color:#fff; font-size:0.8rem; font-style:italic;
+  background: linear-gradient(0deg, rgba(17,19,12,0.7) 0%, rgba(17,19,12,0) 100%);
+}
+
 /* ============ FOOTER ============ */
 footer.site{ background: var(--sage-deep); color: var(--bg); padding-block: 44px 28px; }
 .footer-grid{ display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 28px; }
