@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Taller — Casa Lamarca</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Detalle de un taller en Casa Lamarca, Villa Devoto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="top-strip">
+  <div class="wrap">
+    <span>Emilio Lamarca 3480, Villa Devoto, CABA</span>
+    <span><a href="https://wa.me/5491123788557" target="_blank" rel="noopener">+54 9 11 2378-8557</a><span class="sep">·</span><a href="https://instagram.com/casalamarca_" target="_blank" rel="noopener">@casalamarca_</a></span>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="wordmark"><img src="assets/logo.png" alt="Casa Lamarca" width="230" height="89"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Inicio</a>
+      <a href="talleres.html" class="active">Talleres</a>
+      <a href="cumpleanos.html">Cumpleaños</a>
+      <a href="espacio.html">Alquilá el espacio</a>
+      <a href="tienda.html">Tienda</a>
+      <a href="lamarca.html">Lamarca</a>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<main>
+
+  <section class="banner" id="tallerEstado">
+    <div class="wrap">
+      <p class="notice">Cargando información del taller…</p>
+    </div>
+  </section>
+
+  <section id="tallerCuerpo" style="display:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow" id="tallerCategoria">Taller</p>
+        <h1 id="tallerTitulo">—</h1>
+        <p class="lede" id="tallerFechaHora"></p>
+        <p class="measure" style="margin-top:16px; color:var(--ink-soft);" id="tallerDescripcion"></p>
+        <p id="tallerPrecio" style="margin-top:14px; font-weight:700;"></p>
+        <p id="tallerPromo" style="margin-top:4px; font-weight:700; color:var(--sage);"></p>
+        <p id="tallerAgotado" style="margin-top:10px; font-size:0.78rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral); display:none;">Sin cupo por ahora</p>
+        <div class="btns">
+          <a class="btn btn-primary" id="tallerWa" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a class="btn btn-ghost" href="talleres.html">Ver todos los talleres</a>
+        </div>
+      </div>
+      <div>
+        <figure class="ph ph--16-9">
+          <svg class="icon" id="tallerIcono" viewBox="0 0 24 24"></svg>
+          <figcaption><span>Foto: el taller en el espacio</span></figcaption>
+        </figure>
+        <figure class="ph ph--16-9" id="tallerComidaFoto" style="display:none; margin-top:16px;">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 3v18"/><path d="M4 3c0 3 3 3 3 6s-3 3-3 6"/><path d="M18 3v7a2 2 0 0 1-4 0V3"/><path d="M16 3v18"/></svg>
+          <figcaption><span id="tallerComidaCaption"></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h5>Casa Lamarca</h5>
+        <p>Multiespacio y atelier familiar en Villa Devoto. Talleres, celebraciones, alquiler de espacio y objetos hechos a mano.</p>
+      </div>
+      <div>
+        <h5>Explorá</h5>
+        <a href="talleres.html">Talleres</a>
+        <a href="cumpleanos.html">Cumpleaños</a>
+        <a href="espacio.html">Alquilá el espacio</a>
+        <a href="tienda.html">Tienda</a>
+      </div>
+      <div>
+        <h5>Sobre nosotras</h5>
+        <a href="lamarca.html">Lamarca</a>
+        <a href="https://instagram.com/casalamarca_" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <div>
+        <h5>Visitanos</h5>
+        <p>Emilio Lamarca 3480<br>Villa Devoto, CABA</p>
+        <p style="margin-top:8px;">Con cita previa.<br>Coordinamos por WhatsApp: lun a vie 10–19 hs, sáb 10–14 hs.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Casa Lamarca · Villa Devoto, CABA</span>
+      <span>Sitio realizado por <a href="https://www.linkedin.com/in/jmaglia/" target="_blank" rel="noopener">Joaquín Maglia</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="talleres-data.js"></script>
+<script src="script.js"></script>
+<script>
+(function(){
+  var estadoWrap = document.getElementById('tallerEstado');
+  var cuerpo = document.getElementById('tallerCuerpo');
+  if(!estadoWrap || !cuerpo) return;
+
+  function noEncontrado(texto){
+    estadoWrap.querySelector('.wrap').innerHTML =
+      '<p class="eyebrow">Talleres</p><h1>' + texto + '</h1>' +
+      '<p class="lede">Volvé a la agenda para ver las fechas disponibles, o escribinos directo.</p>' +
+      '<div class="btns"><a class="btn btn-primary" href="talleres.html">Ver talleres</a>' +
+      '<a class="btn btn-ghost" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos</a></div>';
+  }
+
+  var id = new URLSearchParams(window.location.search).get('id');
+  if(!id){ noEncontrado('No encontramos ese taller'); return; }
+
+  talleresBuscarPorId(id).then(function(t){
+    if(!t){ noEncontrado('No encontramos ese taller'); return; }
+
+    var agotado = talleresEstaAgotado(t);
+
+    document.title = t.titulo + ' — Casa Lamarca';
+    document.getElementById('tallerCategoria').textContent = t.categoria;
+    document.getElementById('tallerTitulo').textContent = t.titulo;
+    document.getElementById('tallerFechaHora').textContent =
+      talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : '');
+    document.getElementById('tallerDescripcion').textContent = t.descripcion_larga || t.descripcion_corta || '';
+    document.getElementById('tallerPrecio').textContent = t.precio || '';
+    document.getElementById('tallerPromo').textContent = t.promo || '';
+    document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[t.categoria] || TALLERES_ICONS['_default'];
+
+    var comidaCaption = talleresComidaCaption(t.comida);
+    if(comidaCaption){
+      document.getElementById('tallerComidaCaption').textContent = comidaCaption;
+      document.getElementById('tallerComidaFoto').style.display = '';
+    }
+
+    var waBoton = document.getElementById('tallerWa');
+    var msg = [];
+    if(agotado){
+      document.getElementById('tallerAgotado').style.display = '';
+      waBoton.textContent = 'Sumarme a la lista de espera';
+      msg.push('¡Hola! Vi que "' + t.titulo + '" está sin cupo — quiero sumarme a la lista de espera.');
+    } else {
+      msg.push('¡Hola! Quiero reservar mi lugar en "' + t.titulo + '".');
+    }
+    msg.push('- Fecha: ' + talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : ''));
+    waBoton.href = 'https://wa.me/5491123788557?text=' + encodeURIComponent(msg.join('\n'));
+
+    estadoWrap.style.display = 'none';
+    cuerpo.style.display = '';
+  }).catch(function(){
+    noEncontrado('No pudimos cargar la información del taller');
+  });
+})();
+</script>
+</body>
+</html>
