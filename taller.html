@@ -71,6 +71,47 @@
     </div>
   </section>
 
+  <section id="tallerEventoPrivado" style="display:none;">
+    <div class="wrap">
+      <div class="form-split">
+        <div class="form-split-form">
+          <div class="section-head" style="margin-bottom:0;">
+            <p class="eyebrow">Armá tu evento</p>
+            <h2>Armá tu evento privado de <span id="tallerEventoTipo"></span></h2>
+            <p>Grupos chicos entre semana, grupos más grandes el fin de semana — contanos qué tenés en mente y lo coordinamos por WhatsApp.</p>
+          </div>
+          <form class="mini-form" id="eventoPrivadoForm">
+            <div class="field-stack">
+              <label class="span-2">
+                <span>¿Para qué ocasión?</span>
+                <input type="text" name="ocasion" placeholder="Ej: cumpleaños, junta con amigas, empresa...">
+              </label>
+              <label>
+                <span>¿Cuántas personas, aprox.?</span>
+                <input type="text" name="cantidad" placeholder="Ej: 8 personas" required>
+              </label>
+              <label>
+                <span>Fecha o fechas posibles</span>
+                <input type="text" name="fecha" placeholder="Ej: algún sábado de noviembre">
+              </label>
+              <label class="span-2">
+                <span>¿Algo más para contarnos?</span>
+                <textarea name="comentario" rows="3" placeholder="Opcional"></textarea>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
+          </form>
+        </div>
+        <div class="form-split-photo">
+          <div class="form-photo">
+            <svg id="tallerEventoIcono" viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></svg>
+            <div class="form-photo-caption">Foto: un evento privado en Casa Lamarca</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site">
@@ -111,6 +152,7 @@
 (function(){
   var estadoWrap = document.getElementById('tallerEstado');
   var cuerpo = document.getElementById('tallerCuerpo');
+  var eventoPrivado = document.getElementById('tallerEventoPrivado');
   if(!estadoWrap || !cuerpo) return;
 
   function noEncontrado(texto){
@@ -121,46 +163,117 @@
       '<a class="btn btn-ghost" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos</a></div>';
   }
 
-  var id = new URLSearchParams(window.location.search).get('id');
-  if(!id){ noEncontrado('No encontramos ese taller'); return; }
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  var tipo = params.get('tipo');
 
-  talleresBuscarPorId(id).then(function(t){
-    if(!t){ noEncontrado('No encontramos ese taller'); return; }
+  /* Modo 1: ?id=... — una fecha puntual del Sheet (como siempre). */
+  if(id){
+    talleresBuscarPorId(id).then(function(t){
+      if(!t){ noEncontrado('No encontramos ese taller'); return; }
 
-    var agotado = talleresEstaAgotado(t);
+      var agotado = talleresEstaAgotado(t);
 
-    document.title = t.titulo + ' — Casa Lamarca';
-    document.getElementById('tallerCategoria').textContent = t.categoria;
-    document.getElementById('tallerTitulo').textContent = t.titulo;
-    document.getElementById('tallerFechaHora').textContent =
-      talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : '');
-    document.getElementById('tallerDescripcion').textContent = t.descripcion_larga || t.descripcion_corta || '';
-    document.getElementById('tallerPrecio').textContent = t.precio || '';
-    document.getElementById('tallerPromo').textContent = t.promo || '';
-    document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[t.categoria] || TALLERES_ICONS['_default'];
+      document.title = t.titulo + ' — Casa Lamarca';
+      document.getElementById('tallerCategoria').textContent = t.categoria;
+      document.getElementById('tallerTitulo').textContent = t.titulo;
+      document.getElementById('tallerFechaHora').textContent =
+        talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : '');
+      document.getElementById('tallerDescripcion').textContent = t.descripcion_larga || t.descripcion_corta || '';
+      document.getElementById('tallerPrecio').textContent = t.precio || '';
+      document.getElementById('tallerPromo').textContent = t.promo || '';
+      document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[t.categoria] || TALLERES_ICONS['_default'];
 
-    var comidaCaption = talleresComidaCaption(t.comida);
-    if(comidaCaption){
-      document.getElementById('tallerComidaCaption').textContent = comidaCaption;
-      document.getElementById('tallerComidaFoto').style.display = '';
-    }
+      var comidaCaption = talleresComidaCaption(t.comida);
+      if(comidaCaption){
+        document.getElementById('tallerComidaCaption').textContent = comidaCaption;
+        document.getElementById('tallerComidaFoto').style.display = '';
+      }
 
-    var waBoton = document.getElementById('tallerWa');
-    var msg = [];
-    if(agotado){
-      document.getElementById('tallerAgotado').style.display = '';
-      waBoton.textContent = 'Sumarme a la lista de espera';
-      msg.push('¡Hola! Vi que "' + t.titulo + '" está sin cupo — quiero sumarme a la lista de espera.');
+      var waBoton = document.getElementById('tallerWa');
+      var msg = [];
+      if(agotado){
+        document.getElementById('tallerAgotado').style.display = '';
+        waBoton.textContent = 'Sumarme a la lista de espera';
+        msg.push('¡Hola! Vi que "' + t.titulo + '" está sin cupo — quiero sumarme a la lista de espera.');
+      } else {
+        msg.push('¡Hola! Quiero reservar mi lugar en "' + t.titulo + '".');
+      }
+      msg.push('- Fecha: ' + talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : ''));
+      waBoton.href = 'https://wa.me/5491123788557?text=' + encodeURIComponent(msg.join('\n'));
+
+      estadoWrap.style.display = 'none';
+      cuerpo.style.display = '';
+    }).catch(function(){
+      noEncontrado('No pudimos cargar la información del taller');
+    });
+    return;
+  }
+
+  /* Modo 2: ?tipo=Cerámica — info general del taller, sin fecha. Acá
+     no hay "reservar mi lugar": en su lugar se muestra el formulario
+     de "armá tu evento privado". */
+  if(tipo){
+    var info = TALLERES_TIPOS[tipo] || TALLERES_TIPOS['_default'];
+    var tituloMostrado = (info.titulo && info.titulo.trim()) ? info.titulo.trim() : tipo;
+
+    document.title = tituloMostrado + ' — Casa Lamarca';
+    document.getElementById('tallerCategoria').textContent = tipo;
+    document.getElementById('tallerTitulo').textContent = tituloMostrado;
+    document.getElementById('tallerDescripcion').textContent = info.descripcion || '';
+    document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+
+    document.getElementById('tallerFechaHora').style.display = 'none';
+    document.getElementById('tallerPromo').style.display = 'none';
+    document.getElementById('tallerWa').style.display = 'none';
+
+    var precioEl = document.getElementById('tallerPrecio');
+    if(info.precio && info.precio.trim()){
+      precioEl.textContent = info.precio.trim();
+      precioEl.style.display = '';
     } else {
-      msg.push('¡Hola! Quiero reservar mi lugar en "' + t.titulo + '".');
+      precioEl.style.display = 'none';
     }
-    msg.push('- Fecha: ' + talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : ''));
-    waBoton.href = 'https://wa.me/5491123788557?text=' + encodeURIComponent(msg.join('\n'));
+
+    var tipoSpan = document.getElementById('tallerEventoTipo');
+    if(tipoSpan) tipoSpan.textContent = tituloMostrado;
+    var iconoEvento = document.getElementById('tallerEventoIcono');
+    if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+    if(eventoPrivado) eventoPrivado.style.display = '';
 
     estadoWrap.style.display = 'none';
     cuerpo.style.display = '';
-  }).catch(function(){
-    noEncontrado('No pudimos cargar la información del taller');
+    return;
+  }
+
+  noEncontrado('No encontramos ese taller');
+})();
+
+/* Formulario "Armá tu evento privado": arma el mensaje con el tipo de
+   taller de la URL y lo manda por WhatsApp — mismo enfoque que el
+   resto de los formularios del sitio. */
+(function(){
+  var form = document.getElementById('eventoPrivadoForm');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var tipo = new URLSearchParams(window.location.search).get('tipo') || 'un taller';
+    var infoTipo = (typeof TALLERES_TIPOS !== 'undefined' && TALLERES_TIPOS[tipo]) || null;
+    var nombreTaller = (infoTipo && infoTipo.titulo && infoTipo.titulo.trim()) ? infoTipo.titulo.trim() : tipo;
+    var data = new FormData(form);
+    var ocasion = (data.get('ocasion') || '').trim();
+    var cantidad = (data.get('cantidad') || '').trim();
+    var fecha = (data.get('fecha') || '').trim();
+    var comentario = (data.get('comentario') || '').trim();
+
+    var lineas = ['¡Hola! Quiero armar un evento privado de ' + nombreTaller + ' en Casa Lamarca.'];
+    if(ocasion) lineas.push('- Ocasión: ' + ocasion);
+    if(cantidad) lineas.push('- Personas, aprox.: ' + cantidad);
+    if(fecha) lineas.push('- Fecha posible: ' + fecha);
+    if(comentario) lineas.push('- Comentario: ' + comentario);
+
+    var mensaje = encodeURIComponent(lineas.join('\n'));
+    window.open('https://wa.me/5491123788557?text=' + mensaje, '_blank', 'noopener');
   });
 })();
 </script>

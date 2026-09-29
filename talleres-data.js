@@ -66,6 +66,45 @@ var TALLERES_ICONS = {
   "_default": '<circle cx="12" cy="12" r="8"/><path d="M9 12l2 2 4-4"/>'
 };
 
+/* Contenido de taller.html cuando se entra con ?tipo=Cerámica (info
+   general del taller, sin fecha) en vez de ?id=... (una fecha puntual
+   del Sheet). Por categoría:
+   - titulo: opcional. Vacío ("") = se usa el nombre de la categoría
+     tal cual (ej. "Velas"). Si querés un nombre propio para la página
+     (ej. "Velas de autor"), lo ponés acá.
+   - descripcion: el texto de abajo del título.
+   - precio: opcional. Vacío ("") = no se muestra ningún precio en la
+     página. Es de texto libre (ej. "Desde $12.000", "Consultar").
+   Si el día de mañana hay un tipo de taller nuevo y no está acá, la
+   página muestra "_default" en su lugar — no rompe nada. */
+var TALLERES_TIPOS = {
+  "Cerámica": {
+    titulo: "",
+    descripcion: "Torno, modelado a mano y esmaltado. Cada pieza sale de tus manos y vuelve horneada, lista para usar en tu casa. No hace falta experiencia previa.",
+    precio: ""
+  },
+  "Velas": {
+    titulo: "",
+    descripcion: "Cera de soja, fragancias y moldes propios. Te llevás lo que hiciste puesto a curar en su envase, listo para prender en unos días.",
+    precio: ""
+  },
+  "Terrarios": {
+    titulo: "",
+    descripcion: "Un pequeño ecosistema en vidrio, armado a capas con tierra, piedras y plantas. Te lo llevás a tu casa o lo regalás.",
+    precio: ""
+  },
+  "Arte": {
+    titulo: "",
+    descripcion: "Pintura y técnicas mixtas, sin corrección de examen — el objetivo es soltar la mano y pasarla bien.",
+    precio: ""
+  },
+  "_default": {
+    titulo: "",
+    descripcion: "Un taller con onda, hecho a mano, en Casa Lamarca.",
+    precio: ""
+  }
+};
+
 /* Fotos fijas según el campo "comida" — mismo mecanismo que los
    íconos: un valor chico y controlado, no una foto por fila. Hoy son
    placeholders como el resto del sitio; el día que haya fotos reales
