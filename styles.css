@@ -56,6 +56,8 @@ figure{ margin:0; }
 button{ font-family: inherit; }
 
 .measure{ max-width: var(--measure); }
+#tallerDescripcion p{ margin:0 0 12px; }
+#tallerDescripcion p:last-child{ margin-bottom:0; }
 .wrap{
   max-width: var(--maxw);
   margin-inline: auto;
@@ -258,6 +260,7 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 .grid-2{ grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 980px){ .grid-4{ grid-template-columns: repeat(2,1fr); } .grid-3{ grid-template-columns: repeat(2,1fr);} }
 @media (max-width: 620px){ .grid-4, .grid-3, .grid-2{ grid-template-columns: 1fr; } }
+.grid.is-collapsed .taller-extra{ display:none; }
 
 .card{
   background: var(--surface); border:1px solid var(--line); border-radius: var(--radius);

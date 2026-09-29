@@ -5,9 +5,16 @@
 <title>Taller — Casa Lamarca</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Detalle de un taller en Casa Lamarca, Villa Devoto.">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMzRjRBMkYiLz48dGV4dCB4PSIzMiIgeT0iNDUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIzNCIgZmlsbD0iI0VFRjJFNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TDwvdGV4dD48L3N2Zz4=">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Taller — Casa Lamarca">
+<meta property="og:description" content="Detalle de un taller en Casa Lamarca, Villa Devoto.">
+<meta property="og:image" content="assets/logo.png">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://sheets.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -49,7 +56,7 @@
         <p class="eyebrow" id="tallerCategoria">Taller</p>
         <h1 id="tallerTitulo">—</h1>
         <p class="lede" id="tallerFechaHora"></p>
-        <p class="measure" style="margin-top:16px; color:var(--ink-soft);" id="tallerDescripcion"></p>
+        <div class="measure" style="margin-top:16px; color:var(--ink-soft);" id="tallerDescripcion"></div>
         <p id="tallerPrecio" style="margin-top:14px; font-weight:700;"></p>
         <p id="tallerPromo" style="margin-top:4px; font-weight:700; color:var(--sage);"></p>
         <p id="tallerAgotado" style="margin-top:10px; font-size:0.78rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral); display:none;">Sin cupo por ahora</p>
@@ -112,6 +119,18 @@
     </div>
   </section>
 
+  <section id="tallerVolverCumple" style="display:none;">
+    <div class="wrap">
+      <div style="border:1.5px solid var(--coral); border-radius:var(--radius); padding:26px 32px; display:flex; align-items:center; gap:18px; justify-content:space-between; flex-wrap:wrap;">
+        <div>
+          <p style="margin:0; font-weight:700; font-size:1rem; color:var(--ink);">¿Este es el taller que querés para el cumple?</p>
+          <p style="margin:4px 0 0; font-size:0.86rem; color:var(--ink-soft);">Volvé al formulario de cumpleaños y contanos la fecha.</p>
+        </div>
+        <a class="btn btn-primary" href="cumpleanos.html#cumpleForm" style="white-space:nowrap;">Volver a cumpleaños</a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site">
@@ -155,6 +174,18 @@
   var eventoPrivado = document.getElementById('tallerEventoPrivado');
   if(!estadoWrap || !cuerpo) return;
 
+  /* Pinta la descripción como uno o varios párrafos. Acepta un texto
+     único (t.descripcion_larga, que viene del Sheet) o una lista de
+     párrafos (info.descripcion de TALLERES_TIPOS) — en ambos casos
+     queda con la misma pinta en pantalla. */
+  function pintarDescripcion(el, contenido){
+    var parrafos = Array.isArray(contenido) ? contenido : [contenido];
+    el.innerHTML = parrafos
+      .filter(function(p){ return p && String(p).trim(); })
+      .map(function(p){ return '<p>' + talleresEsc(p) + '</p>'; })
+      .join('');
+  }
+
   function noEncontrado(texto){
     estadoWrap.querySelector('.wrap').innerHTML =
       '<p class="eyebrow">Talleres</p><h1>' + texto + '</h1>' +
@@ -166,6 +197,7 @@
   var params = new URLSearchParams(window.location.search);
   var id = params.get('id');
   var tipo = params.get('tipo');
+  var origen = params.get('origen');
 
   /* Modo 1: ?id=... — una fecha puntual del Sheet (como siempre). */
   if(id){
@@ -179,7 +211,7 @@
       document.getElementById('tallerTitulo').textContent = t.titulo;
       document.getElementById('tallerFechaHora').textContent =
         talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : '');
-      document.getElementById('tallerDescripcion').textContent = t.descripcion_larga || t.descripcion_corta || '';
+      pintarDescripcion(document.getElementById('tallerDescripcion'), t.descripcion_larga || t.descripcion_corta || '');
       document.getElementById('tallerPrecio').textContent = t.precio || '';
       document.getElementById('tallerPromo').textContent = t.promo || '';
       document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[t.categoria] || TALLERES_ICONS['_default'];
@@ -220,7 +252,7 @@
     document.title = tituloMostrado + ' — Casa Lamarca';
     document.getElementById('tallerCategoria').textContent = tipo;
     document.getElementById('tallerTitulo').textContent = tituloMostrado;
-    document.getElementById('tallerDescripcion').textContent = info.descripcion || '';
+    pintarDescripcion(document.getElementById('tallerDescripcion'), info.descripcion || '');
     document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
 
     document.getElementById('tallerFechaHora').style.display = 'none';
@@ -235,11 +267,22 @@
       precioEl.style.display = 'none';
     }
 
-    var tipoSpan = document.getElementById('tallerEventoTipo');
-    if(tipoSpan) tipoSpan.textContent = tituloMostrado;
-    var iconoEvento = document.getElementById('tallerEventoIcono');
-    if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
-    if(eventoPrivado) eventoPrivado.style.display = '';
+    /* Si se entró desde cumpleaños.html (?origen=cumple), no tiene
+       sentido ofrecer el form de "armá tu evento privado" — mejor
+       mandar de vuelta al form de cumpleaños, que es el que ya
+       estaban completando. */
+    var volverCumple = document.getElementById('tallerVolverCumple');
+    if(origen === 'cumple'){
+      if(eventoPrivado) eventoPrivado.style.display = 'none';
+      if(volverCumple) volverCumple.style.display = '';
+    } else {
+      var tipoSpan = document.getElementById('tallerEventoTipo');
+      if(tipoSpan) tipoSpan.textContent = tituloMostrado;
+      var iconoEvento = document.getElementById('tallerEventoIcono');
+      if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+      if(eventoPrivado) eventoPrivado.style.display = '';
+      if(volverCumple) volverCumple.style.display = 'none';
+    }
 
     estadoWrap.style.display = 'none';
     cuerpo.style.display = '';

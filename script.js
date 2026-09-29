@@ -14,6 +14,20 @@
   });
 })();
 
+/* Cumpleaños: "Ver más talleres" — al principio se ven 4 tarjetas
+   (.grid.is-collapsed oculta las .taller-extra vía CSS) y este botón
+   destapa el resto sin recargar la página. */
+(function(){
+  var grid = document.getElementById('talleresCumpleGrid');
+  var toggle = document.getElementById('talleresCumpleToggle');
+  if(!grid || !toggle) return;
+  toggle.addEventListener('click', function(){
+    var expandido = !grid.classList.toggle('is-collapsed');
+    toggle.textContent = expandido ? 'Ver menos' : 'Ver más talleres';
+    toggle.setAttribute('aria-expanded', expandido ? 'true' : 'false');
+  });
+})();
+
 /* Formulario de cumpleaños: arma un mensaje prolijo y lo manda por
    WhatsApp — no hay backend, es el mismo enfoque que el resto del sitio. */
 (function(){
@@ -23,12 +37,14 @@
     e.preventDefault();
     var data = new FormData(form);
     var tipo = (data.get('tipo') || '').trim();
+    var cantidad = (data.get('cantidad') || '').trim();
     var fecha = (data.get('fecha') || '').trim();
     var fechaVisita = (data.get('fechaVisita') || '').trim();
     var comentarios = (data.get('comentarios') || '').trim();
 
     var lineas = ['¡Hola! Quiero consultar por un cumpleaños en Casa Lamarca.'];
     if(tipo) lineas.push('- Cumpleaños de: ' + tipo);
+    if(cantidad) lineas.push('- Personas, aprox.: ' + cantidad);
     if(fecha) lineas.push('- Fecha posible del evento: ' + fecha);
     if(fechaVisita) lineas.push('- Fecha posible para la visita: ' + fechaVisita);
     if(comentarios) lineas.push('- Comentarios: ' + comentarios);
