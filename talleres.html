@@ -64,48 +64,47 @@
         <p class="eyebrow">De qué van</p>
         <h2>Los talleres que hacemos</h2>
       </div>
-      <div class="grid grid-2">
-
-        <article class="card" style="flex-direction:row; align-items:flex-start; gap:16px;">
-          <figure class="ph ph--square" style="width:120px; flex:none;">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M5 4h9v9a4.5 4.5 0 0 1-9 0V4Z"/><path d="M14 8h2a3 3 0 0 1 0 6h-2"/></svg>
+      <div class="grid grid-4">
+        <div class="product">
+          <figure class="ph ph--16-9">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h9v9a4.5 4.5 0 0 1-9 0V4Z"/><path d="M14 8h2a3 3 0 0 1 0 6h-2"/></svg>
+            <figcaption><span>Foto: piezas de cerámica pintadas</span></figcaption>
           </figure>
-          <div>
+          <div class="product-body">
             <h3>Cerámica</h3>
             <p>Torno, modelado a mano y esmaltado. La pieza sale de tus manos y vuelve horneada, lista para usar en tu casa.</p>
           </div>
-        </article>
-
-        <article class="card" style="flex-direction:row; align-items:flex-start; gap:16px;">
-          <figure class="ph ph--square" style="width:120px; flex:none;">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2c1.2 2 1.8 3.4 1.8 4.6A1.8 1.8 0 0 1 12 8.4a1.8 1.8 0 0 1-1.8-1.8C10.2 5.4 10.8 4 12 2Z"/><path d="M9 21h6"/><path d="M8 21c-.5-4 .5-9.5 4-11.5 3.5 2 4.5 7.5 4 11.5"/></svg>
+        </div>
+        <div class="product">
+          <figure class="ph ph--16-9">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.2 2 1.8 3.4 1.8 4.6A1.8 1.8 0 0 1 12 8.4a1.8 1.8 0 0 1-1.8-1.8C10.2 5.4 10.8 4 12 2Z"/><path d="M9 21h6"/><path d="M8 21c-.5-4 .5-9.5 4-11.5 3.5 2 4.5 7.5 4 11.5"/></svg>
+            <figcaption><span>Foto: velas recién moldeadas</span></figcaption>
           </figure>
-          <div>
+          <div class="product-body">
             <h3>Velas</h3>
             <p>Cera de soja, fragancias y moldes propios. Te llevás lo que hiciste puesto a curar en su envase.</p>
           </div>
-        </article>
-
-        <article class="card" style="flex-direction:row; align-items:flex-start; gap:16px;">
-          <figure class="ph ph--square" style="width:120px; flex:none;">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v6"/><path d="M8 9h8l1.5 5a5.5 5.5 0 0 1-11 0L8 9Z"/><path d="M4 21h16"/></svg>
+        </div>
+        <div class="product">
+          <figure class="ph ph--16-9">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"/><path d="M8 9h8l1.5 5a5.5 5.5 0 0 1-11 0L8 9Z"/><path d="M4 21h16"/></svg>
+            <figcaption><span>Foto: terrario armado en vidrio</span></figcaption>
           </figure>
-          <div>
+          <div class="product-body">
             <h3>Terrarios</h3>
             <p>Un pequeño ecosistema en vidrio, armado a capas, para llevarte a tu casa o regalar.</p>
           </div>
-        </article>
-
-        <article class="card" style="flex-direction:row; align-items:flex-start; gap:16px;">
-          <figure class="ph ph--square" style="width:120px; flex:none;">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M4 20c4-1 6-3 7-7l8-8-3-3-8 8c-4 1-6 3-7 7Z"/><path d="M14 6l3 3"/></svg>
+        </div>
+        <div class="product">
+          <figure class="ph ph--16-9">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c4-1 6-3 7-7l8-8-3-3-8 8c-4 1-6 3-7 7Z"/><path d="M14 6l3 3"/></svg>
+            <figcaption><span>Foto: lienzos pintados en el taller</span></figcaption>
           </figure>
-          <div>
+          <div class="product-body">
             <h3>Arte</h3>
             <p>Pintura y técnicas mixtas, sin corrección de examen — el objetivo es soltar la mano.</p>
           </div>
-        </article>
-
+        </div>
       </div>
     </div>
   </section>
@@ -166,7 +165,7 @@
     estado.innerHTML = '<p class="notice">' + texto + '</p><div class="btns" style="margin-top:14px;"><a class="btn btn-primary" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos</a></div>';
   }
 
-    talleresCargar().then(function(talleres){
+  talleresCargar().then(function(talleres){
     if(!talleres.length){
       mensajeVacio('Por ahora no hay talleres agendados. Escribinos y te contamos las próximas fechas.');
       return;
