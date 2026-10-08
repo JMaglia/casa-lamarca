@@ -119,17 +119,6 @@
     </div>
   </section>
 
-  <section id="tallerVolverCumple" style="display:none;">
-    <div class="wrap">
-      <div style="border:1.5px solid var(--coral); border-radius:var(--radius); padding:26px 32px; display:flex; align-items:center; gap:18px; justify-content:space-between; flex-wrap:wrap;">
-        <div>
-          <p style="margin:0; font-weight:700; font-size:1rem; color:var(--ink);">¿Este es el taller que querés para el cumple?</p>
-          <p style="margin:4px 0 0; font-size:0.86rem; color:var(--ink-soft);">Volvé al formulario de cumpleaños y contanos la fecha.</p>
-        </div>
-        <a class="btn btn-primary" href="cumpleanos.html#cumpleForm" style="white-space:nowrap;">Volver a cumpleaños</a>
-      </div>
-    </div>
-  </section>
 
 </main>
 
@@ -197,7 +186,6 @@
   var params = new URLSearchParams(window.location.search);
   var id = params.get('id');
   var tipo = params.get('tipo');
-  var origen = params.get('origen');
 
   /* Modo 1: ?id=... — una fecha puntual del Sheet (como siempre). */
   if(id){
@@ -267,22 +255,11 @@
       precioEl.style.display = 'none';
     }
 
-    /* Si se entró desde cumpleaños.html (?origen=cumple), no tiene
-       sentido ofrecer el form de "armá tu evento privado" — mejor
-       mandar de vuelta al form de cumpleaños, que es el que ya
-       estaban completando. */
-    var volverCumple = document.getElementById('tallerVolverCumple');
-    if(origen === 'cumple'){
-      if(eventoPrivado) eventoPrivado.style.display = 'none';
-      if(volverCumple) volverCumple.style.display = '';
-    } else {
-      var tipoSpan = document.getElementById('tallerEventoTipo');
-      if(tipoSpan) tipoSpan.textContent = tituloMostrado;
-      var iconoEvento = document.getElementById('tallerEventoIcono');
-      if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
-      if(eventoPrivado) eventoPrivado.style.display = '';
-      if(volverCumple) volverCumple.style.display = 'none';
-    }
+    var tipoSpan = document.getElementById('tallerEventoTipo');
+    if(tipoSpan) tipoSpan.textContent = tituloMostrado;
+    var iconoEvento = document.getElementById('tallerEventoIcono');
+    if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+    if(eventoPrivado) eventoPrivado.style.display = '';
 
     estadoWrap.style.display = 'none';
     cuerpo.style.display = '';
