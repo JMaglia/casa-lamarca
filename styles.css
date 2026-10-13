@@ -209,6 +209,24 @@ header.site{
   font-size:0.72rem; font-style:italic; color: rgba(255,255,255,0.65);
 }
 
+/* ============ PAGE HERO — misma estética que el de Inicio, pero mini:
+   para páginas internas (Talleres, Cumpleaños, etc.), no para la home.
+   Bastante más bajo que antes: no tiene que competir con el contenido
+   real (agenda, listados) por la primera pantalla. ============ */
+.hero-full--page{
+  min-height: clamp(190px, 24vw, 250px);
+}
+.hero-full--page .hero-full-content{
+  padding-block: 20px clamp(18px, 3vw, 28px);
+}
+.hero-full--page .hero-full-content h1{
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem);
+  max-width: 22ch;
+}
+.hero-full--page .hero-full-content .lede{
+  font-size: 0.92rem;
+}
+
 .btn{
   display:inline-flex; align-items:center; gap:8px;
   padding: 12px 20px; border-radius: 3px;
