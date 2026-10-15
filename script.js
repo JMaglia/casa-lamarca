@@ -1,3 +1,24 @@
+/* Scroll-reveal: cualquier elemento con clase .reveal (ver styles.css)
+   recibe .is-visible la primera vez que entra en pantalla, y queda así
+   para siempre (no se re-oculta si volvés a scrollear para arriba). */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+
 (function(){
   var toggle = document.getElementById('navToggle');
   var links = document.getElementById('navLinks');
@@ -14,20 +35,6 @@
   });
 })();
 
-/* Cumpleaños: "Ver más talleres" — al principio se ven 4 tarjetas
-   (.grid.is-collapsed oculta las .taller-extra vía CSS) y este botón
-   destapa el resto sin recargar la página. */
-(function(){
-  var grid = document.getElementById('talleresCumpleGrid');
-  var toggle = document.getElementById('talleresCumpleToggle');
-  if(!grid || !toggle) return;
-  toggle.addEventListener('click', function(){
-    var expandido = !grid.classList.toggle('is-collapsed');
-    toggle.textContent = expandido ? 'Ver menos' : 'Ver más talleres';
-    toggle.setAttribute('aria-expanded', expandido ? 'true' : 'false');
-  });
-})();
-
 /* Formulario de cumpleaños: arma un mensaje prolijo y lo manda por
    WhatsApp — no hay backend, es el mismo enfoque que el resto del sitio. */
 (function(){
@@ -36,18 +43,16 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var data = new FormData(form);
-    var tipo = (data.get('tipo') || '').trim();
+    var edad = (data.get('edad') || '').trim();
     var cantidad = (data.get('cantidad') || '').trim();
+    var edadesInvitados = (data.get('edadesInvitados') || '').trim();
     var fecha = (data.get('fecha') || '').trim();
-    var fechaVisita = (data.get('fechaVisita') || '').trim();
-    var comentarios = (data.get('comentarios') || '').trim();
 
     var lineas = ['¡Hola! Quiero consultar por un cumpleaños en Casa Lamarca.'];
-    if(tipo) lineas.push('- Cumpleaños de: ' + tipo);
-    if(cantidad) lineas.push('- Personas, aprox.: ' + cantidad);
-    if(fecha) lineas.push('- Fecha posible del evento: ' + fecha);
-    if(fechaVisita) lineas.push('- Fecha posible para la visita: ' + fechaVisita);
-    if(comentarios) lineas.push('- Comentarios: ' + comentarios);
+    lineas.push('- Cumple: ' + edad);
+    lineas.push('- Invitados: ' + cantidad);
+    if(edadesInvitados) lineas.push('- Edades de los invitados: ' + edadesInvitados);
+    if(fecha) lineas.push('- Fecha posible: ' + fecha);
 
     var mensaje = encodeURIComponent(lineas.join('\n'));
     window.open('https://wa.me/5491123788557?text=' + mensaje, '_blank', 'noopener');

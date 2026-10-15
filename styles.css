@@ -22,7 +22,7 @@
   --muted: #74725f;
   --line: rgba(35,38,31,0.14);
   --surface-shadow: 0 16px 34px -22px rgba(35,38,31,0.35);
-  --radius: 4px;
+  --radius: 12px;
   --maxw: 1180px;
   --measure: 62ch;
 }
@@ -71,21 +71,6 @@ button{ font-family: inherit; }
   color: var(--ochre);
 }
 
-/* ============ TOP STRIP ============ */
-.top-strip{
-  background: var(--sage-deep);
-  color: var(--bg);
-  font-size: 0.78rem;
-}
-.top-strip .wrap{
-  display:flex; justify-content:space-between; align-items:center;
-  padding-block: 7px;
-  gap: 12px; flex-wrap: wrap;
-}
-.top-strip a{ text-decoration:none; opacity:.92; }
-.top-strip a:hover{ opacity:1; text-decoration:underline; }
-.top-strip .sep{ opacity:.55; margin-inline:8px; }
-
 /* ============ NAV ============ */
 header.site{
   position: sticky; top:0; z-index: 50;
@@ -119,11 +104,18 @@ header.site{
 .nav-cta{
   display:inline-flex; align-items:center; gap:8px;
   background: var(--coral); color: #fff;
-  padding: 9px 16px; border-radius: 3px;
+  padding: 10px 18px; border-radius: 10px;
   font-size: 0.83rem; font-weight:700; text-decoration:none;
   white-space:nowrap;
 }
 .nav-cta:hover{ background: var(--coral-deep); }
+.nav-ig{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; border-radius:50%; flex:none;
+  color: var(--ink-soft);
+}
+.nav-ig svg{ width:19px; height:19px; stroke:currentColor; fill:none; }
+.nav-ig:hover{ color: var(--coral); background: color-mix(in srgb, var(--coral) 10%, transparent); }
 .nav-toggle{
   display:none; background:none; border:1px solid var(--line); border-radius:6px;
   width:38px; height:38px; align-items:center; justify-content:center; cursor:pointer;
@@ -229,10 +221,12 @@ header.site{
 
 .btn{
   display:inline-flex; align-items:center; gap:8px;
-  padding: 12px 20px; border-radius: 3px;
+  padding: 14px 24px; border-radius: 10px;
   font-weight:700; font-size:0.9rem; text-decoration:none;
   border: 1.5px solid transparent;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
+.btn-primary:hover{ transform: translateY(-1px); box-shadow: 0 10px 20px -12px color-mix(in srgb, var(--coral) 60%, transparent); }
 .btn-primary{ background: var(--coral); color: #fff; }
 .btn-primary:hover{ background: var(--coral-deep); }
 .btn-ghost{ border-color: var(--ink); color: var(--ink); }
@@ -258,9 +252,26 @@ header.site{
 /* ============ SECTIONS ============ */
 section{ padding-block: clamp(44px, 6vw, 76px); }
 .band{ background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.section-head{ max-width: 620px; margin-bottom: clamp(24px, 3vw, 36px); }
-.section-head h2{ font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem); margin-top:6px; }
-.section-head p{ margin-top:10px; color: var(--ink-soft); }
+.section-head{
+  max-width: 680px; margin: 0 auto clamp(30px, 3.6vw, 44px); text-align:center;
+}
+.section-head h2{ font-size: clamp(1.6rem, 1.25rem + 1.3vw, 2.3rem); margin-top:8px; }
+.section-head p{ margin-top:12px; color: var(--ink-soft); }
+
+/* ============ SCROLL REVEAL — utilidad reusable en todo el sitio ============
+   Clase .reveal: el elemento arranca invisible y corrido un poco hacia
+   abajo, y el JS (script.js) le agrega .is-visible apenas entra en
+   pantalla. Para que varios elementos hermanos aparezcan en cadena en
+   vez de todos juntos, se les pone un --i creciente (0, 1, 2…) inline. */
+.reveal{
+  opacity:0; transform: translateY(26px);
+  transition: opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.reveal.is-visible{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ transition:none !important; opacity:1 !important; transform:none !important; }
+}
 
 /* ============ ICONS ============ */
 .icon{ width:26px; height:26px; stroke: var(--sage); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
@@ -280,8 +291,32 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 @media (max-width: 620px){ .grid-4, .grid-3, .grid-2{ grid-template-columns: 1fr; } }
 .grid.is-collapsed .taller-extra{ display:none; }
 
+/* pared de testimonios en mampostería (CSS columns): como los textos
+   miden distinto, las cards quedan de alturas distintas solas, en vez
+   de la grilla pareja de antes — nada de contenido nuevo, solo el flow. */
+.testi-wall{ column-gap: clamp(16px, 2vw, 24px); margin-top: clamp(16px, 2vw, 24px); }
+.testi-wall .testi{
+  break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+@media (min-width: 640px){ .testi-wall{ column-count:2; } }
+@media (min-width: 980px){ .testi-wall{ column-count:4; } }
+
+/* .testi no tenía estilos propios en ningún lado — las cards de
+   "Voces de la casa" en index/cumpleaños/contacto se veían como texto
+   plano. Le doy una tarjeta simple, consistente con .card. */
+.testi{
+  background: var(--surface); border:1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--surface-shadow);
+  padding: 22px 20px; display:flex; flex-direction:column; gap:10px;
+}
+.testi .stars{ color: var(--ochre); font-size:0.9rem; letter-spacing:2px; }
+.testi p{ color: var(--ink); font-size:0.92rem; line-height:1.55; }
+.testi footer{ margin-top:4px; font-size:0.82rem; font-weight:700; color: var(--ink-soft); }
+
 .card{
   background: var(--surface); border:1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--surface-shadow);
   padding: 22px; display:flex; flex-direction:column; gap:10px; height:100%;
 }
 .card h3{ font-size:1.1rem; }
@@ -297,8 +332,11 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 /* ============ PRODUCTS ============ */
 .product{
   background: var(--surface); border:1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--surface-shadow);
   overflow:hidden; display:flex; flex-direction:column;
+  transition: transform .22s ease, box-shadow .22s ease;
 }
+.product:hover{ transform: translateY(-3px); box-shadow: 0 22px 38px -24px rgba(35,38,31,0.38); }
 .product .ph{ border-radius:0; border-width:0 0 1px; background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--sage) 65%, var(--surface-2)) 0%, var(--surface-2) 75%); }
 .product .ph svg{ width:34px; height:34px; opacity:.6; }
 .product-body{ padding: 16px 18px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
@@ -520,6 +558,116 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   .voces-card:nth-child(3), .voces-card:nth-child(4){ transform:none; }
   .voces-card:nth-child(1):hover, .voces-card:nth-child(2):hover,
   .voces-card:nth-child(3):hover, .voces-card:nth-child(4):hover{ transform:none; }
+}
+
+/* ============ LOS TALLERES QUE HACEMOS — carrusel vertical con scroll (Lamarca) ============
+   Las cards de cada taller se deslizan verticalmente a medida que scrolleás
+   adentro del panel: la actual queda centrada y grande, y se ve un poco de
+   la anterior (arriba) y la siguiente (abajo), recortadas con un degradé
+   suave en los bordes del visor. Nada de panel lateral ni círculo. */
+.mazo-scroll{
+  margin-top:28px; height:min(600px, 80vh); overflow-y:auto; overflow-x:hidden;
+  border-radius:24px;
+  background: var(--surface); position:relative;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.mazo-scroll::-webkit-scrollbar{ width:0; height:0; display:none; }
+.mazo-track{ height:4200px; position:relative; }
+.mazo-sticky{
+  position:sticky; top:0; height:min(600px, 80vh); overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+/* grano sutil superpuesto a todo el panel, para que el blanco plano no
+   quede "de placeholder" — casi imperceptible, es textura, no un patrón. */
+.mazo-sticky::before{
+  content:''; position:absolute; inset:0; z-index:3; opacity:.045; mix-blend-mode:multiply; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+/* resplandor ambiente detrás del visor: una mancha de color grande y
+   desenfocada que cambia según el taller activo (lo sincroniza el JS),
+   para que el fondo acompañe en vez de quedar un rectángulo pastel fijo. */
+.mazo-glow{
+  position:absolute; z-index:0; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:min(680px, 94vw); height:min(680px, 94vw); border-radius:50%;
+  background: radial-gradient(circle, var(--sage) 0%, transparent 70%);
+  filter: blur(64px); opacity:.3; pointer-events:none;
+}
+
+.mazo-hint{
+  position:absolute; top:22px; left:50%; transform:translateX(-50%); z-index:5;
+  margin:0; font-size:0.78rem; font-style:italic; color: var(--muted);
+  transition: opacity .3s ease;
+}
+.mazo-hint.is-hidden{ opacity:0; }
+
+.mazo-viewport{
+  position:relative; z-index:2; width:min(620px, 88vw); height:min(380px, 56vh);
+  overflow:hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+}
+.mazo-list{ position:absolute; inset:0; margin:0; padding:0; list-style:none; }
+.mazo-card{
+  position:absolute; left:0; right:0; top:50%; height:min(280px, 42vh);
+  display:flex; flex-direction:row;
+  border-radius:22px; border:1px solid var(--line); background: var(--surface);
+  box-shadow: 0 26px 42px -28px rgba(35,38,31,0.34), 0 2px 6px rgba(35,38,31,0.05);
+  overflow:hidden; will-change: transform, opacity, filter;
+}
+.mazo-media{
+  position:relative; flex:0 0 50%; overflow:hidden;
+  background: linear-gradient(135deg, var(--sage-deep) 0%, var(--sage) 55%, var(--ochre) 130%);
+}
+.mazo-media::after{
+  content:''; position:absolute; inset:0; opacity:.26; mix-blend-mode:overlay; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+/* numeral fantasma + tag flotante — el mismo lenguaje visual del bloque
+   "Cómo trabajamos" (.how-ghost-num/.how-tag), reutilizado acá en vez de
+   un ícono grande centrado, que quedaba muy "placeholder". */
+.mazo-ghost-num{
+  position:absolute; z-index:1; bottom:-16px; left:14px; user-select:none;
+  font-family:'Fraunces', Georgia, serif; font-weight:600; font-style:italic;
+  font-size:clamp(2.8rem, 7vw, 5rem); line-height:1; letter-spacing:-0.03em;
+  color: rgba(255,255,255,0.92); mix-blend-mode:overlay;
+}
+.mazo-tag{
+  position:absolute; z-index:2; top:14px; left:14px;
+  display:inline-flex; align-items:center; gap:6px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(4px);
+  padding:5px 12px; border-radius:999px;
+  font-size:0.68rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color: var(--ink);
+}
+.mazo-tag-icon{ width:14px; height:14px; stroke:var(--coral-deep); fill:none; flex:none; }
+.mazo-body{ flex:1; min-width:0; min-height:0; padding: clamp(16px,2.4vw,24px); display:flex; flex-direction:column; justify-content:center; }
+.mazo-body h3{ font-size:1.15rem; letter-spacing:-0.01em; }
+.mazo-body p{
+  margin-top:6px; color: var(--ink-soft); font-size:0.88rem; line-height:1.5;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
+.mazo-link{
+  margin-top:10px; display:inline-flex; align-items:center; gap:6px; width:fit-content;
+  font-size:0.82rem; font-weight:700; color: var(--ink); text-decoration:none;
+}
+.mazo-link svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.mazo-link:hover{ color: var(--coral); }
+
+/* contador y puntitos: se sacan de la vista (quedaban como una barra de UI
+   abajo de las cards) pero se dejan en el DOM — el JS los sigue usando
+   como referencia, simplemente no se muestran. */
+.mazo-footer{ display:none; }
+
+@media (max-width:620px){
+  .mazo-scroll{ height:min(560px, 78vh); }
+  .mazo-sticky{ height:min(560px, 78vh); }
+  .mazo-viewport{ width:78vw; height:min(400px, 60vh); }
+  .mazo-card{ flex-direction:column; height:min(270px, 44vh); }
+  .mazo-media{ flex:0 0 42%; }
+  .mazo-ghost-num{ font-size:3.4rem; bottom:-10px; left:12px; }
+  .mazo-tag{ top:11px; left:11px; font-size:0.62rem; padding:4px 10px; }
+  .mazo-body{ padding: clamp(13px,4vw,17px); }
+  .mazo-body h3{ font-size:1.05rem; }
+  .mazo-body p{ -webkit-line-clamp:2; }
 }
 
 /* ============ ABOUT ============ */
