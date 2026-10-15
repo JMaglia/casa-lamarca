@@ -24,6 +24,7 @@
   --surface-shadow: 0 16px 34px -22px rgba(35,38,31,0.35);
   --radius: 12px;
   --maxw: 1180px;
+  --wrap-pad: clamp(20px, 5vw, 56px);
   --measure: 62ch;
 }
 /* Identidad de marca fija: Casa Lamarca se ve igual siempre,
@@ -61,7 +62,7 @@ button{ font-family: inherit; }
 .wrap{
   max-width: var(--maxw);
   margin-inline: auto;
-  padding-inline: clamp(20px, 5vw, 56px);
+  padding-inline: var(--wrap-pad);
 }
 .eyebrow{
   font-size: 0.72rem;
@@ -82,6 +83,9 @@ header.site{
   display:flex; align-items:center; justify-content: space-between;
   padding-block: 14px;
   gap: 16px;
+}
+.nav-right{
+  display:flex; align-items:center; gap:14px; flex:none;
 }
 .wordmark{
   text-decoration:none;
@@ -113,9 +117,10 @@ header.site{
   display:inline-flex; align-items:center; justify-content:center;
   width:36px; height:36px; border-radius:50%; flex:none;
   color: var(--ink-soft);
+  background: var(--surface); border:1px solid var(--line);
 }
-.nav-ig svg{ width:19px; height:19px; stroke:currentColor; fill:none; }
-.nav-ig:hover{ color: var(--coral); background: color-mix(in srgb, var(--coral) 10%, transparent); }
+.nav-ig svg{ width:17px; height:17px; stroke:currentColor; stroke-width:1.6; fill:none; }
+.nav-ig:hover{ color: var(--coral); border-color: var(--coral); background: color-mix(in srgb, var(--coral) 10%, transparent); }
 .nav-toggle{
   display:none; background:none; border:1px solid var(--line); border-radius:6px;
   width:38px; height:38px; align-items:center; justify-content:center; cursor:pointer;
@@ -137,6 +142,53 @@ header.site{
   .nav-links.open{ transform: translateY(0); opacity:1; pointer-events:auto; }
   .nav-toggle{ display:flex; }
   .nav-cta{ display:none; }
+}
+
+/* ============ NAV FLOTANTE — por ahora solo en Inicio (clase .nav-float
+   en el <header>). No pegado a los bordes: una píldora centrada con
+   margen arriba y a los costados, que se achica y se esconde al bajar
+   para no competir con el contenido. El resto de las páginas sigue con
+   el header de borde a borde de siempre. ============ */
+header.site.nav-float{
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 70;
+  background: none;
+  backdrop-filter: none;
+  border-bottom: none;
+  padding-block: clamp(14px, 2.6vw, 22px) 0;
+  padding-inline: var(--wrap-pad);
+  transition: transform .45s cubic-bezier(.22,.61,.36,1);
+}
+header.site.nav-float .wrap.nav{
+  max-width: calc(var(--maxw) - 2 * var(--wrap-pad));
+  margin-inline: auto;
+  padding: 15px 14px 15px 32px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 95%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  box-shadow: var(--surface-shadow);
+  transition: padding-block .3s ease, background .3s ease, box-shadow .3s ease;
+}
+header.site.nav-float .wordmark img{
+  height: 38px;
+  transition: height .3s ease;
+}
+header.site.nav-float.is-scrolled .wrap.nav{
+  padding-block: 10px;
+  background: color-mix(in srgb, var(--bg) 99%, transparent);
+}
+header.site.nav-float.is-hidden{ transform: translateY(-140%); }
+@media (max-width: 860px){
+  header.site.nav-float .wrap.nav{ padding-inline: 10px 16px; }
+  header.site.nav-float .nav-links{
+    inset: 86px 14px auto 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    box-shadow: var(--surface-shadow);
+  }
 }
 
 /* ============ PAGE BANNER ============ */

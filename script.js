@@ -19,6 +19,37 @@
   els.forEach(function(el){ io.observe(el); });
 })();
 
+/* Nav flotante (home): se compacta apenas arrancás a scrollear, y se
+   esconde al bajar / reaparece al subir, para no competirle espacio
+   al contenido. Si la página no tiene .nav-float (el resto, por ahora),
+   no hace nada. */
+(function(){
+  var header = document.querySelector('header.site.nav-float');
+  if(!header) return;
+  var lastY = window.scrollY;
+  var raf = null;
+  function update(){
+    var y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 12);
+    var hiding = y > lastY && y > 120;
+    header.classList.toggle('is-hidden', hiding);
+    if(hiding){
+      var links = document.getElementById('navLinks');
+      var toggle = document.getElementById('navToggle');
+      if(links && links.classList.contains('open')){
+        links.classList.remove('open');
+        if(toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+    lastY = y;
+    raf = null;
+  }
+  window.addEventListener('scroll', function(){
+    if(raf) return;
+    raf = requestAnimationFrame(update);
+  }, { passive:true });
+})();
+
 (function(){
   var toggle = document.getElementById('navToggle');
   var links = document.getElementById('navLinks');
