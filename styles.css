@@ -181,7 +181,22 @@ header.site.nav-float.is-scrolled .wrap.nav{
   background: color-mix(in srgb, var(--bg) 99%, transparent);
 }
 header.site.nav-float.is-hidden{ transform: translateY(-140%); }
+/* En páginas internas, después del header viene .banner directo (no un
+   hero oscuro de fondo completo como en Inicio) — como el header pasa a
+   fixed, hay que correr el título para que la píldora no lo tape. */
+header.site.nav-float + main .banner{
+  padding-top: clamp(118px, 15vw, 132px);
+}
+/* Talleres usa el hero oscuro (no .banner), con el texto anclado abajo
+   del todo — para correrlo hay que agrandar el bloque, no agregarle
+   padding-top (el contenido está en position:absolute desde abajo). */
+header.site.nav-float + main .hero-full--page{
+  min-height: clamp(300px, 34vw, 360px);
+}
 @media (max-width: 860px){
+  header.site.nav-float + main .banner{ padding-top: clamp(108px, 24vw, 126px); }
+  header.site.nav-float + main .hero-full--page{ min-height: clamp(380px, 90vw, 440px); }
+  header.site.nav-float + main .hero-full--page .hero-full-content{ padding-bottom: 46px; }
   header.site.nav-float .wrap.nav{ padding-inline: 10px 16px; }
   header.site.nav-float .nav-links{
     inset: 86px 14px auto 14px;
@@ -214,7 +229,7 @@ header.site.nav-float.is-hidden{ transform: translateY(-140%); }
 .hero-full{
   position: relative;
   overflow: hidden;
-  min-height: clamp(440px, 56vw, 640px);
+  min-height: clamp(520px, 66vw, 760px);
   background: var(--sage-deep);
   /* el contenido va con position:absolute (no flex) para que su columna
      .wrap se centre exactamente igual que el nav y el resto de secciones */
@@ -226,9 +241,15 @@ header.site.nav-float.is-hidden{ transform: translateY(-140%); }
     radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--sage) 55%, var(--sage-deep)) 0%, var(--sage-deep) 62%);
 }
 .hero-full-media svg{ width:72px; height:72px; stroke: color-mix(in srgb, var(--bg) 55%, transparent); opacity:.6; }
+.hero-full-media img{
+  width:100%; height:100%;
+  object-fit: cover;
+  display:block;
+  filter: brightness(0.86) saturate(1.08) sepia(0.14);
+}
 .hero-full-overlay{
   position:absolute; inset:0;
-  background: linear-gradient(180deg, rgba(23,25,15,0) 30%, rgba(17,19,12,0.82) 100%);
+  background: linear-gradient(180deg, rgba(32,20,10,0.38) 0%, rgba(26,17,9,0.5) 40%, rgba(18,12,6,0.88) 100%);
 }
 .hero-full-content{
   position:absolute; left:0; right:0; bottom:0; z-index:2;
