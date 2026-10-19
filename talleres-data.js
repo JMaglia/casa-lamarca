@@ -34,12 +34,19 @@
 
    - "id" tiene que ser único y sin espacios (ej: ceramica-18oct) — es
      lo que arma el link a la página de detalle de cada taller.
-   - "categoria": si es Cerámica, Velas, Terrarios o Arte (tal cual,
-     con tilde) sale con su ícono propio. Cualquier otro texto (ej.
-     "Joyería") funciona igual, solo que con un ícono genérico — para
-     agregar un taller de una categoría nueva no hace falta tocar
-     código. Si más adelante quieren un ícono propio para esa
-     categoría nueva, es un cambio chico de nuestro lado.
+   - "categoria": tiene que ser EXACTAMENTE el nombre de alguno de los
+     talleres que ya están armados en la página de Talleres (tal cual
+     están escritos ahí, con mayúsculas y tildes): "Cerámica",
+     "Terrarios", "Velas rústicas", "Arte y vino", "Estampado 3D",
+     "Tote bags Painting", "Cuadros con Flores Prensadas", "Carteras
+     Sin Costura", "Charms Party" — así el evento con fecha sale con
+     la misma foto y el mismo ícono que esa card en "Los talleres que
+     hacemos". "Arte en Piezas de Cerámica" y "Arte y Jardinería"
+     tienen ícono propio pero todavía no tienen foto (sale con el
+     ícono hasta que saquemos una). Cualquier otro texto (ej.
+     "Joyería", una categoría nueva) funciona igual, solo que sin foto
+     ni ícono propios — no hace falta tocar código para sumar un
+     taller de un tipo nuevo.
    - "estado": vacío o "activo" = normal. "agotado" = se sigue
      mostrando pero con cartel de sin cupo. "cancelado" = se saca de
      la web (la fila queda como registro, no hace falta borrarla). No
@@ -61,6 +68,7 @@ var TALLERES_ICONS = {
   "Velas": '<path d="M12 2c1.2 2 1.8 3.4 1.8 4.6A1.8 1.8 0 0 1 12 8.4a1.8 1.8 0 0 1-1.8-1.8C10.2 5.4 10.8 4 12 2Z"/><path d="M9 21h6"/><path d="M8 21c-.5-4 .5-9.5 4-11.5 3.5 2 4.5 7.5 4 11.5"/>',
   "Terrarios": '<path d="M12 3v6"/><path d="M8 9h8l1.5 5a5.5 5.5 0 0 1-11 0L8 9Z"/><path d="M4 21h16"/>',
   "Arte": '<path d="M4 20c4-1 6-3 7-7l8-8-3-3-8 8c-4 1-6 3-7 7Z"/><path d="M14 6l3 3"/>',
+  "Velas rústicas": '<path d="M12 2c1.2 2 1.8 3.4 1.8 4.6A1.8 1.8 0 0 1 12 8.4a1.8 1.8 0 0 1-1.8-1.8C10.2 5.4 10.8 4 12 2Z"/><path d="M9 21h6"/><path d="M8 21c-.5-4 .5-9.5 4-11.5 3.5 2 4.5 7.5 4 11.5"/>',
   "Arte y vino": '<path d="M8 3h8l-1 6a3 3 0 0 1-6 0L8 3Z"/><path d="M12 12v6"/><path d="M9 21h6"/>',
   "Estampado 3D": '<rect x="5" y="13" width="14" height="7" rx="1"/><path d="M8 13V9a4 4 0 0 1 8 0v4"/>',
   "Tote bags Painting": '<path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
@@ -77,7 +85,8 @@ var TALLERES_ICONS = {
 /* Contenido de taller.html cuando se entra con ?tipo=Cerámica (info
    general del taller, sin fecha) en vez de ?id=... (una fecha puntual
    del Sheet). Cada clave es exactamente el texto que va en la URL
-   (?tipo=...) y en el link de la card que lleva ahí. Por taller:
+   (?tipo=...) y en el link "Ver taller" de la card del mazo que lleva
+   ahí. Por taller:
    - titulo: opcional. Vacío ("") = se usa la clave tal cual (ej.
      "Cerámica"). Si querés un nombre propio para la página que sea
      distinto de la clave (como pasa con "Velas" → "Velas rústicas"),
@@ -198,12 +207,37 @@ var TALLERES_TIPOS = {
 };
 
 /* Fotos fijas según el campo "comida" — mismo mecanismo que los
-   íconos: un valor chico y controlado, no una foto por fila. Hoy son
-   placeholders como el resto del sitio; el día que haya fotos reales
-   se reemplaza acá, no en el Sheet. */
+   íconos: un valor chico y controlado, no una foto por fila. */
 var TALLERES_COMIDA = {
-  "merienda": "Foto: la merienda del taller",
-  "picada": "Foto: la picada del taller"
+  "merienda": "La merienda del taller",
+  "picada": "La picada del taller"
+};
+var TALLERES_COMIDA_FOTOS = {
+  "merienda": "img/comida-merienda.jpg",
+  "picada": "img/comida-picada.jpg"
+};
+
+/* Foto fija según "categoria" (modo ?id=, Sheet) o "tipo" (modo
+   ?tipo=, sin fecha) — mismo mecanismo en los dos casos. Es la misma
+   foto que usa esa card en "Los talleres que hacemos" (talleres.html).
+   Las claves tienen que ser EXACTAMENTE el nombre del taller tal cual
+   está escrito ahí. "Arte en Piezas de Cerámica" y "Arte y Jardinería"
+   todavía no tienen foto — cuando saquemos una, se agrega acá y ya
+   está (se van a mostrar solas, en Talleres y acá). */
+var TALLERES_FOTOS = {
+  "Cerámica": "img/mazo-ceramica.jpg",
+  "Terrarios": "img/mazo-terrarios.jpg",
+  "Velas rústicas": "img/mazo-velas.jpg",
+  "Arte y vino": "img/mazo-arte.jpg",
+  "Estampado 3D": "img/mazo-estampado3d.jpg",
+  "Tote bags Painting": "img/mazo-totebags.jpg",
+  "Cuadros con Flores Prensadas": "img/mazo-cuadrosflores.jpg",
+  "Carteras Sin Costura": "img/mazo-carteras.jpg",
+  "Charms Party": "img/mazo-charms.jpg",
+  /* alias viejos (por si quedó algún evento cargado con la categoría
+     genérica de antes, "Velas" o "Arte" en vez del nombre completo) */
+  "Velas": "img/mazo-velas.jpg",
+  "Arte": "img/mazo-arte.jpg"
 };
 
 var MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
@@ -330,6 +364,15 @@ function talleresIconoSVG(categoria){
 function talleresComidaCaption(comida){
   var key = (comida || "").trim().toLowerCase();
   return TALLERES_COMIDA[key] || null;
+}
+
+function talleresComidaFoto(comida){
+  var key = (comida || "").trim().toLowerCase();
+  return TALLERES_COMIDA_FOTOS[key] || null;
+}
+
+function talleresFoto(categoria){
+  return TALLERES_FOTOS[categoria] || null;
 }
 
 function talleresEsc(str){

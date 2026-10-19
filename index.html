@@ -35,20 +35,29 @@
 
 <main>
 
-  <section class="hero-full">
-    <div class="hero-full-media">
-      <img src="img/fachada_lamarca1.jpeg" alt="Fachada y entrada de Casa Lamarca en Villa Devoto">
+  <section class="hero-wave">
+    <div class="hero-wave-media">
+      <img src="img/hero-home.jpg" alt="Manos trabajando cerámica en un taller de Casa Lamarca">
     </div>
-    <div class="hero-full-overlay"></div>
-    <div class="hero-full-content wrap">
+    <div class="hero-wave-overlay"></div>
+
+    <div class="hero-wave-content">
+      <span class="accent"></span>
       <p class="eyebrow">Villa Devoto, CABA</p>
-      <h1>Un lugar para vivir experiencias, celebrar y hacer planes diferentes.</h1>
+      <h1>
+        <span>Un lugar para</span>
+        <span class="rotate-line" id="heroRotate"></span>
+      </h1>
       <p class="lede">Talleres, cumpleaños, encuentros y objetos hechos a mano — en un espacio pensado para que te sientas como en tu casa.</p>
       <div class="btns">
         <a class="btn btn-primary" href="talleres.html">Conocé los talleres</a>
-        <a class="btn btn-ghost" style="border-color:#fff; color:#fff;" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+        <a class="btn btn-ghost" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
       </div>
     </div>
+
+    <svg class="hero-wave-edge" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,46 C 220,10 380,86 620,56 C 860,26 1040,78 1440,38 L1440,100 L0,100 Z"></path>
+    </svg>
   </section>
 
   <section>
@@ -59,9 +68,8 @@
       </div>
       <div class="grid grid-3">
         <a class="product reveal" style="--i:0; text-decoration:none; color:inherit;" href="talleres.html">
-          <figure class="ph ph--16-9">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M5 4h9v9a4.5 4.5 0 0 1-9 0V4Z"/><path d="M14 8h2a3 3 0 0 1 0 6h-2"/></svg>
-            <figcaption><span>Foto: un taller en marcha</span></figcaption>
+          <figure class="ph ph--16-9 ph--photo">
+            <img src="img/tres-experiencia.jpg" alt="Taller en marcha en Casa Lamarca">
           </figure>
           <div class="product-body">
             <h3>Experiencias</h3>
@@ -69,9 +77,8 @@
           </div>
         </a>
         <a class="product reveal" style="--i:1; text-decoration:none; color:inherit;" href="cumpleanos.html">
-          <figure class="ph ph--16-9">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M4 20h16v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6Z"/><path d="M4 15c1.2 0 1.2-1 2.4-1s1.2 1 2.4 1 1.2-1 2.4-1 1.2 1 2.4 1 1.2-1 2.4-1 1.2 1 2.4 1"/><path d="M12 8V5"/><path d="M12 5c-.8 0-1.4-.6-1.4-1.4S12 2 12 2s1.4.8 1.4 1.6S12.8 5 12 5Z"/></svg>
-            <figcaption><span>Foto: mesa de cumple temático</span></figcaption>
+          <figure class="ph ph--16-9 ph--photo">
+            <img src="img/tres-festejos.jpg" alt="Mesa de cumpleaños temático en Casa Lamarca">
           </figure>
           <div class="product-body">
             <h3>Festejos originales</h3>
@@ -79,9 +86,8 @@
           </div>
         </a>
         <a class="product reveal" style="--i:2; text-decoration:none; color:inherit;" href="espacio.html">
-          <figure class="ph ph--16-9">
-            <svg class="icon" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="1"/><circle cx="14.5" cy="12" r="1"/></svg>
-            <figcaption><span>Foto: el espacio armado para reunirse</span></figcaption>
+          <figure class="ph ph--16-9 ph--photo">
+            <img src="img/tres-espacio.jpg" alt="El espacio de Casa Lamarca listo para alquilar">
           </figure>
           <div class="product-body">
             <h3>Alquilá el espacio</h3>
@@ -91,7 +97,10 @@
       </div>
 
       <div class="food-band reveal" style="margin-top:64px;">
-        <div class="food-band-media"></div>
+        <div class="food-band-media">
+          <div class="food-band-half"><img src="img/comida-merienda.jpg" alt="Merienda dulce y salada de un taller en Casa Lamarca"></div>
+          <div class="food-band-half"><img src="img/comida-picada.jpg" alt="Picada con focaccia casera de Casa Lamarca"></div>
+        </div>
         <div class="food-band-overlay"></div>
         <div class="food-band-content">
           <div class="food-band-icon">
@@ -101,7 +110,6 @@
           <h2>Los detalles también hacen la experiencia.</h2>
           <p>Picadas con nuestra focaccia casera, meriendas dulces y saladas — todo preparado por nosotras con mucho amor, con opciones para distintas necesidades alimentarias.</p>
         </div>
-        <span class="food-band-caption">Foto: la merienda de un taller</span>
       </div>
 
       <div class="reveal" style="margin-top:36px; border:1.5px solid var(--coral); border-radius:var(--radius); padding:26px 32px; display:flex; align-items:center; gap:18px; justify-content:space-between; flex-wrap:wrap;">

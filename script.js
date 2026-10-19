@@ -66,6 +66,38 @@
   });
 })();
 
+/* Palabra rotativa del título del hero de Inicio ("Un lugar para…").
+   Si la página no tiene el elemento (el resto de las páginas), no
+   hace nada. */
+(function(){
+  var line = document.getElementById('heroRotate');
+  if(!line) return;
+  var words = ['vivir experiencias', 'celebrar', 'hacer planes diferentes', 'lo que quieras'];
+  var i = 0;
+  function spawn(text){
+    var el = document.createElement('span');
+    el.className = 'rotate-word';
+    el.textContent = text;
+    line.appendChild(el);
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ el.classList.add('is-active'); });
+    });
+    return el;
+  }
+  var current = spawn(words[0]);
+  function next(){
+    var nextWord = words[(i + 1) % words.length];
+    var incoming = spawn(nextWord);
+    current.classList.remove('is-active');
+    current.classList.add('is-leaving');
+    var toRemove = current;
+    setTimeout(function(){ toRemove.remove(); }, 480);
+    current = incoming;
+    i = (i + 1) % words.length;
+  }
+  setInterval(next, 2200);
+})();
+
 /* Formulario de cumpleaños: arma un mensaje prolijo y lo manda por
    WhatsApp — no hay backend, es el mismo enfoque que el resto del sitio. */
 (function(){

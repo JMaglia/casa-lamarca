@@ -5,20 +5,13 @@
 <title>Taller — Casa Lamarca</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Detalle de un taller en Casa Lamarca, Villa Devoto.">
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMzRjRBMkYiLz48dGV4dCB4PSIzMiIgeT0iNDUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIzNCIgZmlsbD0iI0VFRjJFNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TDwvdGV4dD48L3N2Zz4=">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Taller — Casa Lamarca">
-<meta property="og:description" content="Detalle de un taller en Casa Lamarca, Villa Devoto.">
-<meta property="og:image" content="assets/logo.png">
-<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://sheets.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
+
 <header class="site nav-float">
   <div class="wrap nav">
     <a href="index.html" class="wordmark"><img src="assets/logo.png" alt="Casa Lamarca" width="230" height="89"></a>
@@ -64,13 +57,15 @@
         </div>
       </div>
       <div>
-        <figure class="ph ph--16-9">
+        <figure class="ph ph--16-9" id="tallerFotoWrap">
           <svg class="icon" id="tallerIcono" viewBox="0 0 24 24"></svg>
           <figcaption><span>Foto: el taller en el espacio</span></figcaption>
+          <img id="tallerFotoImg" style="display:none" alt="">
         </figure>
         <figure class="ph ph--16-9" id="tallerComidaFoto" style="display:none; margin-top:16px;">
           <svg class="icon" viewBox="0 0 24 24"><path d="M4 3v18"/><path d="M4 3c0 3 3 3 3 6s-3 3-3 6"/><path d="M18 3v7a2 2 0 0 1-4 0V3"/><path d="M16 3v18"/></svg>
           <figcaption><span id="tallerComidaCaption"></span></figcaption>
+          <img id="tallerComidaImg" style="display:none" alt="">
         </figure>
       </div>
     </div>
@@ -108,15 +103,15 @@
           </form>
         </div>
         <div class="form-split-photo">
-          <div class="form-photo">
+          <div class="form-photo" id="tallerEventoFotoWrap">
             <svg id="tallerEventoIcono" viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></svg>
-            <div class="form-photo-caption">Foto: un evento privado en Casa Lamarca</div>
+            <div class="form-photo-caption" id="tallerEventoFotoCaption">Foto: un evento privado en Casa Lamarca</div>
+            <img id="tallerEventoFotoImg" style="display:none" alt="">
           </div>
         </div>
       </div>
     </div>
   </section>
-
 
 </main>
 
@@ -173,6 +168,21 @@
       .join('');
   }
 
+  /* Pone la foto fija (si hay una para esa categoría/tipo) en el
+     <figure> principal, tapando el ícono genérico. */
+  function mostrarFoto(categoria){
+    var foto = talleresFoto(categoria);
+    if(!foto) return;
+    var fotoWrap = document.getElementById('tallerFotoWrap');
+    var fotoImg = document.getElementById('tallerFotoImg');
+    fotoImg.src = foto;
+    fotoImg.alt = 'Foto del taller de ' + categoria + ' en Casa Lamarca';
+    fotoImg.style.display = '';
+    fotoWrap.classList.add('ph--photo');
+    document.getElementById('tallerIcono').style.display = 'none';
+    fotoWrap.querySelector('figcaption').style.display = 'none';
+  }
+
   function noEncontrado(texto){
     estadoWrap.querySelector('.wrap').innerHTML =
       '<p class="eyebrow">Talleres</p><h1>' + texto + '</h1>' +
@@ -201,11 +211,23 @@
       document.getElementById('tallerPrecio').textContent = t.precio || '';
       document.getElementById('tallerPromo').textContent = t.promo || '';
       document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[t.categoria] || TALLERES_ICONS['_default'];
+      mostrarFoto(t.categoria);
 
       var comidaCaption = talleresComidaCaption(t.comida);
       if(comidaCaption){
         document.getElementById('tallerComidaCaption').textContent = comidaCaption;
         document.getElementById('tallerComidaFoto').style.display = '';
+        var comidaFotoSrc = talleresComidaFoto(t.comida);
+        if(comidaFotoSrc){
+          var comidaWrap = document.getElementById('tallerComidaFoto');
+          var comidaImg = document.getElementById('tallerComidaImg');
+          comidaImg.src = comidaFotoSrc;
+          comidaImg.alt = comidaCaption + ' en Casa Lamarca';
+          comidaImg.style.display = '';
+          comidaWrap.classList.add('ph--photo');
+          comidaWrap.querySelector('svg').style.display = 'none';
+          comidaWrap.querySelector('figcaption').style.display = 'none';
+        }
       }
 
       var waBoton = document.getElementById('tallerWa');
@@ -240,6 +262,7 @@
     document.getElementById('tallerTitulo').textContent = tituloMostrado;
     pintarDescripcion(document.getElementById('tallerDescripcion'), info.descripcion || '');
     document.getElementById('tallerIcono').innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+    mostrarFoto(tipo);
 
     document.getElementById('tallerFechaHora').style.display = 'none';
     document.getElementById('tallerPromo').style.display = 'none';
@@ -255,8 +278,20 @@
 
     var tipoSpan = document.getElementById('tallerEventoTipo');
     if(tipoSpan) tipoSpan.textContent = tituloMostrado;
-    var iconoEvento = document.getElementById('tallerEventoIcono');
-    if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+
+    var fotoEvento = talleresFoto(tipo);
+    if(fotoEvento){
+      var eventoFotoWrap = document.getElementById('tallerEventoFotoWrap');
+      var eventoFotoImg = document.getElementById('tallerEventoFotoImg');
+      eventoFotoImg.src = fotoEvento;
+      eventoFotoImg.alt = 'Evento privado de ' + tituloMostrado + ' en Casa Lamarca';
+      eventoFotoImg.style.display = '';
+      document.getElementById('tallerEventoIcono').style.display = 'none';
+      document.getElementById('tallerEventoFotoCaption').style.display = 'none';
+    } else {
+      var iconoEvento = document.getElementById('tallerEventoIcono');
+      if(iconoEvento) iconoEvento.innerHTML = TALLERES_ICONS[tipo] || TALLERES_ICONS['_default'];
+    }
     if(eventoPrivado) eventoPrivado.style.display = '';
 
     estadoWrap.style.display = 'none';
