@@ -730,23 +730,31 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   .voces-card:nth-child(3):hover, .voces-card:nth-child(4):hover{ transform:none; }
 }
 
-/* ============ LOS TALLERES QUE HACEMOS — carrusel vertical con scroll (Lamarca) ============
-   Las cards de cada taller se deslizan verticalmente a medida que scrolleás
-   adentro del panel: la actual queda centrada y grande, y se ve un poco de
-   la anterior (arriba) y la siguiente (abajo), recortadas con un degradé
-   suave en los bordes del visor. Nada de panel lateral ni círculo. */
-.mazo-scroll{
-  margin-top:28px; height:min(600px, 80vh); overflow-y:auto; overflow-x:hidden;
-  border-radius:24px;
-  background: var(--surface); position:relative;
-  scrollbar-width: none; -ms-overflow-style: none;
-}
-.mazo-scroll::-webkit-scrollbar{ width:0; height:0; display:none; }
+/* ============ LOS TALLERES QUE HACEMOS — carrusel vertical con scroll ============
+   Las cards de cada taller se deslizan verticalmente a medida que
+   scrolleás la PÁGINA (no un cuadro con scroll propio): .mazo-sticky
+   queda pegado arriba con position:sticky mientras .mazo-track —mucho
+   más alto que la pantalla— pasa por abajo. El progreso lo calcula el
+   JS con la posición real del track en la ventana, así que no importa
+   dónde esté el cursor, solo cuánto bajaste la página (ver
+   talleres.html). La actual queda centrada y grande, se ve un poco de
+   la anterior (arriba) y la siguiente (abajo), recortadas con un
+   degradé suave en los bordes del visor. Toda la card es un link. */
+.mazo-scroll{ margin-top:28px; position:relative; }
 .mazo-track{ height:4200px; position:relative; }
 .mazo-sticky{
-  position:sticky; top:0; height:min(600px, 80vh); overflow:hidden;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:sticky; top: clamp(88px, 13vw, 112px);
+  height:min(560px, 74vh); overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  border-radius:24px; background: var(--surface);
 }
+/* el título vive ADENTRO del panel pegado: así queda fijo en pantalla
+   junto con las cards mientras scrolleás esa sección, en vez de irse
+   para arriba y salir de cuadro (que es lo que pasaba cuando el título
+   estaba afuera, en flujo normal, arriba de .mazo-scroll). */
+.mazo-head{ position:relative; z-index:2; margin:0; }
+.mazo-head p{ margin:0; }
+.mazo-head h2{ margin-top:6px; }
 /* grano sutil superpuesto a todo el panel, para que el blanco plano no
    quede "de placeholder" — casi imperceptible, es textura, no un patrón. */
 .mazo-sticky::before{
@@ -764,7 +772,7 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 }
 
 .mazo-hint{
-  position:absolute; top:22px; left:50%; transform:translateX(-50%); z-index:5;
+  position:relative; z-index:2;
   margin:0; font-size:0.78rem; font-style:italic; color: var(--muted);
   transition: opacity .3s ease;
 }
@@ -777,15 +785,19 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
 }
 .mazo-list{ position:absolute; inset:0; margin:0; padding:0; list-style:none; }
-.mazo-card{
+/* el <li> no participa del layout — todo el tamaño/posición/animación
+   vive en el <a> de adentro, que es la card entera siendo un link. */
+.mazo-card{ display:contents; }
+.mazo-card-link{
   position:absolute; left:0; right:0; top:50%; height:min(280px, 42vh);
-  display:flex; flex-direction:row;
+  display:flex; flex-direction:row; text-decoration:none; color:inherit;
   border-radius:22px; border:1px solid var(--line); background: var(--surface);
   box-shadow: 0 26px 42px -28px rgba(35,38,31,0.34), 0 2px 6px rgba(35,38,31,0.05);
   overflow:hidden; will-change: transform, opacity, filter;
 }
 .mazo-media{
   position:relative; flex:0 0 50%; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
   background: linear-gradient(135deg, var(--sage-deep) 0%, var(--sage) 55%, var(--ochre) 130%);
 }
 .mazo-media img{
@@ -795,23 +807,19 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   content:''; position:absolute; inset:0; opacity:.26; mix-blend-mode:overlay; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
-/* numeral fantasma + tag flotante — el mismo lenguaje visual del bloque
-   "Cómo trabajamos" (.how-ghost-num/.how-tag), reutilizado acá en vez de
-   un ícono grande centrado, que quedaba muy "placeholder". */
+/* los 2 talleres sin foto todavía: degradé de marca propio + el ícono
+   de categoría centrado y grande, en vez de una foto. */
+.mazo-card--sinfoto .mazo-media > svg{ width:60px; height:60px; stroke:#fff; opacity:.9; position:relative; z-index:1; }
+.mazo-card--sinfoto-a .mazo-media{ background: linear-gradient(135deg, var(--sage-deep) 0%, var(--sage) 55%, var(--ochre) 130%); }
+.mazo-card--sinfoto-b .mazo-media{ background: linear-gradient(135deg, var(--coral-deep) 0%, var(--sage) 55%, var(--sage-deep) 130%); }
+/* numeral fantasma — el mismo lenguaje visual del bloque "Cómo
+   trabajamos" (.how-ghost-num), reutilizado acá. */
 .mazo-ghost-num{
   position:absolute; z-index:1; bottom:-16px; left:14px; user-select:none;
   font-family:'Fraunces', Georgia, serif; font-weight:600; font-style:italic;
   font-size:clamp(2.8rem, 7vw, 5rem); line-height:1; letter-spacing:-0.03em;
   color: rgba(255,255,255,0.92); mix-blend-mode:overlay;
 }
-.mazo-tag{
-  position:absolute; z-index:2; top:14px; left:14px;
-  display:inline-flex; align-items:center; gap:6px;
-  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(4px);
-  padding:5px 12px; border-radius:999px;
-  font-size:0.68rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color: var(--ink);
-}
-.mazo-tag-icon{ width:14px; height:14px; stroke:var(--coral-deep); fill:none; flex:none; }
 .mazo-body{ flex:1; min-width:0; min-height:0; padding: clamp(16px,2.4vw,24px); display:flex; flex-direction:column; justify-content:center; }
 .mazo-body h3{ font-size:1.15rem; letter-spacing:-0.01em; }
 .mazo-body p{
@@ -820,10 +828,11 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 }
 .mazo-link{
   margin-top:10px; display:inline-flex; align-items:center; gap:6px; width:fit-content;
-  font-size:0.82rem; font-weight:700; color: var(--ink); text-decoration:none;
+  font-size:0.82rem; font-weight:700; color: var(--ink);
+  transition: color .2s ease, transform .2s ease;
 }
 .mazo-link svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-.mazo-link:hover{ color: var(--coral); }
+.mazo-card-link:hover .mazo-link, .mazo-card-link:focus-visible .mazo-link{ color: var(--coral); transform: translateX(3px); }
 
 /* contador y puntitos: se sacan de la vista (quedaban como una barra de UI
    abajo de las cards) pero se dejan en el DOM — el JS los sigue usando
@@ -831,13 +840,12 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 .mazo-footer{ display:none; }
 
 @media (max-width:620px){
-  .mazo-scroll{ height:min(560px, 78vh); }
-  .mazo-sticky{ height:min(560px, 78vh); }
+  .mazo-sticky{ height:min(560px, 78vh); gap:10px; }
+  .mazo-head h2{ font-size:1.5rem; }
   .mazo-viewport{ width:78vw; height:min(400px, 60vh); }
-  .mazo-card{ flex-direction:column; height:min(270px, 44vh); }
+  .mazo-card-link{ flex-direction:column; height:min(270px, 44vh); }
   .mazo-media{ flex:0 0 42%; }
   .mazo-ghost-num{ font-size:3.4rem; bottom:-10px; left:12px; }
-  .mazo-tag{ top:11px; left:11px; font-size:0.62rem; padding:4px 10px; }
   .mazo-body{ padding: clamp(13px,4vw,17px); }
   .mazo-body h3{ font-size:1.05rem; }
   .mazo-body p{ -webkit-line-clamp:2; }
