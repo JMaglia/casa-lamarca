@@ -30,7 +30,7 @@
 
    Columnas esperadas, en este orden:
    id, categoria, titulo, fecha (AAAA-MM-DD), hora, precio, estado,
-   promo, comida, descripcion_corta, descripcion_larga
+   promo, comida, descripcion_corta, descripcion_larga, publico
 
    - "id" tiene que ser único y sin espacios (ej: ceramica-18oct) — es
      lo que arma el link a la página de detalle de cada taller.
@@ -57,6 +57,11 @@
      "Picada" (tal cual) muestran la foto fija correspondiente. Un
      valor distinto no rompe nada, solo no muestra foto de comida.
    - "precio" es de texto libre (ej: "$15.000", "A consultar").
+   - "publico": para los filtros de la página de Talleres. "Adultos",
+     "Niños" (con ñ) o "Familias"; se pueden poner varios separados por
+     coma (ej: "Adultos, Familias"). Vacío = solo aparece en "Todos".
+     Las columnas se leen por nombre, así que puede ir en cualquier
+     lugar del Sheet, pero el encabezado tiene que ser "publico" exacto.
 =================================================================== */
 
 var TALLERES_SHEET_ID = "1gA5KJ6Z2eDL6G6H-yeGbFRD8veJ4upHbRTlGYXL8_kw";
@@ -276,6 +281,11 @@ var TALLERES_CACHE_KEY = "casaLamarcaTalleresCache";
 var TALLERES_CACHE_MS = 5 * 60 * 1000;
 
 function talleresCacheLeer(){
+  // En desarrollo (Live Server) no usamos caché: así un cambio en el
+  // Sheet se ve con solo recargar, sin esperar 5 minutos ni abrir otra
+  // pestaña. En el sitio publicado la caché funciona normal.
+  var host = location.hostname;
+  if(host === "localhost" || host === "127.0.0.1" || location.protocol === "file:") return null;
   try {
     var raw = sessionStorage.getItem(TALLERES_CACHE_KEY);
     if(!raw) return null;

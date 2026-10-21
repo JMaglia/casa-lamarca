@@ -66,6 +66,19 @@
   });
 })();
 
+/* Botón "Ver más talleres" en Cumpleaños: muestra/oculta los talleres
+   extra (.taller-extra) sacando/poniendo .is-collapsed en el grid. */
+(function(){
+  var toggle = document.getElementById('talleresCumpleToggle');
+  var grid = document.getElementById('talleresCumpleGrid');
+  if(!toggle || !grid) return;
+  toggle.addEventListener('click', function(){
+    var collapsed = grid.classList.toggle('is-collapsed');
+    toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    toggle.textContent = collapsed ? 'Ver más talleres' : 'Ver menos talleres';
+  });
+})();
+
 /* Palabra rotativa del título del hero de Inicio ("Un lugar para…").
    Si la página no tiene el elemento (el resto de las páginas), no
    hace nada. */

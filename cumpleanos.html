@@ -35,81 +35,255 @@
 
 <main>
 
-  <section class="banner">
-    <div class="wrap hero-grid">
-      <div>
+  <!-- HERO con collage de fotos reales. -->
+  <section class="cumple-hero">
+    <div class="wrap cumple-hero-grid">
+      <div class="cumple-hero-text">
         <p class="eyebrow">Cumpleaños</p>
         <h1>Festejos distintos a un salón de siempre</h1>
         <p class="lede">Todos los cumpleaños en Casa Lamarca vienen con taller incluido: elegís la temática y armamos la fiesta alrededor de eso. Cada festejo se arma a medida de quién lo cumple.</p>
-        <div class="btns"><a class="btn btn-primary" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Consultar fecha</a></div>
+        <div class="btns">
+          <a class="btn btn-primary" href="#reservar">Consultar fecha</a>
+          <a class="btn btn-ghost" href="#tematicas">Ver temáticas</a>
+        </div>
       </div>
-      <figure class="ph ph--16-9 ph--photo">
-        <img src="img/tres-festejos.jpg" alt="Festejo de cumpleaños con torta y velitas en Casa Lamarca">
-      </figure>
+      <div class="cumple-hero-media" aria-hidden="false">
+        <figure class="cumple-hero-main">
+          <img src="img/tres-festejos.jpg" alt="Grupo de amigas soplando las velitas de una torta en Casa Lamarca" width="1536" height="1024">
+        </figure>
+        <figure class="cumple-hero-side">
+          <img src="img/comida-merienda.jpg" alt="Mesa de merienda armada para un festejo" width="1086" height="1448" loading="lazy">
+        </figure>
+        <div class="cumple-hero-badge"><span>Taller incluido</span></div>
+      </div>
+    </div>
+    <a class="cumple-hero-scroll" href="#tematicas" aria-label="Ver las temáticas">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <section id="tematicas" class="cumple-tematicas">
+    <div class="wrap">
+      <div class="mazo-scroll" id="mazoScroll">
+        <div class="mazo-track">
+          <div class="mazo-sticky">
+            <div class="mazo-glow" id="mazoGlow" aria-hidden="true"></div>
+            <!-- Pétalos prensados de fondo: ilustración (img/petalos-fondo.webp,
+                 inspirada en la mesa del taller de flores prensadas). Decorativo:
+                 queda atrás de las cards. -->
+            <img class="mazo-petalos" src="img/petalos-fondo.webp" alt="" aria-hidden="true" width="2400" height="1120" decoding="async">
+            <div class="section-head mazo-head">
+              <p class="eyebrow">Cómo lo armamos</p>
+              <h2>Elegís la temática, el taller es parte del cumple</h2>
+              <p class="mazo-sub">No es un salón con animación aparte: el taller ES la actividad central de la fiesta, alrededor de la torta y los invitados.</p>
+            </div>
+            <p class="mazo-hint" id="mazoHint">Scrolleá para pasar los talleres ↓</p>
+
+            <div class="mazo-viewport" id="mazoViewport">
+              <ol class="mazo-list" id="mazoList">
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Cer%C3%A1mica&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-ceramica.jpg" alt="Taller de cerámica en Casa Lamarca">
+                      <span class="mazo-ghost-num">01</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Cerámica</h3>
+                      <p>Modelado desde cero o pintura sobre piezas — elegís la modalidad y te llevás algo hecho por vos.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Terrarios&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-terrarios.jpg" alt="Taller de terrarios en Casa Lamarca">
+                      <span class="mazo-ghost-num">02</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Terrarios</h3>
+                      <p>Armamos y diseñamos un terrario de suculentas, y aprendemos a cuidarlo.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Velas&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-velas.jpg" alt="Taller de velas rústicas en Casa Lamarca">
+                      <span class="mazo-ghost-num">03</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Velas rústicas</h3>
+                      <p>Combinamos cemento y cera de soja para crear una vela rústica, en dos etapas.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Arte%20y%20vino&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-arte.jpg" alt="Taller de arte y vino en Casa Lamarca">
+                      <span class="mazo-ghost-num">04</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Arte y vino</h3>
+                      <p>Pintás la pieza que elijas mientras compartimos vino y picada. Sin experiencia previa.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Estampado%203D&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-estampado3d.jpg" alt="Taller de estampado 3D en Casa Lamarca">
+                      <span class="mazo-ghost-num">05</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Estampado 3D</h3>
+                      <p>Estampamos almohadones o un camino de mesa con texturas en relieve, eligiendo el stencil.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Tote%20bags%20Painting&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-totebags.jpg" alt="Taller de tote bags painting en Casa Lamarca">
+                      <span class="mazo-ghost-num">06</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Tote bags Painting</h3>
+                      <p>Pintás y personalizás tu propia tote bag, con los colores y diseños que elijas.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Cuadros%20con%20Flores%20Prensadas&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-cuadrosflores.jpg" alt="Taller de cuadros con flores prensadas en Casa Lamarca">
+                      <span class="mazo-ghost-num">07</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Cuadros con Flores Prensadas</h3>
+                      <p>Armamos un cuadro con flores naturales prensadas — podés sumar una foto o frase.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Carteras%20Sin%20Costura&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-carteras.jpg" alt="Taller de carteras sin costura en Casa Lamarca">
+                      <span class="mazo-ghost-num">08</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Carteras Sin Costura</h3>
+                      <p>Armamos una cartera de fieltro con manijas de cuero, sin coser — elegís el tono.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card mazo-card--sinfoto mazo-card--sinfoto-a">
+                  <a class="mazo-card-link" href="taller.html?tipo=Arte%20en%20Piezas%20de%20Cer%C3%A1mica&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5h7v7a3.5 3.5 0 0 1-7 0V5Z"/><path d="M16 4l3 3-6 6-3-1 1-3 5-5Z"/></svg>
+                      <span class="mazo-ghost-num">09</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Arte en Piezas de Cerámica</h3>
+                      <p>Cada invitado elige una pieza de cerámica y la pinta a su manera — se la lleva de recuerdo.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card">
+                  <a class="mazo-card-link" href="taller.html?tipo=Charms%20Party&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <img src="img/mazo-charms.jpg" alt="Taller de charms party en Casa Lamarca">
+                      <span class="mazo-ghost-num">10</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Charms Party</h3>
+                      <p>Armás tu collar o pulsera combinando 6 charms a tu gusto. Infinitas combinaciones.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+                <li class="mazo-card mazo-card--sinfoto mazo-card--sinfoto-b">
+                  <a class="mazo-card-link" href="taller.html?tipo=Arte%20y%20Jardiner%C3%ADa&amp;origen=cumple">
+                    <div class="mazo-media">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10l-1-9H8l-1 9Z"/><path d="M12 12V7"/><path d="M12 7c-1.5 0-2.5-1-2.5-2.5S12 2 12 2s2.5 1 2.5 2.5S13.5 7 12 7Z"/></svg>
+                      <span class="mazo-ghost-num">11</span>
+                    </div>
+                    <div class="mazo-body">
+                      <h3>Arte y Jardinería</h3>
+                      <p>Pintamos una maceta y plantamos una aromática — pensado para cumpleaños infantiles.</p>
+                      <span class="mazo-link">Ver taller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                    </div>
+                  </a>
+                </li>
+              </ol>
+            </div>
+
+            <div class="mazo-footer">
+              <span class="mazo-count" id="mazoCount">Taller 1 de 11</span>
+              <div class="mazo-dots" id="mazoDots" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <section class="band">
+  <section id="reservar">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Cómo lo armamos</p>
-        <h2>Elegís la temática, el taller es parte del cumple</h2>
-        <p>No es un salón con animación aparte: el taller ES la actividad central de la fiesta, alrededor de la torta y los invitados.</p>
+      <div class="form-split">
+        <div class="form-split-form">
+          <div class="section-head" style="margin-bottom:0;">
+            <p class="eyebrow">Reservá tu fecha</p>
+            <h2>Contanos de quién es el cumple</h2>
+            <p>Completá esto y seguimos la charla por WhatsApp con opciones de temática y disponibilidad.</p>
+          </div>
+          <form class="mini-form" id="cumpleForm">
+            <div class="field-stack">
+              <label class="field">
+                <span>Cumpleaños de</span>
+                <select name="tipo" required>
+                  <option value="" disabled selected>Elegí una opción</option>
+                  <option value="Adultos">Adultos</option>
+                  <option value="Niños">Niños</option>
+                </select>
+                <span class="caret"></span>
+              </label>
+              <label>
+                <span>¿Cuántas personas, aprox.?</span>
+                <input type="text" name="cantidad" placeholder="Ej: 15 invitados">
+              </label>
+              <label>
+                <span>Fecha o fechas posibles del evento</span>
+                <input type="text" name="fecha" placeholder="Ej: algún sábado de octubre">
+              </label>
+              <label>
+                <span>Fechas posibles para la visita</span>
+                <input type="text" name="fechaVisita" placeholder="Ej: cualquier tarde de esta semana">
+              </label>
+              <label class="span-2">
+                <span>¿Algo más para contarnos?</span>
+                <textarea name="comentarios" rows="3" placeholder="Ideas, restricciones alimentarias, lo que se te ocurra..."></textarea>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
+          </form>
+        </div>
+        <div class="form-split-photo">
+          <div class="form-photo">
+            <img src="img/tres-espacio.jpg" alt="El salón de Casa Lamarca, con mesas de madera y luz natural" loading="lazy">
+          </div>
+        </div>
       </div>
-      <div class="grid grid-4">
-        <div class="card">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h9v9a4.5 4.5 0 0 1-9 0V4Z"/><path d="M14 8h2a3 3 0 0 1 0 6h-2"/></svg></div>
-          <h3>Cerámica</h3>
-          <p>Modelado y pintura de piezas simples — cada invitado se lleva la suya.</p>
-        </div>
-        <div class="card">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2c1.2 2 1.8 3.4 1.8 4.6A1.8 1.8 0 0 1 12 8.4a1.8 1.8 0 0 1-1.8-1.8C10.2 5.4 10.8 4 12 2Z"/><path d="M9 21h6"/><path d="M8 21c-.5-4 .5-9.5 4-11.5 3.5 2 4.5 7.5 4 11.5"/></svg></div>
-          <h3>Velas</h3>
-          <p>Cada chico arma la suya, con moldes y colores a elección.</p>
-        </div>
-        <div class="card">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v6"/><path d="M8 9h8l1.5 5a5.5 5.5 0 0 1-11 0L8 9Z"/><path d="M4 21h16"/></svg></div>
-          <h3>Terrarios</h3>
-          <p>Un mini ecosistema en vidrio, armado a capas, para llevar a casa.</p>
-        </div>
-        <div class="card">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20c4-1 6-3 7-7l8-8-3-3-8 8c-4 1-6 3-7 7Z"/><path d="M14 6l3 3"/></svg></div>
-          <h3>Arte</h3>
-          <p>Pintura libre en lienzos chicos, sin reglas ni corrección.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Reservá tu fecha</p>
-        <h2>Contanos de quién es el cumple</h2>
-        <p>Completá esto y seguimos la charla por WhatsApp con opciones de temática y disponibilidad.</p>
-      </div>
-      <form class="mini-form" id="cumpleForm">
-        <div class="field-grid">
-          <label>
-            <span>¿Cuántos años cumple?</span>
-            <input type="text" name="edad" placeholder="Ej: 7 años" required>
-          </label>
-          <label>
-            <span>¿Cuántos invitados, aprox.?</span>
-            <input type="text" name="cantidad" placeholder="Ej: 15 chicos" required>
-          </label>
-          <label>
-            <span>Edades de los invitados</span>
-            <input type="text" name="edadesInvitados" placeholder="Ej: entre 6 y 9 años">
-          </label>
-          <label>
-            <span>Fecha o fechas posibles</span>
-            <input type="text" name="fecha" placeholder="Ej: algún sábado de octubre">
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
-        <p class="notice">Preguntas de prueba — seguramente cambien según la edad del cumpleañero (no es lo mismo un cumple de 5 años que uno de adultos). Falta terminar de definirlas con Sofi.</p>
-      </form>
     </div>
   </section>
 
@@ -148,5 +322,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="mazo.js"></script>
 </body>
 </html>

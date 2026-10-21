@@ -208,6 +208,204 @@ header.site.nav-float + main .hero-full--page{
   }
 }
 
+/* ============ TALLERES — la agenda como encabezado ============
+   Sin foto ni overlay (eso queda para la home): fondo salvia muy suave,
+   H1 = "Próximos talleres" y las cards arrancan en la primera pantalla. */
+.agenda{ background: var(--surface-2); }
+header.site.nav-float + main .agenda{ padding-top: clamp(118px, 15vw, 140px); }
+.agenda-head{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap: 24px 40px; flex-wrap: wrap;
+  margin-bottom: clamp(22px, 3vw, 32px);
+}
+.agenda-head h1{ font-size: clamp(2rem, 1.5rem + 2vw, 3rem); margin-top:8px; }
+.agenda-head .lede{ margin-top:10px; color: var(--ink-soft); font-size: 1.05rem; }
+@media (max-width: 860px){
+  header.site.nav-float + main .agenda{ padding-top: clamp(104px, 24vw, 120px); }
+}
+
+/* Filtros por público (chips), a la derecha del título en desktop.
+   En mobile bajan abajo del título y scrollean de costado en una sola
+   fila en vez de partirse en dos. */
+.agenda-filtros{
+  display:flex; gap:8px; flex-wrap: wrap;
+}
+.chip{
+  min-height: 44px; padding: 0 18px;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink);
+  font-size: .92rem; font-weight: 600; cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.chip:hover{ border-color: var(--sage); }
+.chip.is-active{ background: var(--sage-deep); border-color: var(--sage-deep); color: #fff; }
+.chip:focus-visible{ outline: 2px solid var(--coral); outline-offset: 2px; }
+@media (max-width: 620px){
+  .agenda-filtros{
+    flex: 0 0 calc(100% + var(--wrap-pad) * 2);
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin-inline: calc(var(--wrap-pad) * -1); padding-inline: var(--wrap-pad);
+  }
+  .agenda-filtros::-webkit-scrollbar{ display:none; }
+  .chip{ flex: none; }
+}
+
+/* Banda de marca entre "Próximos talleres" y el carrusel. Mientras pasan
+   las cards el JS de talleres.html le pone .is-pinned (fixed) para que
+   quede quieta arriba del panel. */
+.frase-band.is-pinned{ position: fixed; left: 0; right: 0; }
+.frase-band{
+  position: relative; z-index: 1;
+  background: var(--sage-deep); color: #fff;
+  text-align: center;
+  padding-block: clamp(56px, 8vw, 92px);
+}
+.frase-band .wrap{ display:flex; flex-direction:column; align-items:center; gap: 16px; }
+.frase-band-icon{ width:40px; height:40px; stroke: var(--ochre); }
+.frase-band-quote{
+  font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 500;
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.8rem); line-height: 1.15;
+  max-width: 22ch; text-wrap: balance;
+}
+.frase-band-text{ color: #E3E8D8; max-width: 56ch; font-size: 1.05rem; }
+
+/* ============ CUMPLEAÑOS — hero ============
+   Hero claro (sin overlay oscuro: eso es de la home) con collage de
+   fotos reales: la principal, una en forma de arco con borde blanco y
+   un sello circular. Entra con una animación suave. */
+.cumple-hero{
+  position:relative; overflow:hidden;
+  background: var(--surface-2);
+  padding-block: clamp(48px, 7vw, 80px) clamp(64px, 8vw, 96px);
+}
+header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px); }
+.cumple-hero-grid{
+  display:grid; grid-template-columns: 1.05fr .95fr;
+  gap: clamp(36px, 5vw, 72px); align-items:center;
+}
+.cumple-hero-text h1{
+  /* más chico y más liviano que el H1 de la home: el título grande y
+     protagonista queda reservado para Inicio. */
+  font-size: clamp(2.1rem, 1.5rem + 2vw, 3.1rem); font-weight: 500;
+  line-height: 1.08; margin-top: 12px;
+}
+.cumple-hero-text h1 em{
+  display:block; font-style: italic; font-weight: 500; color: var(--coral);
+}
+.cumple-hero-text .lede{
+  margin-top: 18px; max-width: 48ch; color: var(--ink-soft); font-size: 1.08rem;
+}
+.cumple-hero-text .btns{ margin-top: 26px; }
+
+/* bajada opcional del título del carrusel (Cumpleaños); en mobile se
+   oculta porque el panel sticky es bajo. */
+.mazo-head .mazo-sub{ margin-top:8px; color: var(--ink-soft); max-width: 52ch; margin-inline:auto; }
+@media (max-width: 620px){ .mazo-head .mazo-sub{ display:none; } }
+
+.cumple-hero-media{ position:relative; aspect-ratio: 5 / 4.4; }
+.cumple-hero-main, .cumple-hero-side{ position:absolute; margin:0; overflow:hidden; box-shadow: 0 24px 48px -28px rgba(35,38,31,.55); }
+.cumple-hero-main img, .cumple-hero-side img{ width:100%; height:100%; object-fit:cover; }
+.cumple-hero-main{
+  top:0; right:0; width:88%; aspect-ratio: 3 / 2.15;
+  border-radius: 24px; transform: rotate(1.5deg);
+}
+.cumple-hero-side{
+  left:0; bottom:0; width:38%; aspect-ratio: 3 / 4;
+  border-radius: 999px 999px 18px 18px; border: 6px solid #fff;
+  transform: rotate(-4deg);
+}
+.cumple-hero-side img{ object-position: 50% 60%; }
+.cumple-hero-badge{
+  position:absolute; right: 4%; bottom: 6%;
+  width: clamp(104px, 11vw, 136px); aspect-ratio:1; border-radius:50%;
+  display:grid; place-items:center; text-align:center; padding: 16px;
+  background: var(--coral); color:#fff;
+  font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:500;
+  font-size: clamp(.82rem, .7rem + .3vw, .95rem); line-height:1.2;
+  transform: rotate(9deg);
+  box-shadow: 0 16px 30px -18px rgba(168,69,31,.8);
+}
+.cumple-hero-scroll{
+  position:absolute; left:50%; bottom: 18px; transform: translateX(-50%);
+  width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center;
+  border:1px solid var(--line); background: var(--surface); color: var(--ink);
+  animation: cumple-bounce 2.4s ease-in-out infinite;
+}
+.cumple-hero-scroll svg{ width:18px; height:18px; stroke: currentColor; }
+.cumple-hero-scroll:hover{ color: var(--coral); border-color: var(--coral); }
+@keyframes cumple-bounce{ 0%,100%{ translate: 0 0; } 50%{ translate: 0 6px; } }
+
+/* entrada: texto y fotos aparecen escalonados */
+@keyframes cumple-in{ from{ opacity:0; translate: 0 18px; } to{ opacity:1; translate: 0 0; } }
+.cumple-hero-text > *{ animation: cumple-in .7s cubic-bezier(.22,.61,.36,1) both; }
+.cumple-hero-text > :nth-child(2){ animation-delay: .08s; }
+.cumple-hero-text > :nth-child(3){ animation-delay: .16s; }
+.cumple-hero-text > :nth-child(4){ animation-delay: .24s; }
+.cumple-hero-text > :nth-child(5){ animation-delay: .32s; }
+.cumple-hero-main{ animation: cumple-in .8s .15s cubic-bezier(.22,.61,.36,1) both; }
+.cumple-hero-side{ animation: cumple-in .8s .35s cubic-bezier(.22,.61,.36,1) both; }
+.cumple-hero-badge{ animation: cumple-in .8s .55s cubic-bezier(.22,.61,.36,1) both; }
+@media (prefers-reduced-motion: reduce){
+  .cumple-hero-text > *, .cumple-hero-main, .cumple-hero-side, .cumple-hero-badge, .cumple-hero-scroll{ animation:none; }
+}
+
+@media (max-width: 860px){
+  header.site.nav-float + main .cumple-hero{ padding-top: clamp(108px, 24vw, 124px); }
+  .cumple-hero-grid{ grid-template-columns: 1fr; }
+  .cumple-hero-media{ width:100%; max-width: 520px; margin-inline:auto; }
+  .cumple-hero-scroll{ display:none; }
+}
+
+
+/* ============ ALQUILÁ EL ESPACIO — ambientes ============
+   3 ambientes de planta baja en fila + el del primer piso abajo, ancho
+   y en verde oscuro, para que se lea como un espacio aparte. El hero
+   reusa las clases .cumple-hero-* de Cumpleaños. */
+.ambientes-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
+.ambiente{
+  display:flex; flex-direction:column; overflow:hidden;
+  background: var(--surface); border:1px solid var(--line); border-radius: 18px;
+}
+.ambiente-foto{ margin:0; aspect-ratio: 4 / 3; overflow:hidden; }
+.ambiente-foto img{ width:100%; height:100%; object-fit:cover; transition: transform .6s ease; }
+.ambiente:hover .ambiente-foto img{ transform: scale(1.04); }
+.ambiente-foto--ph{
+  display:grid; place-items:center;
+  background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--sage) 45%, var(--surface-2)) 0%, var(--surface-2) 70%);
+}
+.ambiente-foto--ph svg{ width:48px; height:48px; stroke: var(--sage); opacity:.7; }
+.ambiente-body{ padding: 20px 22px 24px; display:flex; flex-direction:column; gap: 8px; }
+.ambiente-piso{ font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color: var(--ochre); }
+.ambiente-body h3{ font-size: 1.25rem; }
+.ambiente-body p{ color: var(--ink-soft); }
+.ambiente-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 6px; }
+.ambiente-tags li{ padding: 6px 12px; border-radius:999px; font-size:.84rem; font-weight:600; }
+
+.ambiente--privado{
+  grid-column: 1 / -1; flex-direction: row;
+  background: var(--sage-deep); border-color: var(--sage-deep); color:#fff;
+}
+.ambiente--privado .ambiente-foto{ flex: 0 0 44%; aspect-ratio: auto; min-height: 320px; }
+.ambiente--privado .ambiente-foto--ph{ background: radial-gradient(circle at 30% 25%, var(--sage) 0%, color-mix(in srgb, var(--sage-deep) 80%, #000) 85%); }
+.ambiente--privado .ambiente-foto--ph svg{ stroke:#fff; opacity:.6; }
+.ambiente--privado .ambiente-body{ justify-content:center; padding: clamp(28px, 4vw, 52px); gap: 12px; }
+.ambiente--privado .ambiente-piso{ color: var(--ochre); }
+.ambiente--privado .ambiente-body h3{ font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); }
+.ambiente--privado .ambiente-body p{ color: #E3E8D8; max-width: 48ch; }
+.ambiente--privado .ambiente-tags li{ background: rgba(255,255,255,.12); color:#fff; }
+.ambiente--privado .btn{ align-self:flex-start; margin-top: 10px; }
+
+@media (max-width: 980px){
+  .ambientes-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 720px){
+  .ambientes-grid{ grid-template-columns: 1fr; }
+  .ambiente--privado{ flex-direction: column; }
+  .ambiente--privado .ambiente-foto{ flex:none; min-height:0; aspect-ratio: 4 / 3; }
+}
+.cumple-hero + .ambientes{ padding-top: clamp(56px, 7vw, 88px); }
+
 /* ============ PAGE BANNER ============ */
 .banner{
   padding-block: clamp(40px, 7vw, 68px) clamp(32px, 5vw, 48px);
@@ -741,6 +939,11 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
    la anterior (arriba) y la siguiente (abajo), recortadas con un
    degradé suave en los bordes del visor. Toda la card es un link. */
 .mazo-scroll{ margin-top:28px; position:relative; }
+/* En Talleres el carrusel viene justo después de la banda verde: sin
+   el padding general de section ni el margin de arriba, porque el
+   panel sticky ya trae aire propio (el contenido va centrado adentro). */
+.frase-band + #losTalleresQueHacemos{ padding-top: clamp(8px, 2vw, 24px); }
+.frase-band + #losTalleresQueHacemos .mazo-scroll{ margin-top:0; }
 .mazo-track{ height:4200px; position:relative; }
 .mazo-sticky{
   position:sticky; top: clamp(88px, 13vw, 112px);
@@ -759,17 +962,41 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
    quede "de placeholder" — casi imperceptible, es textura, no un patrón. */
 .mazo-sticky::before{
   content:''; position:absolute; inset:0; z-index:3; opacity:.045; mix-blend-mode:multiply; pointer-events:none;
+  /* el grano se desvanece hacia los bordes: si llega hasta el borde del
+     panel, se ve un rectángulo gris contra el blanco de la página. */
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 72%);
+  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 72%);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
 /* resplandor ambiente detrás del visor: una mancha de color grande y
    desenfocada que cambia según el taller activo (lo sincroniza el JS),
    para que el fondo acompañe en vez de quedar un rectángulo pastel fijo. */
 .mazo-glow{
-  position:absolute; z-index:0; left:50%; top:50%; transform:translate(-50%,-50%);
-  width:min(680px, 94vw); height:min(680px, 94vw); border-radius:50%;
+  position:absolute; z-index:0; left:50%; top:0; transform:translateX(-50%);
+  width:min(680px, 94vw); height:100%; border-radius:50%;
   background: radial-gradient(circle, var(--sage) 0%, transparent 70%);
   filter: blur(64px); opacity:.3; pointer-events:none;
+  /* antes era un círculo más alto que el panel, y el overflow:hidden lo
+     cortaba de golpe arriba: quedaba un corte gris justo antes de
+     "De qué van". Ahora ocupa el alto del panel y se desvanece arriba y
+     abajo, así arranca en blanco y no se nota dónde empieza el panel. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32%, #000 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 32%, #000 68%, transparent 100%);
 }
+
+/* Pétalos prensados de fondo (imagen en talleres.html), a los costados de
+   las cards. Se desvanecen en los bordes del panel para que no se note
+   el corte; en mobile se ocultan porque las cards ocupan todo el ancho. */
+.mazo-petalos{
+  position:absolute; inset:0; z-index:1; width:100%; height:100%;
+  max-width:none; object-fit:cover; /* recorta los costados si el panel es más angosto */
+  opacity:.9; pointer-events:none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-composite: intersect;
+}
+@media (max-width: 620px){ .mazo-petalos{ display:none; } }
 
 .mazo-hint{
   position:relative; z-index:2;
