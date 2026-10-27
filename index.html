@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Casa Lamarca</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Casa Lamarca — multiespacio y atelier familiar en Villa Devoto: talleres, cumpleaños, alquiler de espacio y objetos hechos a mano.">
+<meta name="description" content="Casa Lamarca, multiespacio y atelier familiar en Villa Devoto: talleres, cumpleaños, alquiler de espacio y objetos hechos a mano.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -22,6 +22,7 @@
       <a href="espacio.html">Alquilá el espacio</a>
       <a href="tienda.html">Tienda</a>
       <a href="lamarca.html">Lamarca</a>
+      <a class="nav-wa" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
     </nav>
     <div class="nav-right">
       <a class="nav-ig" href="https://instagram.com/casalamarca_" target="_blank" rel="noopener" aria-label="Instagram de Casa Lamarca">
@@ -48,7 +49,7 @@
         <span>Un lugar para</span>
         <span class="rotate-line" id="heroRotate"></span>
       </h1>
-      <p class="lede">Talleres, cumpleaños, encuentros y objetos hechos a mano — en un espacio pensado para que te sientas como en tu casa.</p>
+      <p class="lede">Talleres, cumpleaños, encuentros y objetos hechos a mano, en un espacio pensado para que te sientas como en tu casa.</p>
       <div class="btns">
         <a class="btn btn-primary" href="talleres.html">Conocé los talleres</a>
         <a class="btn btn-ghost" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
@@ -63,17 +64,16 @@
   <section>
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Qué podés vivir acá</p>
         <h2>Tres planes distintos, la misma casa.</h2>
       </div>
-      <div class="grid grid-3">
+      <div class="grid grid-3 tres-planes">
         <a class="product reveal" style="--i:0; text-decoration:none; color:inherit;" href="talleres.html">
           <figure class="ph ph--16-9 ph--photo">
             <img src="img/tres-experiencia.jpg" alt="Taller en marcha en Casa Lamarca">
           </figure>
           <div class="product-body">
             <h3>Experiencias</h3>
-            <p>Cerámica, velas, terrarios, carteras… talleres nuevos cada mes, para hacer solo, en pareja, con amigos o en familia. Sin experiencia previa.</p>
+            <p>Cerámica, velas, terrarios, carteras… talleres nuevos cada mes<span class="m-ocultar">, para hacer solo, en pareja, con amigos o en familia</span>. Sin experiencia previa.</p>
           </div>
         </a>
         <a class="product reveal" style="--i:1; text-decoration:none; color:inherit;" href="cumpleanos.html">
@@ -82,7 +82,7 @@
           </figure>
           <div class="product-body">
             <h3>Festejos originales</h3>
-            <p>El cumple viene con taller incluido: elegís la temática y armamos todo alrededor. Para chicos, adultos o en familia.</p>
+            <p>El cumple viene con taller incluido: elegís la temática y armamos todo alrededor.<span class="m-ocultar"> Para chicos, adultos o en familia.</span></p>
           </div>
         </a>
         <a class="product reveal" style="--i:2; text-decoration:none; color:inherit;" href="espacio.html">
@@ -91,7 +91,7 @@
           </figure>
           <div class="product-body">
             <h3>Alquilá el espacio</h3>
-            <p>Para dar tu propio taller o clase, una consulta profesional, coworking o el cierre de año de tu equipo. Vos ponés el motivo, nosotros el espacio.</p>
+            <p><span class="m-ocultar">Para dar tu propio taller o clase, una consulta profesional, coworking o el cierre de año de tu equipo.</span><span class="m-solo">Para tu taller, una consulta o el cierre de año de tu equipo.</span> Vos ponés el motivo, nosotros el espacio.</p>
           </div>
         </a>
       </div>
@@ -108,35 +108,71 @@
           </div>
           <p class="eyebrow">Un plus que nos identifica</p>
           <h2>Los detalles también hacen la experiencia.</h2>
-          <p>Picadas con nuestra focaccia casera, meriendas dulces y saladas — todo preparado por nosotras con mucho amor, con opciones para distintas necesidades alimentarias.</p>
+          <p>Picadas con nuestra focaccia casera, meriendas dulces y saladas. Todo preparado por nosotras<span class="m-ocultar"> con mucho amor</span>, con opciones para distintas necesidades alimentarias.</p>
         </div>
-      </div>
-
-      <div class="reveal" style="margin-top:36px; border:1.5px solid var(--coral); border-radius:var(--radius); padding:26px 32px; display:flex; align-items:center; gap:18px; justify-content:space-between; flex-wrap:wrap;">
-        <div style="display:flex; align-items:center; gap:16px; flex:1 1 380px; min-width:260px;">
-          <div class="icon-circle" style="border-color:var(--coral); flex:none;">
-            <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--coral);"><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="M5.6 5.6l2.8 2.8"/><path d="M15.6 15.6l2.8 2.8"/><path d="M18.4 5.6l-2.8 2.8"/><path d="M8.4 15.6l-2.8 2.8"/></svg>
-          </div>
-          <div>
-            <p style="margin:0; font-weight:700; font-size:1rem; color:var(--ink);">¿Sabías que podés armar tu evento privado?</p>
-            <p style="margin:4px 0 0; font-size:0.86rem; color:var(--ink-soft);">No hace falta que sea tu cumpleaños: alcanza con ganas de compartir, ya sea con amigos, en familia, o para un plan distinto.</p>
-          </div>
-        </div>
-        <a class="btn btn-primary" href="talleres.html#losTalleresQueHacemos" style="white-space:nowrap; flex:none;">Ver propuestas</a>
       </div>
     </div>
   </section>
 
+  <!-- Zona verde con bordes ondulados arriba y abajo: corta la columna
+       recta de la página (antes todo eran rectángulos del mismo ancho). -->
+  <section class="zona-ola">
+    <svg class="ola ola--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,30 C1110,72 830,8 530,42 C310,66 150,26 0,50 Z"/></svg>
+    <div class="wrap">
+      <!-- Llamado a eventos privados: pizarra de corcho. Cuando entra en
+           pantalla (clase .reveal + script.js), primero se clava la nota
+           con el texto y después van cayendo las fotos, cada una con su
+           chinche roja. -->
+      <div class="reveal corcho">
+        <figure class="polaroid polaroid--1" style="--i:1; --r:-7deg;">
+          <span class="pin" aria-hidden="true"></span>
+          <img src="img/mazo-charms.jpg" alt="Amigas armando collares en el taller de charms" loading="lazy">
+          <figcaption>con amigos</figcaption>
+        </figure>
+        <figure class="polaroid polaroid--2" style="--i:2; --r:5deg;">
+          <span class="pin" aria-hidden="true"></span>
+          <img src="img/mazo-totebags.jpg" alt="Tote bags pintadas a mano" loading="lazy">
+          <figcaption>en familia</figcaption>
+        </figure>
+        <figure class="polaroid polaroid--3" style="--i:3; --r:6deg;">
+          <span class="pin" aria-hidden="true"></span>
+          <img src="img/mazo-arte.jpg" alt="Mesa con vino, picada y piezas para pintar" loading="lazy">
+          <figcaption>equipo de trabajo</figcaption>
+        </figure>
+        <div class="corcho-nota" style="--i:0; --r:-1.5deg;">
+          <span class="pin" aria-hidden="true"></span>
+          <p class="evento-fotos-title">¿Sabías que podés armar tu <em>evento privado</em>?</p>
+          <p class="evento-fotos-desc">No hace falta que sea tu cumpleaños: alcanza con ganas de compartir<span class="m-ocultar">, ya sea con amigos, en familia, o para un plan distinto</span>.</p>
+          <a class="btn btn-primary" href="talleres.html#losTalleresQueHacemos">Ver propuestas</a>
+        </div>
+      </div>
+    </div>
+    <svg class="ola ola--bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0,80 L0,38 C260,6 540,66 830,34 C1090,8 1270,52 1440,26 L1440,80 Z"/></svg>
+  </section>
+
   <section class="band">
     <div class="wrap about-grid reveal">
-      <figure class="ph ph--portrait">
-        <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 14.4c2.5.4 4 2.4 4 5.6"/></svg>
-        <figcaption><span>Foto: mamá e hija en el taller</span></figcaption>
-      </figure>
+      <!-- Foto que se da vuelta: al pasar el mouse (o tocarla en el celu)
+           gira y aparece "el jefe". Cuando tengan las fotos, en cada cara se
+           cambia el placeholder por la foto: agregarle la clase ph--photo a
+           la <figure> y poner adentro el <img> que está comentado. -->
+      <div class="flip" tabindex="0" role="button" aria-pressed="false" aria-label="Dar vuelta la foto">
+        <div class="flip-inner">
+          <figure class="flip-cara ph ph--portrait">
+            <!-- <img src="img/mama-hija.jpg" alt="Mar y Sofi, mamá e hija, en el taller"> -->
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 14.4c2.5.4 4 2.4 4 5.6"/></svg>
+            <figcaption><span>Foto: mamá e hija en el taller</span></figcaption>
+          </figure>
+          <figure class="flip-cara flip-dorso ph ph--portrait">
+            <!-- <img src="img/el-jefe.jpg" alt="El jefe de la casa, en pañales"> -->
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M7 20c1-3 3-4.5 5-4.5s4 1.5 5 4.5"/></svg>
+            <figcaption><span>Foto: el jefe en pañales</span></figcaption>
+          </figure>
+        </div>
+      </div>
       <div>
-        <p class="eyebrow">Lamarca</p>
-        <h2 style="font-size:clamp(1.5rem, 1.2rem + 1vw, 2.1rem); margin-top:6px;">Una familia de Villa Devoto</h2>
-        <p class="measure" style="margin-top:12px; color:var(--ink-soft);">Mamá e hija abrieron las puertas de este espacio para compartir lo que más les gusta hacer: crear con las manos y recibir gente. Cada taller, cada festejo, es una excusa más para encontrarse.</p>
+        <h2 style="font-size:clamp(1.5rem, 1.2rem + 1vw, 2.1rem); margin-top:6px;">La familia de Casa Lamarca</h2>
+        <p class="measure" style="margin-top:12px; color:var(--ink-soft);">Mamá e hija abrieron las puertas de este espacio para compartir lo que más les gusta hacer: crear con las manos y recibir gente.<span class="m-ocultar"> Cada taller, cada festejo, es una excusa más para encontrarse.</span></p>
         <blockquote class="pull">Un ratito para crear, desconectar y regalarte tiempo para vos.</blockquote>
         <div class="btns"><a class="btn btn-ghost" href="lamarca.html">Conocé nuestra historia</a></div>
       </div>
@@ -145,10 +181,14 @@
 
   <section>
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Lo que dicen</p>
+      <div class="section-head voces-head">
         <h2>Voces de la casa</h2>
+        <!-- solo en el celu: el puntaje al lado del título -->
+        <p class="voces-nota"><b>5,0</b><span><span class="voces-stars-sm"><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg></span>21 reseñas</span></p>
       </div>
+      <!-- Reseñas reales de Google (todas de 5 estrellas), elegidas a mano.
+           En PC se ven las primeras 4; en el celu, la cinta: arriba las 1-4
+           y abajo las 5-8. Para cambiar una: reemplazar texto, nombre e inicial. -->
       <div class="voces-grid">
         <div class="voces-card reveal" style="--i:0; background: color-mix(in srgb, var(--sage) 10%, white);">
           <span class="voces-quote" style="color:var(--sage);">&rdquo;</span>
@@ -159,13 +199,12 @@
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="voces-txt">"Para el cumple de mi hija de 9 hicimos taller de tote bags. Hermosa la atención, riquísima la comida. Excelente el lugar."</p>
+          <p class="voces-txt">"Festejé mi cumpleaños pintando piezas de cerámica con un grupo de amigos. Sofi y su mamá se encargaron de guiarnos y aconsejarnos, ambas tienen una energía bellísima. La merienda que ofrecen la presentan muy linda y estaba todo riquísimo."</p>
           <div class="voces-foot">
-            <div class="voces-who"><span class="voces-avatar" style="background:var(--sage);">S</span><span>Sole</span></div>
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--sage);">D</span><span>Delfina Basso</span></div>
             <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
           </div>
         </div>
-
         <div class="voces-card reveal" style="--i:1; background: color-mix(in srgb, var(--coral) 9%, white);">
           <span class="voces-quote" style="color:var(--coral);">&rdquo;</span>
           <div class="voces-stars">
@@ -175,13 +214,12 @@
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="voces-txt">"Increíble lugar, muy cálido y sus dueñas súper amables; realicé un taller floral. Hermosa experiencia. Sin dudas, voy a continuar realizando talleres en Casa Lamarca."</p>
+          <p class="voces-txt">"Celebré mi cumple con el taller de Tote bags... ¡fue increíble! La energía de las chicas y todas sus atenciones hacen que el momento se sienta mucho más cálido y agradable."</p>
           <div class="voces-foot">
-            <div class="voces-who"><span class="voces-avatar" style="background:var(--coral);">S</span><span>Silvina R.</span></div>
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--coral);">M</span><span>Melisa Juarez</span></div>
             <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
           </div>
         </div>
-
         <div class="voces-card reveal" style="--i:2; background: color-mix(in srgb, var(--ochre) 11%, white);">
           <span class="voces-quote" style="color:var(--ochre);">&rdquo;</span>
           <div class="voces-stars">
@@ -191,13 +229,12 @@
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="voces-txt">"La picada excelente, la cerámica divertido y dinámico, el lugar muy lindo y cómodo. La madre e hija que dan el taller se nota que lo disfrutan y te hacen disfrutarlo a vos."</p>
+          <p class="voces-txt">"Fui con mi novia, sinceramente no esperaba nada. Me llevé una experiencia genial: la picada excelente, la cerámica divertida y dinámica. Se nota que la madre y la hija disfrutan lo que hacen. Volveré."</p>
           <div class="voces-foot">
-            <div class="voces-who"><span class="voces-avatar" style="background:var(--ochre);">T</span><span>Thiago G.</span></div>
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--ochre);">T</span><span>Thiago Grimberg</span></div>
             <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
           </div>
         </div>
-
         <div class="voces-card reveal" style="--i:3; background: color-mix(in srgb, var(--sage-deep) 9%, white);">
           <span class="voces-quote" style="color:var(--sage-deep);">&rdquo;</span>
           <div class="voces-stars">
@@ -207,9 +244,69 @@
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="voces-txt">"Me encantó la experiencia! La actividad me pareció muy hermosa y la merienda riquísima. El mejor plan para hacer con amigas o con familia también!"</p>
+          <p class="voces-txt">"Una hermosa experiencia, en un espacio donde el buen gusto y la delicadeza son protagonistas. El cuidado de cada detalle, el taller muy bien guiado, la picada y el vino exquisitos y, por sobre todo, la amorosidad de las anfitrionas."</p>
           <div class="voces-foot">
-            <div class="voces-who"><span class="voces-avatar" style="background:var(--sage-deep);">R</span><span>Rocío G.</span></div>
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--sage-deep);">M</span><span>Marta Romano</span></div>
+            <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
+          </div>
+        </div>
+        <div class="voces-card reveal" style="--i:0; background: color-mix(in srgb, var(--sage) 10%, white);">
+          <span class="voces-quote" style="color:var(--sage);">&rdquo;</span>
+          <div class="voces-stars">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+          </div>
+          <p class="voces-txt">"Es difícil encontrar no sólo un lindo lugar sino sentirte en un hogar donde aprender, reír, despejar… Sus dueñas te hacen sentir que siempre querés volver a vivir una nueva experiencia."</p>
+          <div class="voces-foot">
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--sage);">K</span><span>Kari Sovico</span></div>
+            <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
+          </div>
+        </div>
+        <div class="voces-card reveal" style="--i:1; background: color-mix(in srgb, var(--coral) 9%, white);">
+          <span class="voces-quote" style="color:var(--coral);">&rdquo;</span>
+          <div class="voces-stars">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+          </div>
+          <p class="voces-txt">"Increíble lugar, muy cálido y sus dueñas súper amables; realicé un taller floral. Hermosa experiencia. Sin dudas voy a seguir haciendo talleres en Casa Lamarca."</p>
+          <div class="voces-foot">
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--coral);">S</span><span>Silvina Rivero</span></div>
+            <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
+          </div>
+        </div>
+        <div class="voces-card reveal" style="--i:2; background: color-mix(in srgb, var(--ochre) 11%, white);">
+          <span class="voces-quote" style="color:var(--ochre);">&rdquo;</span>
+          <div class="voces-stars">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+          </div>
+          <p class="voces-txt">"Un lugar hermoso para armar experiencias, buena ubicación, espacios cómodos y muy buena onda de sus propietarios. Participé de la propuesta de tote bag y es súper recomendable. También organizo en el lugar catas de gin y otras propuestas, y todo resultó excelente."</p>
+          <div class="voces-foot">
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--ochre);">G</span><span>Graciela Bartoli</span></div>
+            <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
+          </div>
+        </div>
+        <div class="voces-card reveal" style="--i:3; background: color-mix(in srgb, var(--sage-deep) 9%, white);">
+          <span class="voces-quote" style="color:var(--sage-deep);">&rdquo;</span>
+          <div class="voces-stars">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg>
+          </div>
+          <p class="voces-txt">"Para el cumple de mi hija de 9 hicimos el taller de tote bags. Hermosa la atención, riquísima la comida. Excelente el lugar."</p>
+          <div class="voces-foot">
+            <div class="voces-who"><span class="voces-avatar" style="background:var(--sage-deep);">S</span><span>Sole</span></div>
             <svg class="voces-gicon" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.07-1.47-.22-2.12H12v3.85h6.6c-.13 1.1-.86 2.76-2.47 3.87l-.02.15 3.59 2.78.25.02c2.28-2.1 3.57-5.2 3.57-8.55z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.78-2.93c-1.01.7-2.37 1.19-4.15 1.19-3.18 0-5.88-2.1-6.84-5.02l-.14.01-3.73 2.89-.05.13C3.24 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.16 14.33a7.2 7.2 0 01-.39-2.33c0-.81.14-1.6.38-2.33l-.01-.16-3.78-2.94-.12.06A11.98 11.98 0 000 12c0 1.93.47 3.76 1.24 5.37z"/><path fill="#EA4335" d="M12 4.75c2.26 0 3.78.98 4.65 1.8l3.4-3.32C17.94 1.19 15.24 0 12 0 7.3 0 3.24 2.7 1.24 6.63l3.9 3.04C6.12 6.85 8.82 4.75 12 4.75z"/></svg>
           </div>
         </div>
@@ -238,7 +335,26 @@
     </div>
   </section>
 
-  <section class="band">
+  <!-- PRUEBA (solo PC): las mismas reseñas en "la cinta", para comparar
+       con la grilla de arriba. Las tarjetas las copia script.js de la
+       grilla; acá no hay que cargar nada. En el celu esta sección no se
+       ve (ahí la cinta ya reemplaza a la grilla). -->
+  <section class="voces-pc">
+    <div class="wrap voces-pc-head">
+      <h2>Voces de la casa</h2>
+      <p class="voces-pc-nota"><b>5,0</b><span><span class="voces-stars-sm"><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18.1l1.4-6.3L1 7.4l6.4-.6z"/></svg></span>21 reseñas en Google</span></p>
+    </div>
+    <div class="voces-cinta voces-cinta--pc" data-cinta-de=".voces-grid"></div>
+    <div class="wrap">
+      <a class="voces-link" href="https://www.google.com/maps/place/Casa+Lamarca/@-34.6005616,-58.5038879,17z/data=!4m8!3m7!1s0x95bcb76608b19eb1:0xeb7926d83cbdabca!8m2!3d-34.6005616!4d-58.5038879!9m1!1b1!16s%2Fg%2F11x0gfqh5w" target="_blank" rel="noopener">
+        Ver todas las reseñas
+        <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="band zona-ola zona-ola--wa">
+    <svg class="ola ola--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,44 C1200,16 980,62 700,40 C440,20 230,60 0,32 Z"/></svg>
     <div class="wrap reveal" style="display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
       <div>
         <h2 style="font-size:clamp(1.4rem,1.1rem+1vw,1.9rem);">¿Charlamos por WhatsApp?</h2>
@@ -250,33 +366,37 @@
 
 </main>
 
-<footer class="site">
+<footer class="site footer-ola footer-ola--verde">
+  <svg class="ola ola--top ola--footer" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,36 C1180,64 900,14 620,40 C380,62 170,22 0,46 Z"/></svg>
   <div class="wrap">
     <div class="footer-grid">
-      <div>
-        <h5>Casa Lamarca</h5>
+      <div class="footer-marca">
+        <a href="index.html" class="footer-logo"><img src="assets/logo.png" alt="Casa Lamarca" width="230" height="89" loading="lazy"></a>
         <p>Multiespacio y atelier familiar en Villa Devoto. Talleres, celebraciones, alquiler de espacio y objetos hechos a mano.</p>
+        <div class="footer-redes">
+          <a class="footer-red" href="https://wa.me/5491123788557" target="_blank" rel="noopener" aria-label="WhatsApp de Casa Lamarca"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.2 17.1L2 22l5-1.3a11 11 0 0 0 13.5-17.2Zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-3 .8.8-2.9-.2-.3a9 9 0 1 1 7.3 3.9Zm5-6.7c-.3-.1-1.6-.8-1.9-.9s-.4-.1-.6.1-.7.9-.9 1.1-.3.2-.6.1a7.4 7.4 0 0 1-3.7-3.2c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.6-.5h-.6a1 1 0 0 0-.8.4 3.2 3.2 0 0 0-1 2.4 5.6 5.6 0 0 0 1.2 3 12.7 12.7 0 0 0 4.9 4.3c1.8.8 2.5.8 3.4.7a2.9 2.9 0 0 0 1.9-1.3 2.4 2.4 0 0 0 .2-1.3c-.1-.2-.3-.3-.6-.4Z" fill="currentColor"/></svg></a>
+          <a class="footer-red" href="https://instagram.com/casalamarca_" target="_blank" rel="noopener" aria-label="Instagram de Casa Lamarca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
       </div>
       <div>
         <h5>Explorá</h5>
-        <a href="talleres.html">Talleres</a>
-        <a href="cumpleanos.html">Cumpleaños</a>
-        <a href="espacio.html">Alquilá el espacio</a>
-        <a href="tienda.html">Tienda</a>
-      </div>
-      <div>
-        <h5>Sobre nosotras</h5>
-        <a href="lamarca.html">Lamarca</a>
-        <a href="https://instagram.com/casalamarca_" target="_blank" rel="noopener">Instagram</a>
+        <div class="footer-links">
+          <a href="talleres.html">Talleres</a>
+          <a href="cumpleanos.html">Cumpleaños</a>
+          <a href="espacio.html">Alquilá el espacio</a>
+          <a href="tienda.html">Tienda</a>
+          <a href="lamarca.html">Lamarca</a>
+        </div>
       </div>
       <div>
         <h5>Visitanos</h5>
         <p>Emilio Lamarca 3480<br>Villa Devoto, CABA</p>
-        <p style="margin-top:8px;">Con cita previa.<br>Coordinamos por WhatsApp: lun a vie 10–19 hs, sáb 10–14 hs.</p>
+        <p class="footer-nota">Con cita previa.<br>Coordinamos por WhatsApp: lun a vie 10 a 19 hs, sáb 10 a 14 hs.</p>
+        <a class="footer-mapa" href="https://www.google.com/maps/search/?api=1&amp;query=Emilio+Lamarca+3480,+Villa+Devoto,+CABA" target="_blank" rel="noopener">Cómo llegar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Casa Lamarca · Villa Devoto, CABA</span>
+      <span>© 2026 Casa Lamarca · Villa Devoto, CABA</span>
       <span>Sitio realizado por <a href="https://www.linkedin.com/in/jmaglia/" target="_blank" rel="noopener">Joaquín Maglia</a></span>
     </div>
   </div>

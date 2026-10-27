@@ -136,7 +136,7 @@ var TALLERES_TIPOS = {
     titulo: "",
     descripcion: [
       "Una experiencia para crear, brindar y disfrutar sin apuro.",
-      "Elegís la pieza que más te guste —tote bag, matera, maceta, plato de cerámica o almohadón— y la intervenís a tu manera, explorando colores, formas y diferentes recursos para crear una pieza única. Mientras creás, disfrutamos de vino y una picada para compartir.",
+      "Elegís la pieza que más te guste (tote bag, matera, maceta, plato de cerámica o almohadón) y la intervenís a tu manera, explorando colores, formas y diferentes recursos para crear una pieza única. Mientras creás, disfrutamos de vino y una picada para compartir.",
       "No necesitás experiencia previa, solo ganas de crear, brindar y pasar un lindo momento."
     ],
     precio: ""

@@ -38,7 +38,7 @@ body{
   color: var(--ink);
   font-family: 'Karla', ui-sans-serif, system-ui, sans-serif;
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.42;
   -webkit-font-smoothing: antialiased;
 }
 img{ max-width:100%; display:block; }
@@ -46,7 +46,7 @@ a{ color: inherit; }
 h1,h2,h3{
   font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.1;
   text-wrap: balance;
   margin: 0;
   letter-spacing: 0;
@@ -77,7 +77,6 @@ header.site{
   position: sticky; top:0; z-index: 50;
   background: color-mix(in srgb, var(--bg) 92%, transparent);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
 }
 .nav{
   display:flex; align-items:center; justify-content: space-between;
@@ -199,9 +198,13 @@ header.site.nav-float + main .hero-full--page{
   header.site.nav-float + main #tallerCuerpo{ padding-top: clamp(108px, 24vw, 126px); }
   header.site.nav-float + main .hero-full--page{ min-height: clamp(380px, 90vw, 440px); }
   header.site.nav-float + main .hero-full--page .hero-full-content{ padding-bottom: 46px; }
-  header.site.nav-float .wrap.nav{ padding-inline: 10px 16px; }
+  header.site.nav-float .wrap.nav{ padding-inline: 16px 12px; gap: 10px; }
+  /* Instagram pegado al menú (antes quedaba en el medio por el
+     space-between entre logo, Instagram y menú) */
+  .nav-right{ margin-left:auto; gap: 10px; }
+  .nav-ig{ width:38px; height:38px; }
   header.site.nav-float .nav-links{
-    inset: 86px 14px auto 14px;
+    inset: 86px var(--wrap-pad) auto var(--wrap-pad);
     border-radius: 14px;
     border: 1px solid var(--line);
     box-shadow: var(--surface-shadow);
@@ -242,9 +245,8 @@ header.site.nav-float + main .agenda{ padding-top: clamp(118px, 15vw, 140px); }
 .chip:focus-visible{ outline: 2px solid var(--coral); outline-offset: 2px; }
 @media (max-width: 620px){
   .agenda-filtros{
-    flex: 0 0 calc(100% + var(--wrap-pad) * 2);
+    flex: 0 0 100%; min-width: 0;
     flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
-    margin-inline: calc(var(--wrap-pad) * -1); padding-inline: var(--wrap-pad);
   }
   .agenda-filtros::-webkit-scrollbar{ display:none; }
   .chip{ flex: none; }
@@ -260,11 +262,13 @@ header.site.nav-float + main .agenda{ padding-top: clamp(118px, 15vw, 140px); }
   text-align: center;
   padding-block: clamp(56px, 8vw, 92px);
 }
+/* ola abajo de la banda (va adentro, así acompaña a la banda cuando se pega) */
+.frase-band{ padding-bottom: clamp(84px, 10vw, 128px); }
 .frase-band .wrap{ display:flex; flex-direction:column; align-items:center; gap: 16px; }
 .frase-band-icon{ width:40px; height:40px; stroke: var(--ochre); }
 .frase-band-quote{
   font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 500;
-  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.8rem); line-height: 1.15;
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.8rem); line-height: 1.1;
   max-width: 22ch; text-wrap: balance;
 }
 .frase-band-text{ color: #E3E8D8; max-width: 56ch; font-size: 1.05rem; }
@@ -287,7 +291,7 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
   /* más chico y más liviano que el H1 de la home: el título grande y
      protagonista queda reservado para Inicio. */
   font-size: clamp(2.1rem, 1.5rem + 2vw, 3.1rem); font-weight: 500;
-  line-height: 1.08; margin-top: 12px;
+  line-height: 1.04; margin-top: 12px;
 }
 .cumple-hero-text h1 em{
   display:block; font-style: italic; font-weight: 500; color: var(--coral);
@@ -321,20 +325,10 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
   display:grid; place-items:center; text-align:center; padding: 16px;
   background: var(--coral); color:#fff;
   font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:500;
-  font-size: clamp(.82rem, .7rem + .3vw, .95rem); line-height:1.2;
+  font-size: clamp(.82rem, .7rem + .3vw, .95rem); line-height:1.15;
   transform: rotate(9deg);
   box-shadow: 0 16px 30px -18px rgba(168,69,31,.8);
 }
-.cumple-hero-scroll{
-  position:absolute; left:50%; bottom: 18px; transform: translateX(-50%);
-  width:44px; height:44px; border-radius:50%;
-  display:grid; place-items:center;
-  border:1px solid var(--line); background: var(--surface); color: var(--ink);
-  animation: cumple-bounce 2.4s ease-in-out infinite;
-}
-.cumple-hero-scroll svg{ width:18px; height:18px; stroke: currentColor; }
-.cumple-hero-scroll:hover{ color: var(--coral); border-color: var(--coral); }
-@keyframes cumple-bounce{ 0%,100%{ translate: 0 0; } 50%{ translate: 0 6px; } }
 
 /* entrada: texto y fotos aparecen escalonados */
 @keyframes cumple-in{ from{ opacity:0; translate: 0 18px; } to{ opacity:1; translate: 0 0; } }
@@ -347,14 +341,13 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
 .cumple-hero-side{ animation: cumple-in .8s .35s cubic-bezier(.22,.61,.36,1) both; }
 .cumple-hero-badge{ animation: cumple-in .8s .55s cubic-bezier(.22,.61,.36,1) both; }
 @media (prefers-reduced-motion: reduce){
-  .cumple-hero-text > *, .cumple-hero-main, .cumple-hero-side, .cumple-hero-badge, .cumple-hero-scroll{ animation:none; }
+  .cumple-hero-text > *, .cumple-hero-main, .cumple-hero-side, .cumple-hero-badge{ animation:none; }
 }
 
 @media (max-width: 860px){
   header.site.nav-float + main .cumple-hero{ padding-top: clamp(108px, 24vw, 124px); }
   .cumple-hero-grid{ grid-template-columns: 1fr; }
   .cumple-hero-media{ width:100%; max-width: 520px; margin-inline:auto; }
-  .cumple-hero-scroll{ display:none; }
 }
 
 
@@ -406,10 +399,191 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
 }
 .cumple-hero + .ambientes{ padding-top: clamp(56px, 7vw, 88px); }
 
+/* ============ HOME — llamado a eventos privados: pizarra de corcho ============
+   Corcho hecho con CSS (color + dos texturas de ruido en SVG) y marco de
+   madera. Adentro, una nota de papel con el texto y tres polaroids, todo
+   clavado con chinches rojas. Cuando la pizarra entra en pantalla
+   (.reveal → .is-visible, ver script.js) cada elemento "cae" en orden
+   (--i) hasta su inclinación final (--r) y después aparece la chinche. */
+.corcho{
+  position:relative; margin-top: 36px;
+  min-height: 560px; display:grid; place-items:center;
+  padding: 56px 24px;
+  background-color: #C49A6C;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.8  0 0 0 0 0.6  0 0 0 3.2 -2.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0.32  0 0 0 0 0.2  0 0 0 0 0.1  0 0 0 1.6 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+  border: 14px solid #7A5234;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 0 2px #5E3D24,
+    inset 0 10px 24px rgba(60,35,15,.35),
+    0 24px 40px -28px rgba(60,35,15,.7);
+}
+/* la pizarra no hace el fade/subida del .reveal: lo animan sus hijos */
+.corcho.reveal{ opacity:1; transform:none; }
+
+/* chinche roja */
+.pin{
+  position:absolute; z-index:4; top: -7px; left: 50%;
+  width: 18px; height: 18px; margin-left: -9px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FF9C8C 0%, #E0362B 38%, #A3170F 80%);
+  box-shadow: 0 3px 4px rgba(40,10,5,.45), inset 0 -2px 3px rgba(80,5,0,.35);
+}
+
+/* nota de papel con el texto */
+.corcho-nota{
+  position:relative; z-index:2; max-width: 410px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap: 14px;
+  background: #FBF6EC; padding: 38px 40px 34px;
+  box-shadow: 0 16px 26px -16px rgba(60,35,15,.6);
+  transform: rotate(var(--r, 0deg));
+}
+.evento-fotos-title{
+  margin:0; font-family:'Fraunces', Georgia, serif; font-weight:600;
+  font-size: clamp(1.8rem, 1.2rem + 1.9vw, 2.6rem); line-height:1.05; text-wrap: balance;
+}
+.evento-fotos-title em{ font-style:italic; font-weight:500; color: var(--coral); }
+.evento-fotos-desc{ margin:0; color: var(--ink-soft); font-size: 1rem; max-width: 40ch; }
+.corcho-nota .btn{ margin-top: 6px; }
+
+/* polaroids */
+.polaroid{
+  position:absolute; z-index:1; margin:0;
+  background:#fff; padding: 10px 10px 0;
+  box-shadow: 0 16px 24px -14px rgba(50,30,10,.65);
+  transform: rotate(var(--r, 0deg));
+}
+.polaroid img{ display:block; width:100%; aspect-ratio: 1 / 1.05; object-fit:cover; }
+.polaroid figcaption{
+  padding: 10px 0 12px; text-align:center;
+  font-family:'Fraunces', Georgia, serif; font-style:italic; font-size: 1.05rem; color: var(--ink-soft);
+}
+.polaroid--1{ left: 4%; top: 30px; width: 170px; }
+.polaroid--2{ left: 13%; bottom: 28px; width: 160px; }
+.polaroid--3{ right: 4%; top: 80px; width: 205px; }
+
+/* animación: caen en orden y después se clava la chinche */
+.corcho .polaroid, .corcho .corcho-nota{
+  opacity:0;
+  transform: translateY(-34px) rotate(calc(var(--r, 0deg) - 9deg)) scale(1.05);
+  transition: opacity .45s ease, transform .7s cubic-bezier(.2,.9,.3,1.25);
+  transition-delay: calc(var(--i, 0) * 260ms + 150ms);
+}
+.corcho.is-visible .polaroid, .corcho.is-visible .corcho-nota{
+  opacity:1; transform: rotate(var(--r, 0deg));
+}
+.corcho .pin{
+  opacity:0; transform: scale(2.2) translateY(-8px);
+  transition: opacity .2s ease, transform .3s cubic-bezier(.3,1.6,.5,1);
+  transition-delay: calc(var(--i, 0) * 260ms + 650ms);
+}
+.corcho.is-visible .pin{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+  .corcho .polaroid, .corcho .corcho-nota, .corcho .pin{ transition:none; opacity:1; }
+  .corcho .polaroid, .corcho .corcho-nota{ transform: rotate(var(--r, 0deg)); }
+  .corcho .pin{ transform:none; }
+}
+
+@media (max-width: 1080px){
+  .polaroid--1{ width: 140px; left: 2%; }
+  .polaroid--2{ width: 130px; left: 8%; }
+  .polaroid--3{ width: 160px; right: 2%; }
+  .corcho-nota{ max-width: 340px; padding: 30px 24px 26px; }
+}
+@media (max-width: 860px){
+  .corcho{ min-height:0; display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start;
+           padding: 30px 12px 32px; border-width: 10px; }
+  .polaroid{ position:relative; inset:auto; width: 30%; padding: 6px 6px 0; }
+  .polaroid--1, .polaroid--2, .polaroid--3{ width: 30%; left:auto; right:auto; top:auto; bottom:auto; }
+  .polaroid--2{ margin-inline: 2%; top: 12px; z-index:2; }
+  .polaroid figcaption{ font-size: .7rem; padding: 6px 0 8px; white-space: nowrap; }
+  .pin{ width: 14px; height: 14px; margin-left: -7px; top: -5px; }
+  .corcho-nota{ flex: 0 0 100%; max-width:none; margin-top: 30px; padding: 30px 22px 26px; }
+}
+
+/* menos aire abajo: la pizarra ya cierra la sección */
+/* ============ OLAS entre secciones (home) ============
+   .zona-ola: sección con fondo verde claro y bordes ondulados. La ola
+   de arriba se pinta del color de la sección anterior (blanco) y la de
+   abajo del color de la siguiente, así el corte no es una línea recta.
+   Cada ola tiene una curva distinta para que no se repita el dibujo. */
+section.zona-ola{
+  position:relative; background: var(--surface-2);
+  padding-block: clamp(84px, 9vw, 128px);
+}
+.ola{
+  position:absolute; left:0; width:100%; height: clamp(34px, 5vw, 72px);
+  display:block; pointer-events:none;
+}
+.ola path{ fill: var(--bg); }
+/* por encima de texturas (ej. el grano de Lamarca), si no la ola queda
+   grisácea y se ve el borde recto de la sección */
+.ola{ z-index:2; }
+.ola--top{ top:-1px; }
+.ola--bottom{ bottom:-1px; }
+.zona-ola .corcho{ margin-top:0; }
+/* la de WhatsApp: verde claro, con ola arriba; abajo la tapa la ola del footer */
+section.zona-ola--wa{ padding-block: clamp(72px, 8vw, 104px) clamp(56px, 6vw, 80px); }
+/* footer verde oscuro: su ola de arriba se pinta del verde claro de la
+   sección de WhatsApp */
+footer.site.footer-ola{ position:relative; padding-top: calc(44px + clamp(34px, 5vw, 72px)); }
+/* la ola del footer toma el color de la sección de arriba: blanco por
+   defecto, verde claro en la home (arriba está la franja de WhatsApp) */
+.ola--footer path{ fill: var(--bg); }
+.footer-ola--verde .ola--footer path{ fill: var(--surface-2); }
+/* heros con fondo verde claro (Cumpleaños, Alquilá el espacio, agenda de
+   Talleres): la ola de abajo se pinta del color de lo que sigue */
+.cumple-hero, .agenda{ position:relative; }
+.agenda{ padding-bottom: clamp(72px, 8vw, 104px); }
+.ola--oscura path{ fill: var(--sage-deep); }
+
+/* ============ FOTO QUE SE DA VUELTA (home, "La familia de Casa Lamarca") ============
+   Giro 3D con un pequeño rebote al final. Hover en desktop; en touch y
+   teclado lo maneja la clase .is-flipped (JS en index.html). */
+.flip{ perspective: 1400px; cursor:pointer; outline:none; }
+.flip-inner{
+  position:relative; transform-style: preserve-3d;
+  transition: transform .9s cubic-bezier(.3,1.35,.45,1);
+}
+.flip-cara{ margin:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+/* doble clase: le gana al position:relative de .ph */
+.flip-cara.flip-dorso{ position:absolute; inset:0; transform: rotateY(180deg); }
+.flip.is-flipped .flip-inner{ transform: rotateY(180deg); }
+@media (hover: hover){
+  .flip:hover .flip-inner{ transform: rotateY(180deg); }
+  .flip.is-flipped:hover .flip-inner{ transform: rotateY(0deg); }
+}
+.flip:focus-visible .flip-cara{ outline: 2px solid var(--coral); outline-offset: 4px; }
+/* mientras gira, la foto "se levanta" un poco */
+.flip-inner::after{ content:none; }
+.flip:hover .flip-cara, .flip.is-flipped .flip-cara{ box-shadow: 0 30px 50px -30px rgba(35,38,31,.55); }
+@media (prefers-reduced-motion: reduce){ .flip-inner{ transition: none; } }
+
+/* ============ AJUSTES MOBILE (varias páginas) ============ */
+/* link a WhatsApp dentro del menú hamburguesa (en desktop está el botón) */
+.nav-links .nav-wa{ display:none; }
+@media (max-width: 860px){
+  .nav-links .nav-wa{ display:block; margin-top: 6px; color: var(--coral); font-weight:700; border-bottom:none; }
+  /* fotos de mamá e hija (home y Lamarca): más bajas */
+  .flip .ph--portrait{ aspect-ratio: 4 / 3; }
+  /* la foto al lado de los formularios queda al final y no suma */
+  .form-split-photo{ display:none; }
+}
+@media (max-width: 620px){
+  /* carrusel de talleres: el panel ocupa la pantalla, con pétalos arriba y abajo */
+  .mazo-sticky{ height: calc(100svh - 110px) !important; max-height: 760px; }
+  /* tienda: 2 productos por fila */
+  .grid-tienda{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 12px; }
+  .grid-tienda .product-body{ padding: 12px 12px 14px; gap:6px; }
+  .grid-tienda .product-body h3{ font-size: .92rem; }
+  .grid-tienda .product-body p{ font-size: .78rem; }
+  .grid-tienda .price-row{ flex-direction: column; align-items: stretch; gap: 8px; }
+  .grid-tienda .btn-sm{ text-align:center; }
+  .grid-tienda .ph span{ display:none; }
+}
+
 /* ============ PAGE BANNER ============ */
 .banner{
   padding-block: clamp(40px, 7vw, 68px) clamp(32px, 5vw, 48px);
-  border-bottom: 1px solid var(--line);
 }
 .banner h1{ font-size: clamp(2rem, 1.5rem + 2vw, 3.1rem); margin-top:10px; }
 .banner .lede{ margin-top:14px; color: var(--ink-soft); max-width: 56ch; font-size: 1.05rem; }
@@ -528,7 +702,7 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
 .hero-wave-content h1{
   color:#fff; font-weight:500;
   font-size: clamp(2.2rem, 1.5rem + 2.8vw, 3.9rem);
-  line-height:1.1; max-width:15ch; margin:16px 0 20px;
+  line-height:1.06; max-width:15ch; margin:16px 0 20px;
   display:flex; flex-direction:column; gap:2px;
 }
 .hero-wave-content .rotate-line{
@@ -587,7 +761,7 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
   color: var(--muted);
 }
 .ph svg{ width:30px; height:30px; opacity:.5; flex:none; stroke: var(--sage); }
-.ph span{ font-size: 0.76rem; font-style: italic; max-width: 22ch; line-height:1.4; }
+.ph span{ font-size: 0.76rem; font-style: italic; max-width: 22ch; line-height:1.26; }
 .ph--16-9{ aspect-ratio: 16/9; }
 .ph--square{ aspect-ratio: 1/1; }
 .ph--portrait{ aspect-ratio: 4/5; }
@@ -610,7 +784,7 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
 
 /* ============ SECTIONS ============ */
 section{ padding-block: clamp(44px, 6vw, 76px); }
-.band{ background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.band{ background: var(--bg); }
 .section-head{
   max-width: 680px; margin: 0 auto clamp(30px, 3.6vw, 44px); text-align:center;
 }
@@ -670,7 +844,7 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   padding: 22px 20px; display:flex; flex-direction:column; gap:10px;
 }
 .testi .stars{ color: var(--ochre); font-size:0.9rem; letter-spacing:2px; }
-.testi p{ color: var(--ink); font-size:0.92rem; line-height:1.55; }
+.testi p{ color: var(--ink); font-size:0.92rem; line-height:1.36; }
 .testi footer{ margin-top:4px; font-size:0.82rem; font-weight:700; color: var(--ink-soft); }
 
 .card{
@@ -790,18 +964,10 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   font-size:7rem; line-height:1; letter-spacing:-0.04em;
   color: rgba(255,255,255,0.92); mix-blend-mode:overlay;
 }
-.how-tag{
-  position:absolute; z-index:3; top:16px; left:16px;
-  display:inline-flex; align-items:center; gap:6px;
-  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(4px);
-  padding:6px 13px; border-radius:999px;
-  font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color: var(--ink);
-}
-.how-tag-dot{ width:7px; height:7px; border-radius:50%; flex:none; }
 
 .how-copy{ padding: clamp(26px,3vw,38px) clamp(24px,3vw,40px); display:flex; flex-direction:column; justify-content:center; }
 .how-copy h3{ font-size:1.6rem; letter-spacing:-0.01em; }
-.how-copy p{ margin-top:12px; color: var(--ink-soft); font-size:0.96rem; line-height:1.6; max-width:40ch; }
+.how-copy p{ margin-top:12px; color: var(--ink-soft); font-size:0.96rem; line-height:1.38; max-width:40ch; }
 .how-link{
   margin-top:18px; display:inline-flex; align-items:center; gap:7px;
   font-size:0.84rem; font-weight:700; color: var(--ink); text-decoration:none; width:fit-content;
@@ -883,7 +1049,7 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 }
 .voces-stars{ display:flex; gap:2px; position:relative; z-index:1; }
 .voces-stars svg{ width:13px; height:13px; fill: var(--ochre); }
-.voces-txt{ margin:0; font-size:0.95rem; color: var(--ink); line-height:1.56; position:relative; z-index:1; }
+.voces-txt{ margin:0; font-size:0.95rem; color: var(--ink); line-height:1.36; position:relative; z-index:1; }
 .voces-foot{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:4px; position:relative; z-index:1; }
 .voces-who{ display:flex; align-items:center; gap:10px; }
 .voces-avatar{
@@ -996,14 +1162,8 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
   mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
   mask-composite: intersect;
 }
-@media (max-width: 620px){ .mazo-petalos{ display:none; } }
+/* en mobile se usa otra composición vertical (<picture> en el HTML) */
 
-.mazo-hint{
-  position:relative; z-index:2;
-  margin:0; font-size:0.78rem; font-style:italic; color: var(--muted);
-  transition: opacity .3s ease;
-}
-.mazo-hint.is-hidden{ opacity:0; }
 
 .mazo-viewport{
   position:relative; z-index:2; width:min(620px, 88vw); height:min(380px, 56vh);
@@ -1050,7 +1210,7 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 .mazo-body{ flex:1; min-width:0; min-height:0; padding: clamp(16px,2.4vw,24px); display:flex; flex-direction:column; justify-content:center; }
 .mazo-body h3{ font-size:1.15rem; letter-spacing:-0.01em; }
 .mazo-body p{
-  margin-top:6px; color: var(--ink-soft); font-size:0.88rem; line-height:1.5;
+  margin-top:6px; color: var(--ink-soft); font-size:0.88rem; line-height:1.32;
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 .mazo-link{
@@ -1085,15 +1245,14 @@ section{ padding-block: clamp(44px, 6vw, 76px); }
 @media (max-width: 860px){ .about-grid{ grid-template-columns:1fr; } }
 blockquote.pull{
   font-size:1.5rem; font-weight:500; font-style:italic; font-family:'Fraunces', Georgia, serif;
-  line-height:1.3; margin: 16px 0 0; color: var(--ink);
+  line-height:1.22; margin: 16px 0 0; color: var(--ink);
   border-left: 3px solid var(--coral); padding-left: 18px;
 }
 
 /* ============ CONTACT ============ */
 .contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(20px,4vw,48px); }
 @media (max-width: 860px){ .contact-grid{ grid-template-columns:1fr; } }
-.info-row{ display:flex; gap:14px; align-items:flex-start; padding-block:13px; border-bottom:1px solid var(--line); }
-.info-row:last-child{ border-bottom:none; }
+.info-row{ display:flex; gap:14px; align-items:flex-start; padding-block:13px; }
 .info-row h4{ font-size:0.74rem; text-transform:uppercase; letter-spacing:0.09em; color: var(--muted); margin:0 0 4px; font-weight:700; }
 .info-row p, .info-row a{ font-size:0.96rem; text-decoration:none; }
 .info-row a:hover{ color: var(--coral); }
@@ -1140,7 +1299,7 @@ blockquote.pull{
   padding: 12px 13px; width:100%; box-sizing:border-box; appearance:none;
 }
 .field-stack select{ padding-right:36px; cursor:pointer; }
-.field-stack textarea{ resize:none; font-family:inherit; line-height:1.5; }
+.field-stack textarea{ resize:none; font-family:inherit; line-height:1.32; }
 .field-stack input:focus, .field-stack select:focus, .field-stack textarea:focus{ outline:2px solid var(--sage); outline-offset:1px; }
 .field-stack input::placeholder, .field-stack textarea::placeholder{ color:var(--muted); }
 .field-stack .caret{
@@ -1168,18 +1327,275 @@ blockquote.pull{
 
 /* ============ FOOTER ============ */
 footer.site{ background: var(--sage-deep); color: var(--bg); padding-block: 44px 28px; }
-.footer-grid{ display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 28px; }
-@media (max-width: 760px){ .footer-grid{ grid-template-columns: 1fr 1fr; } }
-@media (max-width: 480px){ .footer-grid{ grid-template-columns: 1fr; } }
-.footer-grid h5{ font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; opacity:.7; margin-bottom:10px; font-weight:700; }
-.footer-grid a{ text-decoration:none; opacity:.92; font-size:0.9rem; display:block; margin-bottom:7px; }
-.footer-grid a:hover{ opacity:1; text-decoration:underline; }
-.footer-grid p{ font-size:0.9rem; opacity:.92; line-height:1.7; }
+.footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1.1fr; gap: 40px; }
+/* jerarquía: títulos en la tipografía de marca, blancos y más grandes;
+   el contenido más chico y apagado */
+.footer-grid h5{
+  font-family:'Fraunces', Georgia, serif; font-size: 1.2rem; font-weight:600;
+  color:#fff; margin: 0 0 14px; letter-spacing: 0;
+}
+.footer-grid a{ text-decoration:none; color: rgba(255,255,255,.72); font-size:0.92rem; display:block; margin-bottom:9px; transition: color .2s ease; }
+.footer-grid a:hover{ color:#fff; }
+.footer-grid p{ font-size:0.92rem; color: rgba(255,255,255,.72); line-height:1.42; }
+.footer-nota{ margin-top: 10px; font-size: .84rem !important; color: rgba(255,255,255,.55) !important; }
+/* columna de marca: logo en blanco + redes */
+.footer-logo{ display:inline-block !important; margin-bottom: 14px !important; }
+.footer-logo img{ height: 46px; width:auto; filter: brightness(0) invert(1); }
+.footer-marca p{ max-width: 34ch; }
+.footer-redes{ display:flex; gap:10px; margin-top: 18px; }
+.footer-red{
+  display:grid !important; place-items:center; width:42px; height:42px; margin:0 !important;
+  border-radius:50%; border:1px solid rgba(255,255,255,.28); color:#fff !important;
+  transition: background .2s ease, border-color .2s ease;
+}
+.footer-red svg{ width:19px; height:19px; }
+.footer-red:hover{ background: var(--coral); border-color: var(--coral); }
+.footer-mapa{ display:inline-flex !important; align-items:center; gap:6px; margin-top: 12px; color: var(--ochre) !important; font-weight:700; }
+.footer-mapa svg{ width:14px; height:14px; stroke: currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition: transform .2s ease; }
+.footer-mapa:hover svg{ transform: translateX(3px); }
 .footer-bottom{
-  margin-top: 32px; padding-top:20px; border-top:1px solid rgba(238,240,231,0.18);
+  margin-top: 32px; padding-top:20px;
   display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
   font-size:0.78rem; opacity:.75;
 }
 .footer-bottom a{ text-decoration: underline; }
 
-@media (max-width: 400px){ .wrap{ padding-inline: 16px; } }
+/* pantallas chicas: 16px de costado. Se cambia la variable (no solo el
+   .wrap) para que todo lo que se estira hasta el borde con
+   calc(var(--wrap-pad) * -1) use la misma medida y nada se pase. */
+@media (max-width: 400px){ :root{ --wrap-pad: 16px; } .wrap{ padding-inline: 16px; } }
+
+/* (al final del archivo para que le gane a las reglas generales del footer) */
+/* footer en mobile: más corto, sin descripción ni nota, links en 2 columnas */
+/* celu: todo centrado y en bloques separados por una línea fina.
+   Logo con las redes abajo; los links de "Explorá" como botoncitos
+   (más fáciles de tocar con el dedo); dirección + "Cómo llegar"; y el
+   pie chiquito al final. Sin descripción ni nota de horarios. */
+@media (max-width: 760px){
+  .footer-grid{ grid-template-columns: 1fr; gap: 0; text-align:center; }
+  .footer-grid > div{ padding: 24px 0; border-top: 1px solid rgba(255,255,255,.12); }
+  .footer-grid > .footer-marca{ padding-top: 0; border-top: 0; display:flex; flex-direction:column; align-items:center; }
+  .footer-marca p, .footer-nota{ display:none; }
+  .footer-logo{ margin-bottom: 16px !important; }
+  .footer-logo img{ height: 50px; }
+  .footer-redes{ margin-top: 0; justify-content:center; }
+  .footer-grid h5{ font-size: 1.05rem; margin-bottom: 14px; }
+  .footer-links{ display:flex; flex-wrap:wrap; justify-content:center; gap: 8px; }
+  .footer-links a{
+    margin:0; padding: 8px 14px; border-radius: 999px; font-size: .88rem;
+    background: rgba(255,255,255,.08); color: rgba(255,255,255,.85);
+  }
+  .footer-links a:hover{ background: rgba(255,255,255,.16); }
+  .footer-grid p{ margin:0; }
+  .footer-mapa{ justify-content:center; margin-top: 10px; }
+  .footer-bottom{
+    margin-top: 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12);
+    flex-direction: column; align-items:center; gap: 6px; text-align:center;
+  }
+}
+
+/* ============ MOBILE: "Tres planes" como lista compacta ============
+   Foto cuadradita a la izquierda, título y texto a la derecha: se ven
+   los tres sin scrollear tanto. */
+@media (max-width: 620px){
+  .tres-planes{ gap: 12px; }
+  .tres-planes .product{ flex-direction: row; align-items: stretch; }
+  .tres-planes .product .ph{ flex: 0 0 108px; aspect-ratio: auto; min-height: 108px; }
+  .tres-planes .product-body{ padding: 12px 14px; gap: 4px; justify-content: center; }
+  .tres-planes .product-body h3{ font-size: 1rem; }
+  .tres-planes .product-body p{ flex: none; font-size: .8rem; line-height: 1.36; }
+}
+
+/* ============ MOBILE: "Voces de la casa" como cinta ============
+   Dos filas de reseñas que se deslizan solas en sentidos opuestos (las
+   arma script.js copiando las tarjetas). Arriba, el 5,0 al lado del
+   título. En PC no cambia nada: sigue la grilla y los chips. */
+.voces-cinta, .voces-nota{ display:none; }
+/* en la PC la grilla muestra solo las primeras 4 (en el HTML hay 8: las otras 4 son para la cinta del celu) */
+.voces-grid .voces-card:nth-child(n+5){ display:none; }
+@keyframes voces-correr{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+@media (max-width: 620px){
+  .voces-head{ display:flex; align-items:flex-end; justify-content:space-between; gap: 12px; text-align:left; }
+  .voces-head h2{ margin:0; max-width: 9ch; }
+  .voces-nota{ display:flex; align-items:center; gap: 8px; margin:0; flex:none; }
+  .voces-nota b{ font-family:'Fraunces', Georgia, serif; font-weight:600; font-size: 2.1rem; line-height:1; color: var(--ink); }
+  .voces-nota > span{ display:flex; flex-direction:column; gap:3px; font-size:.72rem; color: var(--ink-soft); }
+  .voces-nota .voces-stars-sm svg{ width:10px; height:10px; }
+  .voces-grid{ display:none; }
+  .voces-cinta{
+    display:flex; flex-direction:column; gap: 14px; overflow:hidden;
+    margin-inline: calc(var(--wrap-pad) * -1); padding: 8px 0 18px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .voces-fila{ display:flex; gap: 14px; width:max-content; align-items:flex-start; animation: voces-correr 48s linear infinite; }
+  .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 56s; }
+  .voces-cinta .voces-card{ flex: 0 0 250px; padding: 20px 18px 18px; gap: 10px; transform:none !important; }
+  .voces-cinta .voces-txt{ font-size: .88rem; }
+  .voces-cinta .voces-quote{ display:none; }
+  /* abajo queda solo "Ver todas las reseñas" (el puntaje ya está arriba) */
+  .voces-chip{ display:none; }
+  .voces-loose{ margin-top: 14px; }
+}
+/* ---- PRUEBA en PC: la cinta como sección aparte, debajo de la grilla ---- */
+section.voces-pc{ padding-top: clamp(24px, 3vw, 40px); }
+.voces-pc-head{ display:flex; align-items:flex-end; justify-content:space-between; gap: 24px; }
+.voces-pc-head h2{ margin:0; font-size: clamp(1.6rem, 1.25rem + 1.3vw, 2.3rem); }
+.voces-pc-nota{ display:flex; align-items:center; gap: 12px; margin:0; }
+.voces-pc-nota b{ font-family:'Fraunces', Georgia, serif; font-weight:600; font-size: 2.8rem; line-height:1; color: var(--ink); }
+.voces-pc-nota > span{ display:flex; flex-direction:column; gap:4px; font-size:.85rem; color: var(--ink-soft); }
+.voces-cinta--pc{
+  display:flex; flex-direction:column; gap: 20px; overflow:hidden; margin-top: 36px; padding: 8px 0 26px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.voces-cinta--pc .voces-fila{ display:flex; gap: 20px; width:max-content; align-items:flex-start; animation: voces-correr 70s linear infinite; }
+.voces-cinta--pc .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 80s; }
+.voces-cinta--pc .voces-card{ flex: 0 0 360px; transform:none !important; }
+.voces-cinta--pc .voces-card:hover{ transform:none; }
+.voces-pc .voces-link{ display:inline-flex; margin-top: 8px; }
+@media (prefers-reduced-motion: reduce){
+  .voces-cinta--pc{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+  .voces-cinta--pc .voces-fila{ animation:none; }
+}
+/* en el celu la prueba no se ve: ahí la cinta ya está en lugar de la grilla */
+@media (max-width: 620px){ section.voces-pc{ display:none; } }
+
+/* en pantallas chicas el .wrap usa 16px de costado: la cinta se estira lo mismo
+   (si no, se pasaba 4px y la página se movía de costado) */
+@media (max-width: 400px){ .voces-cinta{ margin-inline: -16px; } }
+/* si el celu pide menos movimiento: la cinta no corre, se desliza con el dedo */
+@media (max-width: 620px) and (prefers-reduced-motion: reduce){
+  .voces-cinta{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+  .voces-fila{ animation:none; padding-inline: var(--wrap-pad); }
+}
+
+/* ============ TEXTOS MÁS CORTOS EN MOBILE ============
+   .m-ocultar: parte del texto que en el celu no se muestra.
+   .m-solo: versión resumida que se muestra solo en el celu. */
+.m-solo{ display:none; }
+@media (max-width: 620px){
+  .m-ocultar{ display:none; }
+  .m-solo{ display:inline; }
+  /* los tags del espacio privado repiten lo que ya dice el texto */
+  .ambiente-tags{ display:none; }
+}
+
+/* ============ LAMARCA: "¿Tenés otra consulta?" con la fachada de fondo ============ */
+section.consulta-fachada{
+  position:relative; padding-block: clamp(100px, 11vw, 170px);
+  background:
+    linear-gradient(90deg, rgba(35,38,31,.62) 0%, rgba(35,38,31,.38) 55%, rgba(35,38,31,.28) 100%),
+    url('img/hero-contacto.jpg') center / cover no-repeat;
+}
+.cf-grid{ display:grid; grid-template-columns: minmax(0, 560px) 1fr; gap: clamp(32px, 6vw, 96px); align-items:center; }
+.cmf-card{
+  width:100%; box-sizing:border-box;
+  background: var(--surface); border-radius: 22px; padding: clamp(26px, 3vw, 40px);
+  box-shadow: 0 40px 70px -40px rgba(0,0,0,.7);
+}
+.cmf-card h2{ font-size: clamp(1.8rem, 1.3rem + 1.5vw, 2.4rem); }
+.cmf-bajada{ margin-top: 10px; color: var(--ink-soft); }
+.cmf-datos{ display:flex; flex-wrap:wrap; gap: 4px 0; margin: 14px 0 6px; padding:0; list-style:none; font-size:.9rem; }
+.cmf-datos li:not(:last-child)::after{ content:'·'; margin: 0 10px; color: var(--muted); }
+.cmf-datos a{ color: var(--ink-soft); text-decoration:none; }
+.cmf-datos a:hover{ color: var(--coral); }
+.cmf-form{ max-width:none; display:flex; flex-direction:column; gap: 14px; margin-top: 14px; }
+.cmf-form label{ display:flex; flex-direction:column; gap:6px; font-size:.82rem; font-weight:700; color: var(--ink-soft); }
+.cmf-form input, .cmf-form textarea{
+  font-family:'Karla', sans-serif; font-size:.96rem; font-weight:400; color: var(--ink);
+  background: var(--surface); border:1px solid var(--line); border-radius: var(--radius);
+  padding: 12px 14px; resize: vertical;
+}
+.cmf-form input:focus, .cmf-form textarea:focus{ outline:2px solid var(--sage); outline-offset:1px; }
+.cmf-form input::placeholder, .cmf-form textarea::placeholder{ color: var(--muted); }
+.cmf-pie{ display:flex; align-items:center; justify-content:space-between; gap: 16px; margin-top: 4px; }
+.cmf-pie p{ font-size:.82rem; color: var(--muted); max-width: 32ch; }
+.mini-form.cmf-form button.btn{ margin-top:0; flex:none; }
+
+/* el mapa como polaroid clavada (usa .pin de la pizarra de Cumpleaños) */
+.cf-mapa{
+  position:relative; justify-self:center; display:block; width: min(340px, 100%);
+  background:#fff; padding: 12px 12px 0; text-decoration:none;
+  box-shadow: 0 30px 40px -24px rgba(0,0,0,.75);
+  transform: rotate(3deg); transition: transform .3s ease;
+}
+.cf-mapa:hover{ transform: rotate(1deg) scale(1.02); }
+.cf-mapa .pin{ top:-8px; }
+/* el iframe es más grande que el marco y está centrado: el pin sigue en
+   el medio, pero los botones de Google ("Open in Maps", zoom, etc.)
+   quedan afuera, recortados. El filtro lo apaga un poco para que
+   combine con la paleta. */
+.cf-mapa-foto{ position:relative; display:block; aspect-ratio: 1 / 1; background:#E4EAD9; overflow:hidden; }
+.cf-mapa-foto iframe{
+  position:absolute; top:-70px; left:-90px; width: calc(100% + 180px); height: calc(100% + 140px);
+  border:0; pointer-events:none; filter: saturate(.6) sepia(.15) contrast(.96);
+}
+.cf-mapa-pie{
+  display:block; padding: 12px 0 14px; text-align:center;
+  font-family:'Fraunces', Georgia, serif; font-style:italic; font-size: 1.1rem; color: var(--ink-soft);
+}
+.cf-mapa:hover .cf-mapa-pie{ color: var(--coral); }
+
+/* abajo la ola ya es verde oscuro (la pinta la sección), así que en
+   esta página el footer no lleva su ola blanca */
+.footer-ola--foto .ola--footer{ display:none; }
+footer.site.footer-ola--foto{ padding-top: 44px; }
+
+@media (max-width: 860px){
+  section.consulta-fachada{ background:
+    linear-gradient(180deg, rgba(35,38,31,.5), rgba(35,38,31,.3)),
+    url('img/hero-contacto.jpg') center / cover no-repeat; }
+  .cf-grid{ grid-template-columns: 1fr; }
+  .cf-mapa{ width: min(260px, 80%); }
+}
+/* "Cómo llegar" suelto: solo en el celu (en PC está la polaroid) */
+.cmf-llegar{ display:none; }
+
+/* celu: la fachada como portada con el título en blanco encima y una ola
+   abajo; después el formulario sobre blanco (sin card) y al final el mapa
+   chiquito con los datos y "Cómo llegar".
+   La card pasa a display:contents, así el título, la bajada, los datos y
+   el form se acomodan directo en la grilla. La foto es un ::before de la
+   grilla que ocupa las 3 primeras filas (espacio + título + bajada): si el
+   texto ocupa más renglones, la foto crece sola. */
+@media (max-width: 600px){
+  section.consulta-fachada{ padding: 0 0 64px; background: var(--bg); }
+  .cf-grid{
+    display:grid; position:relative; z-index:1; isolation:isolate;
+    grid-template-columns: 96px 1fr; column-gap: 14px; row-gap: 0;
+    grid-template-rows: 250px auto auto auto auto auto;
+    align-items: start;
+    grid-template-areas: "foto foto" "titulo titulo" "bajada bajada" "form form" "mapa datos" "mapa llegar";
+  }
+  .cf-grid::before{
+    content:''; grid-row: 1 / 4; grid-column: 1 / -1; z-index:-1; align-self:stretch;
+    margin-inline: calc(-1 * var(--wrap-pad));
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0,80 L0,36 C280,64 560,10 840,36 C1080,58 1280,22 1440,40 L1440,80 Z' fill='%23FFFFFF'/%3E%3C/svg%3E") bottom / 100% 30px no-repeat,
+      linear-gradient(180deg, rgba(35,38,31,0) 35%, rgba(35,38,31,.8) 100%),
+      url('img/hero-contacto.jpg') 30% 30% / cover no-repeat;
+  }
+  .cmf-card{ display:contents; }
+  .cmf-card h2{ grid-area: titulo; color:#fff; font-size: 1.9rem; }
+  .cmf-bajada{ grid-area: bajada; color:#EDEFE6; font-size: .95rem; margin-top: 8px; padding-bottom: 48px; }
+  .cmf-form{ grid-area: form; margin-top: 18px; }
+  .cmf-pie{ flex-direction: column; align-items: stretch; }
+  .cmf-pie p{ max-width:none; }
+  .mini-form.cmf-form button.btn{ justify-content:center; text-align:center; }
+  .cmf-datos{ grid-area: datos; align-self:end; flex-direction: column; gap: 2px; margin: 0; }
+  .cmf-datos li:not(:last-child)::after{ content:none; }
+  .cmf-llegar{ grid-area: llegar; display:block; align-self:start; margin-top: 6px; color: var(--coral); font-weight:700; font-size:.9rem; text-decoration:none; }
+  .cf-mapa{
+    grid-area: mapa; align-self:center; width: 96px; height: 96px; margin-top: 26px;
+    padding:0; border-radius: 14px; overflow:hidden; transform:none; box-shadow:none;
+  }
+  .cf-mapa:hover{ transform:none; }
+  .cf-mapa .pin, .cf-mapa-pie{ display:none; }
+  .cf-mapa-foto{ aspect-ratio:auto; height:100%; }
+  .cf-mapa-foto iframe{ top:-60px; left:-120px; width: calc(100% + 240px); height: calc(100% + 120px); }
+}
+@media (max-width: 520px){
+  .cmf-pie{ flex-direction: column; align-items: stretch; }
+  .cmf-pie p{ max-width:none; }
+}

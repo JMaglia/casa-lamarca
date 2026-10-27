@@ -88,6 +88,16 @@
     if(phase === bandPhase) return;
     bandPhase = phase;
     if(phase === 'fija'){
+      /* se mide JUSTO antes de fijarla, con la banda en su lugar normal:
+         si se mide solo al cargar, las fuentes o las imágenes que cargan
+         después cambian las alturas y la banda "salta" al fijarse. */
+      band.classList.remove('is-pinned');
+      band.style.top = '';
+      band.style.transform = '';
+      bandWrap.style.paddingTop = '';
+      var r = band.getBoundingClientRect();
+      var gap = track.getBoundingClientRect().top - r.bottom;
+      bandFixedTop = stickyTop - gap - r.height;
       bandWrap.style.paddingTop = band.offsetHeight + 'px';
       band.style.transform = '';
       band.style.top = bandFixedTop + 'px';

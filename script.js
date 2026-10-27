@@ -179,3 +179,69 @@
     window.open('https://wa.me/5491123788557?text=' + texto, '_blank', 'noopener');
   });
 })();
+
+/* Foto que se da vuelta (.flip, home y Lamarca): en desktop gira con el hover (CSS); en el celu
+   (y con teclado) se da vuelta al tocarla / Enter. */
+(function(){
+  document.querySelectorAll('.flip').forEach(function(card){
+    function toggle(){
+      var on = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+    });
+  });
+})();
+
+
+/* Voces de la casa en el celu: "la cinta". Arma dos filas con copias de
+   las reseñas que se deslizan solas, en sentidos opuestos (la animación
+   está en CSS). Cada fila tiene las tarjetas dos veces seguidas, así al
+   llegar a la mitad vuelve a empezar sin que se note el salto. No se
+   frena nunca. En PC, debajo de la grilla, está la prueba de la cinta
+   (sección .voces-pc). */
+window.armarCintaVoces = function(grid, destino){
+  // destino: un .voces-cinta ya puesto en el HTML (la prueba de PC);
+  // si no se pasa, se crea uno nuevo justo debajo de la grilla (celu)
+  if(!destino){
+    var vieja = grid.parentNode.querySelector('.voces-cinta');
+    if(vieja) vieja.remove();
+  }
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.voces-card'));
+  if(cards.length < 2) return;
+  var cinta = destino || document.createElement('div');
+  if(!destino) cinta.className = 'voces-cinta';
+  cinta.innerHTML = '';
+  cinta.setAttribute('aria-hidden', 'true'); // las reseñas reales ya están en la grilla
+  var ordenes;
+  if(cards.length >= 8){
+    // arriba las primeras 4, abajo las 4 siguientes (todas distintas)
+    ordenes = [cards.slice(0, 4), cards.slice(4, 8)];
+  } else if(cards.length >= 6){
+    var m = Math.ceil(cards.length / 2);
+    ordenes = [cards.slice(0, m), cards.slice(m)];
+  } else {
+    // pocas reseñas: las mismas en las dos filas, en otro orden
+    var mitad = Math.floor(cards.length / 2);
+    ordenes = [cards, cards.slice(mitad).concat(cards.slice(0, mitad))];
+  }
+  ordenes.forEach(function(orden, n){
+    var fila = document.createElement('div');
+    fila.className = 'voces-fila' + (n ? ' voces-fila--vuelta' : '');
+    // dos veces seguidas: al llegar a la mitad vuelve a empezar sin salto
+    orden.concat(orden).forEach(function(card){
+      var c = card.cloneNode(true);
+      c.classList.remove('reveal');
+      fila.appendChild(c);
+    });
+    cinta.appendChild(fila);
+  });
+  if(!destino) grid.parentNode.insertBefore(cinta, grid.nextSibling);
+};
+document.querySelectorAll('.voces-grid').forEach(function(g){ window.armarCintaVoces(g); });
+document.querySelectorAll('[data-cinta-de]').forEach(function(destino){
+  var grid = document.querySelector(destino.getAttribute('data-cinta-de'));
+  if(grid) window.armarCintaVoces(grid, destino);
+});
