@@ -36,6 +36,27 @@
 
 <main>
 
+  <!-- TIENDA "PRÓXIMAMENTE": mientras no esté lista, se muestra esto. -->
+  <section class="banner proxima">
+    <div class="wrap proxima-grid">
+      <div class="proxima-texto">
+        <h1>Objetos hechos a mano</h1>
+        <p class="proxima-pronto">Próximamente</p>
+        <p class="lede">Estamos armando la tienda con las carteras, la cerámica y las piezas que hacemos nosotras. Muy pronto las vas a poder ver acá.</p>
+      </div>
+      <div class="proxima-fotos" aria-hidden="true">
+        <figure class="proxima-foto" style="--r:-5deg"><span class="pin"></span><img src="img/mazo-carteras.jpg" alt="" loading="lazy"><figcaption>Carteras</figcaption></figure>
+        <figure class="proxima-foto" style="--r:3deg"><span class="pin"></span><img src="img/mazo-ceramica.jpg" alt="" loading="lazy"><figcaption>Cerámica</figcaption></figure>
+        <figure class="proxima-foto" style="--r:-2deg"><span class="pin"></span><img src="img/mazo-velas.jpg" alt="" loading="lazy"><figcaption>Velas</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIENDA REAL (catálogo): está oculta con "hidden", no borrada.
+       Para volver a mostrarla: sacar el atributo hidden de este div y
+       borrar la sección "proxima" de arriba. -->
+  <div class="tienda-catalogo" hidden>
+
   <section class="banner">
     <div class="wrap">
       <h1>Objetos hechos a mano</h1>
@@ -117,6 +138,8 @@
       <p class="notice">Precios y stock de prueba: se actualizan antes de publicar.</p>
     </div>
   </section>
+
+  </div>
 
 </main>
 

@@ -1528,7 +1528,7 @@ section.consulta-fachada{
    combine con la paleta. */
 .cf-mapa-foto{ position:relative; display:block; aspect-ratio: 1 / 1; background:#E4EAD9; overflow:hidden; }
 .cf-mapa-foto iframe{
-  position:absolute; top:-70px; left:-90px; width: calc(100% + 180px); height: calc(100% + 140px);
+  position:absolute; top:-100px; left:-160px; width: calc(100% + 320px); height: calc(100% + 200px);
   border:0; pointer-events:none; filter: saturate(.6) sepia(.15) contrast(.96);
 }
 .cf-mapa-pie{
@@ -1566,7 +1566,7 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
     grid-template-columns: 96px 1fr; column-gap: 14px; row-gap: 0;
     grid-template-rows: 250px auto auto auto auto auto;
     align-items: start;
-    grid-template-areas: "foto foto" "titulo titulo" "bajada bajada" "form form" "mapa datos" "mapa llegar";
+    grid-template-areas: "foto foto" "titulo titulo" "bajada bajada" "form form" "mapa llegar";
   }
   .cf-grid::before{
     content:''; grid-row: 1 / 4; grid-column: 1 / -1; z-index:-1; align-self:stretch;
@@ -1585,7 +1585,7 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
   .mini-form.cmf-form button.btn{ justify-content:center; text-align:center; }
   .cmf-datos{ grid-area: datos; align-self:end; flex-direction: column; gap: 2px; margin: 0; }
   .cmf-datos li:not(:last-child)::after{ content:none; }
-  .cmf-llegar{ grid-area: llegar; display:block; align-self:start; margin-top: 6px; color: var(--coral); font-weight:700; font-size:.9rem; text-decoration:none; }
+  .cmf-llegar{ grid-area: llegar; display:block; align-self:center; margin-top: 26px; color: var(--coral); font-weight:700; font-size:.9rem; text-decoration:none; }
   .cf-mapa{
     grid-area: mapa; align-self:center; width: 96px; height: 96px; margin-top: 26px;
     padding:0; border-radius: 14px; overflow:hidden; transform:none; box-shadow:none;
@@ -1598,4 +1598,59 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
 @media (max-width: 520px){
   .cmf-pie{ flex-direction: column; align-items: stretch; }
   .cmf-pie p{ max-width:none; }
+}
+
+/* ============ TIENDA "PRÓXIMAMENTE" ============
+   Texto a la izquierda y tres polaroids clavadas con la chinche roja a
+   la derecha (en el celu van abajo, más chicas). El catálogo real sigue
+   en el HTML, oculto con el atributo hidden. */
+.proxima-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items:center; }
+.proxima-pronto{
+  margin-top: 6px; font-family:'Fraunces', Georgia, serif; font-style: italic; font-weight:500;
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.1rem); color: var(--coral);
+}
+.proxima-texto .lede + .lede{ margin-top: 10px; }
+.proxima-fotos{ position:relative; display:flex; justify-content:center; padding: 20px 0; }
+.proxima-foto{
+  position:relative; margin:0 -14px; width: clamp(130px, 13vw, 190px); flex:none;
+  background:#fff; padding: 9px 9px 0; transform: rotate(var(--r, 0deg));
+  box-shadow: 0 18px 28px -16px rgba(50,30,10,.6);
+}
+.proxima-foto:nth-child(2){ margin-top: 34px; z-index:1; }
+.proxima-foto img{ display:block; width:100%; aspect-ratio: 1 / 1.1; object-fit:cover; }
+.proxima-foto figcaption{
+  padding: 8px 0 10px; text-align:center;
+  font-family:'Fraunces', Georgia, serif; font-style:italic; font-size: 1rem; color: var(--ink-soft);
+}
+@media (max-width: 760px){
+  .proxima-grid{ grid-template-columns: 1fr; }
+  .proxima-fotos{ padding: 6px 0 10px; }
+  .proxima-foto{ width: 31%; margin: 0 -6px; padding: 6px 6px 0; }
+  .proxima-foto:nth-child(2){ margin-top: 18px; }
+  .proxima-foto figcaption{ font-size: .8rem; padding: 6px 0 8px; }
+  .proxima-foto .pin{ width:14px; height:14px; margin-left:-7px; top:-5px; }
+}
+
+/* ============ ALQUILÁ EL ESPACIO: frase, "incluye" y para empresas ============ */
+.espacio-frase{
+  margin-top: 14px; font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:500;
+  font-size: clamp(1.15rem, 1rem + .5vw, 1.4rem); color: var(--coral);
+}
+.incluye{ display:flex; justify-content:center; flex-wrap:wrap; gap: 10px 26px; margin: 18px 0 0; padding:0; list-style:none; }
+.incluye li{ display:flex; align-items:center; gap: 8px; font-size:.95rem; font-weight:600; color: var(--ink-soft); }
+.incluye svg{ width:22px; height:22px; fill:none; stroke: var(--sage); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.corpo-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(18px, 3vw, 32px); max-width: 980px; margin-inline:auto; }
+.corpo-card{ background: var(--surface); border-radius: 20px; overflow:hidden; box-shadow: 0 24px 40px -30px rgba(35,38,31,.45); }
+.corpo-card img{ display:block; width:100%; aspect-ratio: 16 / 10; object-fit:cover; }
+.corpo-body{ padding: 22px 24px 26px; }
+.corpo-body h3{ font-size: 1.25rem; }
+.corpo-body p{ margin-top: 8px; color: var(--ink-soft); }
+.corpo-cierre{ margin-top: clamp(30px, 4vw, 44px); text-align:center; display:flex; flex-direction:column; align-items:center; gap: 18px; }
+.corpo-cierre p{ font-family:'Fraunces', Georgia, serif; font-style:italic; font-size: clamp(1.15rem, 1rem + .6vw, 1.45rem); color: var(--sage-deep); max-width: 36ch; }
+@media (max-width: 700px){
+  .corpo-grid{ grid-template-columns: 1fr; }
+  .corpo-card img{ aspect-ratio: 16 / 9; }
+  .corpo-body{ padding: 18px 18px 22px; }
+  .incluye{ gap: 8px 18px; }
+  .incluye li{ font-size: .88rem; }
 }
