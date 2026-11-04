@@ -1398,7 +1398,11 @@ footer.site{ background: var(--sage-deep); color: var(--bg); padding-block: 44px
    Foto cuadradita a la izquierda, título y texto a la derecha: se ven
    los tres sin scrollear tanto. */
 @media (max-width: 620px){
-  .tres-planes{ gap: 12px; }
+  /* filas iguales; la foto no empuja la altura (la del espacio es
+     vertical y estiraba su card): ocupa el alto que da el texto */
+  .tres-planes{ gap: 12px; grid-auto-rows: 1fr; }
+  .tres-planes .product .ph{ position:relative; }
+  .tres-planes .product .ph img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
   .tres-planes .product{ flex-direction: row; align-items: stretch; }
   .tres-planes .product .ph{ flex: 0 0 108px; aspect-ratio: auto; min-height: 108px; }
   .tres-planes .product-body{ padding: 12px 14px; gap: 4px; justify-content: center; }
@@ -1653,4 +1657,38 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
   .corpo-body{ padding: 18px 18px 22px; }
   .incluye{ gap: 8px 18px; }
   .incluye li{ font-size: .88rem; }
+}
+
+/* ============ HOME "Tres planes": que se note que son links ============
+   PC: "Ver talleres →" en coral al pie de cada card (la flecha se corre
+   al pasar el mouse). Celu (lista compacta): una flechita a la derecha. */
+.plan-link{
+  display:inline-flex; align-items:center; gap:6px; margin-top: auto; padding-top: 6px;
+  color: var(--coral); font-weight:700; font-size:.9rem;
+}
+.plan-link svg{ width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition: transform .2s ease; }
+.tres-planes .product:hover .plan-link svg{ transform: translateX(4px); }
+.plan-chev{ display:none; }
+@media (max-width: 620px){
+  .plan-link{ display:none; }
+  .plan-chev{ display:flex; align-items:center; padding: 0 12px 0 2px; color: var(--coral); flex:none; }
+  .plan-chev svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+}
+
+/* ============ HOME: hero más liviano en el celu ============
+   Menos texto (la bajada queda en una línea corta), sin la rayita
+   naranja, un solo botón (WhatsApp ya está en el menú) y más oscuro
+   abajo para que se lea bien sobre la foto. */
+@media (max-width: 620px){
+  .hero-wave{ min-height: clamp(500px, 120vw, 600px); }
+  .hero-wave-overlay{
+    background:
+      linear-gradient(0deg, rgba(14,9,5,.82) 0%, rgba(14,9,5,.55) 38%, rgba(14,9,5,.15) 70%, transparent 100%);
+  }
+  .hero-wave-content .accent{ display:none; }
+  .hero-wave-content h1{ margin: 10px 0 12px; }
+  .hero-wave-content .lede{ margin-bottom: 20px; font-size: .98rem; }
+  .hero-wave-content .hero-wa{ display:none; }
+  .hero-wave-content .btns{ margin-top: 0; }
+  .hero-wave-content .btn-primary{ padding: 12px 20px; }
 }

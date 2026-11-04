@@ -110,7 +110,17 @@
     }
   }
 
+  /* Cuánto hay que scrollear para pasar de un taller al siguiente.
+     El alto del track se arma con esto (pisa el height del CSS): así
+     da lo mismo cuántos talleres haya. Más chico = cambia más rápido. */
+  var PASO_POR_CARD = 200;
+  function sizeTrack(){
+    track.style.height = (sticky.offsetHeight + (n - 1) * PASO_POR_CARD) + 'px';
+  }
+  sizeTrack();
+
   function onResize(){
+    sizeTrack();
     measure();
     measureStickyTop();
     measureBand();
@@ -129,6 +139,10 @@
     var scrollable = track.offsetHeight - sticky.offsetHeight;
     var scrolled = stickyTop - rect.top;
     target = scrollable > 0 ? Math.min(1, Math.max(0, scrolled / scrollable)) : 0;
+    /* el scroll elige a qué taller ir, pero el carrusel no se queda a
+       mitad de camino: apenas pasás la mitad, va directo y completo al
+       siguiente (la animación la hace tick(), siempre hasta el final) */
+    if(n > 1) target = Math.round(target * (n - 1)) / (n - 1);
     moveBand(scrolled, scrollable);
     if(!hintHidden && scrolled > 4 && hint){
       hintHidden = true;
@@ -139,7 +153,7 @@
   }
 
   function tick(){
-    current += (target - current) * 0.16;
+    current += (target - current) * 0.12;
     if(Math.abs(target - current) < 0.0006) current = target;
     render(current);
     if(current !== target){
