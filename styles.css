@@ -1692,3 +1692,85 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
   .hero-wave-content .btns{ margin-top: 0; }
   .hero-wave-content .btn-primary{ padding: 12px 20px; }
 }
+
+/* ============ HERO DE ALQUILÁ EL ESPACIO Y CUMPLEAÑOS: más liviano en el celu ============
+   (clase .hero-celu en las dos secciones)
+   Que la foto aparezca en la primera pantalla: título más chico, bajada
+   corta (en Alquilá se oculta: la frase en cursiva hace de bajada) y los
+   dos botones uno al lado del otro. En PC no cambia nada. */
+@media (max-width: 620px){
+  .hero-celu{ padding-bottom: 56px; }
+  .hero-celu .cumple-hero-grid{ gap: 26px; }
+  .hero-celu h1{ font-size: clamp(1.9rem, 1.4rem + 2.4vw, 2.3rem); margin-top: 0; }
+  .espacio-hero .lede{ display:none; }
+  .hero-celu .lede{ margin-top: 10px; font-size: 1rem; }
+  .hero-celu .espacio-frase{ margin-top: 10px; font-size: 1.12rem; }
+  /* los dos botones uno al lado del otro, más compactos */
+  .hero-celu .btns{ margin-top: 20px; display:flex; flex-direction:row; flex-wrap:nowrap; gap: 8px; }
+  /* siempre lado a lado: si en un celu angosto no entra el texto en un
+     renglón, el botón pasa a dos renglones en vez de irse abajo */
+  .hero-celu .btns .btn{ flex: 1 1 auto; min-width:0; justify-content:center; text-align:center; padding: 11px 12px; font-size: .9rem; line-height: 1.2; white-space:normal; }
+  .hero-celu .cumple-hero-media{ aspect-ratio: 5 / 3.9; }
+}
+
+/* ============ FORMULARIOS más prolijos (por ahora, Cumpleaños) ============
+   Sin fondo: los campos tienen un relleno verde muy suave y sin borde;
+   al escribir se ponen blancos con un borde verde. Etiquetas más
+   legibles, select con flechita propia y el título alineado a la
+   izquierda, con el form. */
+.form-head{ text-align:left; margin-inline:0; align-self:stretch; } /* sin esto, en el celu se achica y queda corrido */
+.form-head p{ margin-inline:0; }
+.form-card .field-stack{ gap: 18px 16px; margin-top:0; align-items:end; } /* si una etiqueta ocupa 2 renglones, los campos igual quedan alineados */
+.form-card .field-stack label{ font-size: .88rem; color: var(--ink); gap: 8px; }
+.form-card .field-stack input, .form-card .field-stack select, .form-card .field-stack textarea{
+  background: #F4F6EF; border: 1px solid transparent; border-radius: 12px;
+  padding: 13px 14px; font-size: .98rem;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.form-card .field-stack input:hover, .form-card .field-stack select:hover, .form-card .field-stack textarea:hover{ border-color: rgba(35,38,31,.14); }
+.form-card .field-stack input:focus, .form-card .field-stack select:focus, .form-card .field-stack textarea:focus{
+  outline:none; background:#fff; border-color: var(--sage); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 20%, transparent);
+}
+.form-card .field-stack input::placeholder, .form-card .field-stack textarea::placeholder{ color: #9a988a; }
+/* el select muestra el "Elegí una opción" en gris, como los placeholders */
+.form-card .field-stack select:invalid{ color: #9a988a; }
+.form-card .field-stack select option{ color: var(--ink); }
+.form-card .field-stack .caret{
+  top: auto; bottom: 19px; right: 15px; width: 8px; height: 8px; border: 0;
+  border-right: 2px solid var(--sage-deep); border-bottom: 2px solid var(--sage-deep);
+  transform: rotate(45deg);
+}
+.form-card button.btn{ margin-top: 24px; padding: 15px 28px; }
+@media (max-width: 620px){ .form-card button.btn{ width:100%; justify-content:center; } }
+/* celu: que el form entre en una pantalla. Los 4 campos cortos van de a
+   dos (con etiquetas más cortas), menos espacio entre campos, el
+   comentario más bajito y sin la bajada del título. */
+@media (max-width: 620px){
+  .form-card .field-stack{ grid-template-columns: 1fr 1fr; gap: 12px 10px; }
+  .form-card .field-stack label{ font-size: .82rem; gap: 6px; }
+  .form-card .field-stack input, .form-card .field-stack select, .form-card .field-stack textarea{ padding: 11px 12px; font-size: .95rem; }
+  .form-card .field-stack .caret{ bottom: 17px; right: 13px; }
+  .form-card .field-stack select{ padding-right: 30px; }
+  .form-card .ta-compacta{ height: 74px; }
+  .form-card .field-stack .m-full{ grid-column: 1 / -1; } /* las fechas, a lo ancho: si no, el ejemplo se corta */
+  .form-card button.btn{ margin-top: 16px; padding-block: 13px; }
+  .form-split-form{ gap: 16px; }
+  .form-head > p:not(.eyebrow){ display:none; } /* sin bajada en el celu */
+}
+
+/* mismo estilo de campos para el form de Lamarca ("¿Tenés otra consulta?") */
+.cmf-form label{ font-size: .88rem; color: var(--ink); gap: 8px; }
+.cmf-form input, .cmf-form textarea{
+  background: #F4F6EF; border: 1px solid transparent; border-radius: 12px; padding: 13px 14px; font-size: .98rem;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.cmf-form input:hover, .cmf-form textarea:hover{ border-color: rgba(35,38,31,.14); }
+.cmf-form input:focus, .cmf-form textarea:focus{ outline:none; background:#fff; border-color: var(--sage); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 20%, transparent); }
+.cmf-form input::placeholder, .cmf-form textarea::placeholder{ color:#9a988a; }
+.cmf-form textarea{ resize:none; }
+@media (max-width: 620px){
+  .cmf-form{ gap: 12px; }
+  .cmf-form label{ font-size: .82rem; gap: 6px; }
+  .cmf-form input, .cmf-form textarea{ padding: 11px 12px; font-size: .95rem; }
+  .cmf-form textarea{ height: 74px; }
+}

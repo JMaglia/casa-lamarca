@@ -37,11 +37,11 @@
 <main>
 
   <!-- HERO con collage de fotos reales. -->
-  <section class="cumple-hero">
+  <section class="cumple-hero hero-celu">
     <div class="wrap cumple-hero-grid">
       <div class="cumple-hero-text">
         <h1>Festejos distintos a un salón de siempre</h1>
-        <p class="lede">Todos los cumpleaños en Casa Lamarca vienen con taller incluido: elegís la temática y armamos la fiesta alrededor de eso.<span class="m-ocultar"> Cada festejo se arma a medida de quién lo cumple.</span></p>
+        <p class="lede">Todos los cumpleaños<span class="m-ocultar"> en Casa Lamarca</span> vienen con taller incluido<span class="m-ocultar">: elegís la temática y armamos la fiesta alrededor de eso</span>.<span class="m-ocultar"> Cada festejo se arma a medida de quién lo cumple.</span></p>
         <div class="btns">
           <a class="btn btn-primary" href="#reservar">Consultar fecha</a>
           <a class="btn btn-ghost" href="#tematicas">Ver temáticas</a>
@@ -238,12 +238,12 @@
     <div class="wrap">
       <div class="form-split">
         <div class="form-split-form">
-          <div class="section-head" style="margin-bottom:0;">
+          <div class="section-head form-head" style="margin-bottom:0;">
             <p class="eyebrow">Reservá tu fecha</p>
             <h2>Contanos de quién es el cumple</h2>
-            <p>Completá esto y seguimos la charla por WhatsApp con opciones de temática y disponibilidad.</p>
+            <p class="m-ocultar">Completá esto y seguimos la charla por WhatsApp con opciones de temática y disponibilidad.</p>
           </div>
-          <form class="mini-form" id="cumpleForm">
+          <form class="mini-form form-card" id="cumpleForm">
             <div class="field-stack">
               <label class="field">
                 <span>Cumpleaños de</span>
@@ -255,20 +255,20 @@
                 <span class="caret"></span>
               </label>
               <label>
-                <span>¿Cuántas personas, aprox.?</span>
-                <input type="text" name="cantidad" placeholder="Ej: 15 invitados">
+                <span><span class="m-ocultar">¿Cuántas personas, aprox.?</span><span class="m-solo">Personas</span></span>
+                <input type="text" name="cantidad" placeholder="15">
               </label>
-              <label>
-                <span>Fecha o fechas posibles del evento</span>
-                <input type="text" name="fecha" placeholder="Ej: algún sábado de octubre">
+              <label class="m-full">
+                <span><span class="m-ocultar">Fecha o fechas posibles del evento</span><span class="m-solo">Fecha del cumple</span></span>
+                <input type="text" name="fecha" placeholder="Algún sábado de octubre">
               </label>
-              <label>
-                <span>Fechas posibles para la visita</span>
-                <input type="text" name="fechaVisita" placeholder="Ej: cualquier tarde de esta semana">
+              <label class="m-full">
+                <span><span class="m-ocultar">Fechas posibles para la visita</span><span class="m-solo">Para la visita</span></span>
+                <input type="text" name="fechaVisita" placeholder="Esta semana, a la tarde">
               </label>
               <label class="span-2">
                 <span>¿Algo más para contarnos?</span>
-                <textarea name="comentarios" rows="3" placeholder="Ideas, restricciones alimentarias, lo que se te ocurra..."></textarea>
+                <textarea name="comentarios" rows="3" class="ta-compacta" placeholder="Ideas, restricciones alimentarias, lo que se te ocurra"></textarea>
               </label>
             </div>
             <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>

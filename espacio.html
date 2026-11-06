@@ -37,15 +37,15 @@
 <main>
 
   <!-- HERO: mismo formato que Cumpleaños (fondo claro + collage). -->
-  <section class="cumple-hero">
+  <section class="cumple-hero espacio-hero hero-celu">
     <div class="wrap cumple-hero-grid">
       <div class="cumple-hero-text">
         <h1>Un lugar distinto para reunirse</h1>
         <p class="lede">Prestamos Casa Lamarca para encuentros que no piden un salón de siempre.</p>
         <p class="espacio-frase">Vos traés el motivo. Nosotros ponemos la casa.</p>
         <div class="btns">
-          <a class="btn btn-primary" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Consultar disponibilidad</a>
-          <a class="btn btn-ghost" href="#ambientes">Ver los ambientes</a>
+          <a class="btn btn-primary" href="https://wa.me/5491123788557" target="_blank" rel="noopener"><span class="m-ocultar">Consultar disponibilidad</span><span class="m-solo">Consultar fecha</span></a>
+          <a class="btn btn-ghost espacio-ver" href="#ambientes"><span class="m-ocultar">Ver los ambientes</span><span class="m-solo">Ver ambientes</span></a>
         </div>
       </div>
       <div class="cumple-hero-media">
@@ -159,37 +159,37 @@
     <div class="wrap">
       <div class="form-split">
         <div class="form-split-form">
-          <div class="section-head" style="margin-bottom:0;">
+          <div class="section-head form-head" style="margin-bottom:0;">
             <p class="eyebrow">Reservá el espacio</p>
             <h2>Contanos qué necesitás</h2>
             <p><span class="m-ocultar">Casa Lamarca es un espacio familiar, llevado por mamá e hija. </span>Antes de confirmar solemos coordinar una visita. Completá esto y seguimos la charla por WhatsApp.</p>
           </div>
-          <form class="mini-form" id="espacioForm">
+          <form class="mini-form form-card" id="espacioForm">
             <div class="field-stack">
               <label>
-                <span>¿Para qué lo necesitás?</span>
-                <input type="text" name="uso" placeholder="Ej: reunión de equipo, taller particular..." required>
+                <span><span class="m-ocultar">¿Para qué lo necesitás?</span><span class="m-solo">¿Para qué?</span></span>
+                <input type="text" name="uso" placeholder="Reunión, taller…" required>
               </label>
               <label>
-                <span>¿Cuántas personas, aprox.?</span>
-                <input type="text" name="cantidad" placeholder="Ej: 12 personas" required>
+                <span><span class="m-ocultar">¿Cuántas personas, aprox.?</span><span class="m-solo">Personas</span></span>
+                <input type="text" name="cantidad" placeholder="12" required>
               </label>
-              <label>
-                <span>Fecha o fechas posibles del evento</span>
-                <input type="text" name="fecha" placeholder="Ej: algún miércoles de noviembre">
+              <label class="m-full">
+                <span><span class="m-ocultar">Fecha o fechas posibles del evento</span><span class="m-solo">Fecha del evento</span></span>
+                <input type="text" name="fecha" placeholder="Algún miércoles de noviembre">
               </label>
-              <label>
-                <span>Fechas posibles para la visita</span>
-                <input type="text" name="fechaVisita" placeholder="Ej: esta semana a la tarde">
+              <label class="m-full">
+                <span><span class="m-ocultar">Fechas posibles para la visita</span><span class="m-solo">Para la visita</span></span>
+                <input type="text" name="fechaVisita" placeholder="Esta semana, a la tarde">
               </label>
               <label class="span-2">
                 <span>¿Algo más para contarnos?</span>
-                <textarea name="comentario" rows="3" placeholder="Opcional"></textarea>
+                <textarea name="comentario" rows="3" class="ta-compacta" placeholder="Opcional"></textarea>
               </label>
             </div>
             <div class="btns">
               <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
-              <a class="btn btn-ghost" href="lamarca.html">Conocé nuestra historia</a>
+              <a class="btn btn-ghost m-ocultar" href="lamarca.html">Conocé nuestra historia</a>
             </div>
           </form>
         </div>

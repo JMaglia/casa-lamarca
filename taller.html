@@ -76,27 +76,27 @@
     <div class="wrap">
       <div class="form-split">
         <div class="form-split-form">
-          <div class="section-head" style="margin-bottom:0;">
+          <div class="section-head form-head" style="margin-bottom:0;">
             <h2>Armá tu evento privado de <span id="tallerEventoTipo"></span></h2>
             <p>Grupos chicos entre semana, grupos más grandes el fin de semana. Contanos qué tenés en mente y lo coordinamos por WhatsApp.</p>
           </div>
-          <form class="mini-form" id="eventoPrivadoForm">
+          <form class="mini-form form-card" id="eventoPrivadoForm">
             <div class="field-stack">
               <label class="span-2">
                 <span>¿Para qué ocasión?</span>
-                <input type="text" name="ocasion" placeholder="Ej: cumpleaños, junta con amigas, empresa...">
+                <input type="text" name="ocasion" placeholder="Cumpleaños, junta con amigas, empresa">
               </label>
-              <label>
-                <span>¿Cuántas personas, aprox.?</span>
-                <input type="text" name="cantidad" placeholder="Ej: 8 personas" required>
+              <label class="m-full">
+                <span><span class="m-ocultar">¿Cuántas personas, aprox.?</span><span class="m-solo">Personas</span></span>
+                <input type="text" name="cantidad" placeholder="8" required>
               </label>
-              <label>
-                <span>Fecha o fechas posibles</span>
-                <input type="text" name="fecha" placeholder="Ej: algún sábado de noviembre">
+              <label class="m-full">
+                <span><span class="m-ocultar">Fecha o fechas posibles</span><span class="m-solo">Fecha</span></span>
+                <input type="text" name="fecha" placeholder="Un sábado de noviembre">
               </label>
               <label class="span-2">
                 <span>¿Algo más para contarnos?</span>
-                <textarea name="comentario" rows="3" placeholder="Opcional"></textarea>
+                <textarea name="comentario" rows="3" class="ta-compacta" placeholder="Opcional"></textarea>
               </label>
             </div>
             <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
