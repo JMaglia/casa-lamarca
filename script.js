@@ -200,8 +200,7 @@
    las reseñas que se deslizan solas, en sentidos opuestos (la animación
    está en CSS). Cada fila tiene las tarjetas dos veces seguidas, así al
    llegar a la mitad vuelve a empezar sin que se note el salto. No se
-   frena nunca. En PC, debajo de la grilla, está la prueba de la cinta
-   (sección .voces-pc). */
+   frena nunca. Se usa igual en PC y en el celu. */
 window.armarCintaVoces = function(grid, destino){
   // destino: un .voces-cinta ya puesto en el HTML (la prueba de PC);
   // si no se pasa, se crea uno nuevo justo debajo de la grilla (celu)
@@ -241,7 +240,3 @@ window.armarCintaVoces = function(grid, destino){
   if(!destino) grid.parentNode.insertBefore(cinta, grid.nextSibling);
 };
 document.querySelectorAll('.voces-grid').forEach(function(g){ window.armarCintaVoces(g); });
-document.querySelectorAll('[data-cinta-de]').forEach(function(destino){
-  var grid = document.querySelector(destino.getAttribute('data-cinta-de'));
-  if(grid) window.armarCintaVoces(grid, destino);
-});

@@ -1441,29 +1441,6 @@ footer.site{ background: var(--sage-deep); color: var(--bg); padding-block: 44px
   .voces-chip{ display:none; }
   .voces-loose{ margin-top: 14px; }
 }
-/* ---- PRUEBA en PC: la cinta como sección aparte, debajo de la grilla ---- */
-section.voces-pc{ padding-top: clamp(24px, 3vw, 40px); }
-.voces-pc-head{ display:flex; align-items:flex-end; justify-content:space-between; gap: 24px; }
-.voces-pc-head h2{ margin:0; font-size: clamp(1.6rem, 1.25rem + 1.3vw, 2.3rem); }
-.voces-pc-nota{ display:flex; align-items:center; gap: 12px; margin:0; }
-.voces-pc-nota b{ font-family:'Fraunces', Georgia, serif; font-weight:600; font-size: 2.8rem; line-height:1; color: var(--ink); }
-.voces-pc-nota > span{ display:flex; flex-direction:column; gap:4px; font-size:.85rem; color: var(--ink-soft); }
-.voces-cinta--pc{
-  display:flex; flex-direction:column; gap: 20px; overflow:hidden; margin-top: 36px; padding: 8px 0 26px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-}
-.voces-cinta--pc .voces-fila{ display:flex; gap: 20px; width:max-content; align-items:flex-start; animation: voces-correr 70s linear infinite; }
-.voces-cinta--pc .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 80s; }
-.voces-cinta--pc .voces-card{ flex: 0 0 360px; transform:none !important; }
-.voces-cinta--pc .voces-card:hover{ transform:none; }
-.voces-pc .voces-link{ display:inline-flex; margin-top: 8px; }
-@media (prefers-reduced-motion: reduce){
-  .voces-cinta--pc{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
-  .voces-cinta--pc .voces-fila{ animation:none; }
-}
-/* en el celu la prueba no se ve: ahí la cinta ya está en lugar de la grilla */
-@media (max-width: 620px){ section.voces-pc{ display:none; } }
 
 /* en pantallas chicas el .wrap usa 16px de costado: la cinta se estira lo mismo
    (si no, se pasaba 4px y la página se movía de costado) */
@@ -1567,10 +1544,10 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
   section.consulta-fachada{ padding: 0 0 64px; background: var(--bg); }
   .cf-grid{
     display:grid; position:relative; z-index:1; isolation:isolate;
-    grid-template-columns: 96px 1fr; column-gap: 14px; row-gap: 0;
+    grid-template-columns: 1fr; column-gap: 0; row-gap: 0;
     grid-template-rows: 250px auto auto auto auto auto;
     align-items: start;
-    grid-template-areas: "foto foto" "titulo titulo" "bajada bajada" "form form" "mapa llegar";
+    grid-template-areas: "foto" "titulo" "bajada" "form" "mapa";
   }
   .cf-grid::before{
     content:''; grid-row: 1 / 4; grid-column: 1 / -1; z-index:-1; align-self:stretch;
@@ -1589,15 +1566,22 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
   .mini-form.cmf-form button.btn{ justify-content:center; text-align:center; }
   .cmf-datos{ grid-area: datos; align-self:end; flex-direction: column; gap: 2px; margin: 0; }
   .cmf-datos li:not(:last-child)::after{ content:none; }
-  .cmf-llegar{ grid-area: llegar; display:block; align-self:center; margin-top: 26px; color: var(--coral); font-weight:700; font-size:.9rem; text-decoration:none; }
+  /* mapa: una franja ancha con el botón "Cómo llegar" encima, abajo a la
+     derecha (antes era un cuadradito suelto con el link al costado) */
+  .cmf-llegar{
+    grid-area: mapa; z-index:2; align-self:end; justify-self:end; margin: 0 12px 12px 0;
+    display:inline-flex; align-items:center; gap:6px; background:#fff; color: var(--ink);
+    padding: 9px 14px; border-radius:999px; font-weight:700; font-size:.88rem; text-decoration:none;
+    box-shadow: 0 8px 18px -10px rgba(35,38,31,.55);
+  }
   .cf-mapa{
-    grid-area: mapa; align-self:center; width: 96px; height: 96px; margin-top: 26px;
-    padding:0; border-radius: 14px; overflow:hidden; transform:none; box-shadow:none;
+    grid-area: mapa; align-self:stretch; width: 100%; height: 160px; margin-top: 28px;
+    padding:0; border-radius: 18px; overflow:hidden; transform:none; box-shadow: 0 1px 0 rgba(35,38,31,.04), 0 0 0 1px rgba(35,38,31,.08);
   }
   .cf-mapa:hover{ transform:none; }
   .cf-mapa .pin, .cf-mapa-pie{ display:none; }
   .cf-mapa-foto{ aspect-ratio:auto; height:100%; }
-  .cf-mapa-foto iframe{ top:-60px; left:-120px; width: calc(100% + 240px); height: calc(100% + 120px); }
+  .cf-mapa-foto iframe{ top:-90px; left:-60px; width: calc(100% + 120px); height: calc(100% + 180px); }
 }
 @media (max-width: 520px){
   .cmf-pie{ flex-direction: column; align-items: stretch; }
@@ -1773,4 +1757,74 @@ footer.site.footer-ola--foto{ padding-top: 44px; }
   .cmf-form label{ font-size: .82rem; gap: 6px; }
   .cmf-form input, .cmf-form textarea{ padding: 11px 12px; font-size: .95rem; }
   .cmf-form textarea{ height: 74px; }
+}
+
+/* ============ LAMARCA en el celu: más ordenada ============ */
+@media (max-width: 620px){
+  /* Nosotras: primero el título y la frase, después la foto (más baja)
+     y al final el texto. Así la página no arranca con una foto sola. */
+  .lamarca-about .about-grid{ gap: 0; }
+  .lamarca-about .about-grid > div:last-child{ display:contents; }
+  .lamarca-about h1{ order:1; font-size: 2rem; }
+  .lamarca-about blockquote.pull{ order:2; font-size: 1.2rem; margin-top: 12px; }
+  .lamarca-about .flip{ order:3; margin-top: 22px; }
+  .lamarca-about .flip .ph--portrait{ aspect-ratio: 16 / 10; }
+  .lamarca-about .measure{ order:4; }
+  .lamarca-about .measure:first-of-type{ margin-top: 20px !important; }
+
+  /* Dos servicios: filas compactas (cuadradito de color con el número +
+     texto), en vez de dos bloques grandes con degradé */
+  section.lamarca-how{ padding-block: 72px 76px; }
+  .lamarca-how .how-head p{ display:none; }
+  .lamarca-how .how-head h2{ font-size: 1.7rem; }
+  .lamarca-how .how-tiles{ gap: 12px; }
+  .lamarca-how .how-tile, .lamarca-how .how-tile--rev{ grid-template-columns: 76px 1fr; }
+  .lamarca-how .how-tile--rev .how-media{ order:1; }
+  .lamarca-how .how-tile--rev .how-copy{ order:2; }
+  .lamarca-how .how-media{ min-height:0; }
+  .lamarca-how .how-ghost-num{ font-size: 2.6rem; bottom: auto; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .lamarca-how .how-copy{ padding: 14px 16px; }
+  .lamarca-how .how-copy h3{ font-size: 1.12rem; }
+  .lamarca-how .how-copy p{ margin-top: 4px; font-size: .86rem; }
+  .lamarca-how .how-link{ margin-top: 8px; font-size: .86rem; }
+
+  /* Reseñas: filas más bajitas (texto cortado a 4 renglones) */
+  .voces-cinta .voces-card{ flex-basis: 236px; padding: 16px 16px 14px; gap: 8px; }
+  .voces-cinta .voces-txt{ font-size: .84rem; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+}
+
+/* los links que bajan a un formulario (#reservar, #consulta...) dejan
+   lugar arriba para el menú flotante */
+section[id]{ scroll-margin-top: 96px; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
+
+/* ============ VOCES DE LA CASA: una sola versión, la cinta ============
+   En PC y en el celu: título + 5,0 arriba, dos filas que corren solas
+   y "Ver todas las reseñas". Las tarjetas salen del bloque oculto
+   .voces-grid (ver script.js). Lo de abajo es para PC; el celu ya tiene
+   sus medidas en el bloque "MOBILE: Voces de la casa como cinta". */
+.voces-grid[hidden]{ display:none !important; }
+.voces-chip{ display:none; }
+@media (min-width: 621px){
+  .voces-head{ display:flex; align-items:flex-end; justify-content:space-between; gap: 24px; text-align:left; max-width:none; }
+  .voces-head h2{ margin:0; }
+  .voces-nota{ display:flex; align-items:center; gap: 12px; margin:0; flex:none; }
+  .voces-nota b{ font-family:'Fraunces', Georgia, serif; font-weight:600; font-size: 2.8rem; line-height:1; color: var(--ink); }
+  .voces-nota > span{ display:flex; flex-direction:column; gap:4px; font-size:.85rem; color: var(--ink-soft); }
+  .voces-cinta{
+    display:flex; flex-direction:column; gap: 20px; overflow:hidden;
+    margin-inline: calc(50% - 50vw); padding: 8px 0 26px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+  .voces-fila{ display:flex; gap: 20px; width:max-content; align-items:flex-start; animation: voces-correr 70s linear infinite; }
+  .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 80s; }
+  .voces-cinta .voces-card{ flex: 0 0 360px; transform:none !important; }
+  .voces-cinta .voces-txt{ display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; } /* filas parejas */
+  .voces-loose{ margin-top: 10px; }
+}
+@media (min-width: 621px) and (prefers-reduced-motion: reduce){
+  .voces-cinta{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+  .voces-fila{ animation:none; }
 }
