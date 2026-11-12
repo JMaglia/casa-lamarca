@@ -1853,3 +1853,11 @@ html{ scroll-behavior: smooth; }
   .voces-cinta--carriles .voces-carril::-webkit-scrollbar{ display:none; }
   .voces-cinta--carriles .voces-fila{ animation:none; }
 }
+
+/* Talleres en el celu: más fluido. El resplandor de fondo ya es un
+   degradé, así que el desenfoque extra (muy pesado para el iPhone) se
+   saca sin que se note; las cards no se desenfocan en el celu. */
+@media (max-width: 620px){
+  .mazo-glow{ filter:none; }
+  .mazo-card-link{ will-change: transform, opacity; backface-visibility:hidden; }
+}

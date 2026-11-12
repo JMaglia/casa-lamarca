@@ -184,8 +184,9 @@
       var blur = (reduceMotion || esCelu) ? 0 : Math.min(dist * 1.1, 3);
       card.style.transform = 'translate3d(0, calc(-50% + ' + ty + 'px), 0) scale(' + scale + ')';
       card.style.opacity = String(opacity);
-      card.style.filter = blur > 0.05 ? 'blur(' + blur + 'px)' : 'none';
-      card.style.zIndex = String(Math.max(1, 100 - Math.round(dist * 10)));
+      if(!esCelu) card.style.filter = blur > 0.05 ? 'blur(' + blur + 'px)' : 'none';
+      var z = String(Math.max(1, 100 - Math.round(dist * 10)));
+      if(card.style.zIndex !== z) card.style.zIndex = z;
       var isActive = i === idx;
       card.style.pointerEvents = isActive ? 'auto' : 'none';
       card.tabIndex = isActive ? 0 : -1;
