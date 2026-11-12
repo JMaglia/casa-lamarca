@@ -20,6 +20,9 @@
   if(!n) return;
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* en el celu: las cards siguen al dedo (sin saltar de a una), sin
+     desenfoque (es lo que más le cuesta dibujar al iPhone) */
+  var esCelu = window.matchMedia && window.matchMedia('(max-width: 620px)').matches;
 
   var dots = cards.map(function(){
     var d = document.createElement('span');
@@ -119,7 +122,12 @@
   }
   sizeTrack();
 
+  /* en el celu, la barra de Safari aparece y desaparece al scrollear y
+     eso cuenta como cambio de tamaño: solo se recalcula si cambió el ancho */
+  var anchoPrevio = window.innerWidth;
   function onResize(){
+    if(esCelu && window.innerWidth === anchoPrevio) return;
+    anchoPrevio = window.innerWidth;
     sizeTrack();
     measure();
     measureStickyTop();
@@ -142,7 +150,7 @@
     /* el scroll elige a qué taller ir, pero el carrusel no se queda a
        mitad de camino: apenas pasás la mitad, va directo y completo al
        siguiente (la animación la hace tick(), siempre hasta el final) */
-    if(n > 1) target = Math.round(target * (n - 1)) / (n - 1);
+    if(n > 1 && !esCelu) target = Math.round(target * (n - 1)) / (n - 1);
     moveBand(scrolled, scrollable);
     if(!hintHidden && scrolled > 4 && hint){
       hintHidden = true;
@@ -153,7 +161,7 @@
   }
 
   function tick(){
-    current += (target - current) * 0.12;
+    current += (target - current) * (esCelu ? 0.25 : 0.12);
     if(Math.abs(target - current) < 0.0006) current = target;
     render(current);
     if(current !== target){
@@ -173,8 +181,8 @@
       var ty = offset * spacing;
       var scale = Math.max(0.8, 1 - dist * 0.12);
       var opacity = Math.max(0, 1 - dist * 0.65);
-      var blur = reduceMotion ? 0 : Math.min(dist * 1.1, 3);
-      card.style.transform = 'translateY(calc(-50% + ' + ty + 'px)) scale(' + scale + ')';
+      var blur = (reduceMotion || esCelu) ? 0 : Math.min(dist * 1.1, 3);
+      card.style.transform = 'translate3d(0, calc(-50% + ' + ty + 'px), 0) scale(' + scale + ')';
       card.style.opacity = String(opacity);
       card.style.filter = blur > 0.05 ? 'blur(' + blur + 'px)' : 'none';
       card.style.zIndex = String(Math.max(1, 100 - Math.round(dist * 10)));

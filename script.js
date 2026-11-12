@@ -294,3 +294,28 @@ function correrCarriles(cinta){
   io.observe(cinta);
 }
 document.querySelectorAll('.voces-grid').forEach(function(g){ window.armarCintaVoces(g); });
+
+/* DIAGNÓSTICO TEMPORAL (solo con ?debug en la dirección): muestra qué
+   pasa con las filas de reseñas en el celu. Se saca cuando esté resuelto. */
+if(/debug/.test(location.search)){
+  setTimeout(function(){
+    var out = [navigator.userAgent];
+    document.querySelectorAll('.voces-fila').forEach(function(f, i){
+      var r = f.getBoundingClientRect(), cs = getComputedStyle(f);
+      var c0 = f.children[0], cc = c0 ? getComputedStyle(c0) : null, r0 = c0 ? c0.getBoundingClientRect() : null;
+      var car = f.parentNode, rc = car.getBoundingClientRect();
+      var el = document.elementFromPoint(rc.left + rc.width / 2, rc.top + rc.height / 2);
+      out.push('FILA ' + (i + 1) + ': hijos ' + f.children.length +
+        ' | fila x' + Math.round(r.left) + ' y' + Math.round(r.top) + ' w' + Math.round(r.width) + ' h' + Math.round(r.height) +
+        ' | disp ' + cs.display + ' op ' + cs.opacity + ' vis ' + cs.visibility + ' tr ' + cs.transform +
+        ' | card1 x' + (r0 ? Math.round(r0.left) + ' y' + Math.round(r0.top) + ' w' + Math.round(r0.width) + ' h' + Math.round(r0.height) : '-') +
+        ' op ' + (cc ? cc.opacity : '-') + ' disp ' + (cc ? cc.display : '-') +
+        ' | carril ' + car.className + ' sl ' + Math.round(car.scrollLeft) + ' sw ' + car.scrollWidth + ' cw ' + car.clientWidth + ' h' + Math.round(rc.height) +
+        ' | encima: ' + (el ? el.tagName + '.' + el.className : 'nada'));
+    });
+    var p = document.createElement('textarea');
+    p.value = out.join('\n\n');
+    p.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;height:45vh;z-index:99999;font:11px/1.35 monospace;background:#fff;color:#000;border:2px solid red;padding:6px;';
+    document.body.appendChild(p);
+  }, 2500);
+}
