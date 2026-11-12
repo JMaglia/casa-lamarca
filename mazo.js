@@ -19,6 +19,14 @@
   var n = cards.length;
   if(!n) return;
 
+  /* En el celu no hay carrusel con el scroll de la página: las cards se
+     deslizan de costado con el dedo (scroll libre, ver styles.css).
+     Se decide al cargar la página. */
+  if(window.matchMedia && window.matchMedia('(max-width: 620px)').matches){
+    scroller.classList.add('mazo--libre');
+    return;
+  }
+
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var dots = cards.map(function(){

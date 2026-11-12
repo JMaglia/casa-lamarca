@@ -1833,3 +1833,40 @@ html{ scroll-behavior: smooth; }
 .reserva-wrap{ max-width: 640px; }
 .reserva-wrap .form-head p{ margin-top: 6px; color: var(--sage-deep); font-weight:600; }
 .reserva-wrap .form-card{ margin-top: 22px; }
+
+/* ============ CELU: "Los talleres que hacemos" con scroll libre ============
+   En vez del carrusel que avanza con el scroll de la página (en el celu
+   se sentía tosco), las cards van una al lado de la otra y se deslizan
+   con el dedo; se asoma la siguiente para que se entienda que hay más.
+   Lo activa mazo.js agregando .mazo--libre. */
+@media (max-width: 620px){
+  .mazo--libre .mazo-track{ height:auto !important; }
+  .mazo--libre .mazo-sticky{
+    position:static; height:auto !important; max-height:none; overflow:visible;
+    background:none; border-radius:0; align-items:stretch; gap: 16px;
+  }
+  .mazo--libre .mazo-sticky::before, .mazo--libre .mazo-glow, .mazo--libre .mazo-petalos{ display:none; }
+  .mazo--libre .mazo-head{ text-align:left; }
+  .mazo--libre .mazo-viewport{
+    width:auto; height:auto; overflow-x:auto; overflow-y:hidden;
+    -webkit-mask-image:none; mask-image:none;
+    margin-inline: calc(var(--wrap-pad) * -1); padding: 4px var(--wrap-pad) 22px;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--wrap-pad);
+    scrollbar-width:none; -webkit-overflow-scrolling: touch;
+  }
+  .mazo--libre .mazo-viewport::-webkit-scrollbar{ display:none; }
+  .mazo--libre .mazo-list{ position:static; display:flex; gap: 12px; width:max-content; }
+  .mazo--libre .mazo-card-link{
+    position:relative; top:auto; left:auto; right:auto;
+    width: 76vw; max-width: 300px; height:auto; flex-direction:column;
+    transform:none !important; opacity:1 !important; filter:none !important; pointer-events:auto !important;
+    will-change:auto; scroll-snap-align:start;
+  }
+  .mazo--libre .mazo-media{ flex:none; aspect-ratio: 4 / 3; }
+  .mazo--libre .mazo-body{ padding: 14px 16px 16px; }
+  .mazo--libre .mazo-body p{ -webkit-line-clamp:3; }
+}
+
+/* reseñas: que el navegador del celu prepare las filas de antemano (en
+   iPhone, con la máscara de los bordes, a veces tardaban en dibujarse) */
+.voces-fila{ will-change: transform; transform: translateZ(0); backface-visibility:hidden; }
