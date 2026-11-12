@@ -1828,3 +1828,8 @@ html{ scroll-behavior: smooth; }
   .voces-cinta{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
   .voces-fila{ animation:none; }
 }
+
+/* ============ TALLER: formulario "Reservá tu lugar" ============ */
+.reserva-wrap{ max-width: 640px; }
+.reserva-wrap .form-head p{ margin-top: 6px; color: var(--sage-deep); font-weight:600; }
+.reserva-wrap .form-card{ margin-top: 22px; }

@@ -226,8 +226,8 @@ var TALLERES_COMIDA_FOTOS = {
    ?tipo=, sin fecha) — mismo mecanismo en los dos casos. Es la misma
    foto que usa esa card en "Los talleres que hacemos" (talleres.html).
    Las claves tienen que ser EXACTAMENTE el nombre del taller tal cual
-   está escrito ahí. "Arte en Piezas de Cerámica" y "Arte y Jardinería"
-   todavía no tienen foto — cuando saquemos una, se agrega acá y ya
+   está escrito ahí. "Arte y Jardinería" todavía no tiene
+   foto — cuando saquemos una, se agrega acá y ya
    está (se van a mostrar solas, en Talleres y acá). */
 var TALLERES_FOTOS = {
   "Cerámica": "img/mazo-ceramica.jpg",
@@ -239,6 +239,7 @@ var TALLERES_FOTOS = {
   "Cuadros con Flores Prensadas": "img/mazo-cuadrosflores.jpg",
   "Carteras Sin Costura": "img/mazo-carteras.jpg",
   "Charms Party": "img/mazo-charms.jpg",
+  "Arte en Piezas de Cerámica": "img/mazo-arteceramica.jpg",
   /* alias viejos (por si quedó algún evento cargado con la categoría
      genérica de antes, "Velas" o "Arte" en vez del nombre completo) */
   "Velas": "img/mazo-velas.jpg",

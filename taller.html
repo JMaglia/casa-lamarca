@@ -51,7 +51,7 @@
         <p id="tallerPromo" style="margin-top:4px; font-weight:700; color:var(--sage);"></p>
         <p id="tallerAgotado" style="margin-top:10px; font-size:0.78rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral); display:none;">Sin cupo por ahora</p>
         <div class="btns">
-          <a class="btn btn-primary" id="tallerWa" href="https://wa.me/5491123788557" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a class="btn btn-primary" id="tallerWa" href="#reservarLugar">Reservar mi lugar</a>
           <a class="btn btn-ghost" href="talleres.html">Ver todos los talleres</a>
         </div>
       </div>
@@ -66,6 +66,44 @@
           <figcaption><span id="tallerComidaCaption"></span></figcaption>
           <img id="tallerComidaImg" style="display:none" alt="">
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVAR MI LUGAR: formulario chico (solo en la página de un taller
+       con fecha). Arma el mensaje con el taller, la fecha y los datos, y
+       lo manda por WhatsApp, igual que el resto de los formularios. -->
+  <section id="reservarLugar" style="display:none;">
+    <div class="wrap">
+      <div class="reserva-wrap">
+        <div class="section-head form-head" style="margin-bottom:0;">
+          <h2 id="reservaTitulo">Reservá tu lugar</h2>
+          <p id="reservaDetalle"></p>
+        </div>
+        <form class="mini-form form-card" id="reservaForm">
+          <div class="field-stack">
+            <label class="span-2">
+              <span>Tu nombre</span>
+              <input type="text" name="nombre" placeholder="¿Cómo te llamás?" required>
+            </label>
+            <label class="field m-full">
+              <span>¿Cuántos lugares?</span>
+              <select name="lugares" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5 o más">5 o más</option>
+              </select>
+              <span class="caret"></span>
+            </label>
+            <label class="m-full">
+              <span><span class="m-ocultar">¿Algo que tengamos que saber?</span><span class="m-solo">Comentario</span></span>
+              <input type="text" name="comentario" placeholder="Opcional">
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary" id="reservaBoton">Enviar por WhatsApp</button>
+        </form>
       </div>
     </div>
   </section>
@@ -233,16 +271,16 @@
       }
 
       var waBoton = document.getElementById('tallerWa');
-      var msg = [];
+      var fechaTxt = talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : '');
+      reservaDatos = { titulo: t.titulo, fecha: fechaTxt };
+      document.getElementById('reservaDetalle').textContent = t.titulo + ' · ' + fechaTxt;
       if(agotado){
+        // sin cupo: se avisa y no se muestra ni el botón ni el formulario
         document.getElementById('tallerAgotado').style.display = '';
-        waBoton.textContent = 'Sumarme a la lista de espera';
-        msg.push('¡Hola! Vi que "' + t.titulo + '" está sin cupo, quiero sumarme a la lista de espera.');
+        waBoton.style.display = 'none';
       } else {
-        msg.push('¡Hola! Quiero reservar mi lugar en "' + t.titulo + '".');
+        document.getElementById('reservarLugar').style.display = '';
       }
-      msg.push('- Fecha: ' + talleresFechaLinda(t.fecha) + (t.hora ? ' · ' + t.hora : ''));
-      waBoton.href = 'https://wa.me/5491123788557?text=' + encodeURIComponent(msg.join('\n'));
 
       estadoWrap.style.display = 'none';
       cuerpo.style.display = '';
@@ -304,6 +342,28 @@
   }
 
   noEncontrado('No encontramos ese taller');
+})();
+
+/* Formulario "Reservar mi lugar": junta nombre y lugares con el taller
+   y la fecha (los carga el script de arriba en reservaDatos). */
+var reservaDatos = null;
+(function(){
+  var form = document.getElementById('reservaForm');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!reservaDatos) return;
+    var data = new FormData(form);
+    var nombre = (data.get('nombre') || '').trim();
+    var lugares = (data.get('lugares') || '').trim();
+    var comentario = (data.get('comentario') || '').trim();
+    var lineas = ['¡Hola! Quiero reservar mi lugar en "' + reservaDatos.titulo + '".'];
+    lineas.push('- Fecha: ' + reservaDatos.fecha);
+    if(nombre) lineas.push('- Nombre: ' + nombre);
+    if(lugares) lineas.push('- Lugares: ' + lugares);
+    if(comentario) lineas.push('- Comentario: ' + comentario);
+    window.open('https://wa.me/5491123788557?text=' + encodeURIComponent(lineas.join('\n')), '_blank', 'noopener');
+  });
 })();
 
 /* Formulario "Armá tu evento privado": arma el mensaje con el tipo de
