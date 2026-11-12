@@ -238,5 +238,59 @@ window.armarCintaVoces = function(grid, destino){
     cinta.appendChild(fila);
   });
   if(!destino) grid.parentNode.insertBefore(cinta, grid.nextSibling);
+  if(window.matchMedia && window.matchMedia('(max-width: 620px)').matches) correrCarriles(cinta);
 };
+
+/* Celu: cada fila va adentro de un carril con scroll de costado y se
+   mueve sola cambiando ese scroll (no con una animación CSS). Si la
+   persona la toca, se frena y después sigue desde donde la dejó. */
+function correrCarriles(cinta){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  cinta.classList.add('voces-cinta--carriles');
+  var VEL = 22; // píxeles por segundo
+  var carriles = Array.prototype.slice.call(cinta.querySelectorAll('.voces-fila')).map(function(fila, n){
+    var carril = document.createElement('div');
+    carril.className = 'voces-carril';
+    fila.parentNode.insertBefore(carril, fila);
+    carril.appendChild(fila);
+    var c = { el: carril, fila: fila, dir: n ? -1 : 1, pos: 0, quieto: 0 };
+    var soltar = function(){ c.quieto = Date.now() + 2500; c.pos = carril.scrollLeft; };
+    carril.addEventListener('touchstart', function(){ c.quieto = Infinity; }, {passive:true});
+    carril.addEventListener('touchend', soltar, {passive:true});
+    carril.addEventListener('touchcancel', soltar, {passive:true});
+    return c;
+  });
+  var visible = false, ultimo = 0, iniciado = false;
+  function mitad(c){ return c.fila.scrollWidth / 2; }
+  function iniciar(){
+    carriles.forEach(function(c){
+      c.pos = c.dir < 0 ? mitad(c) : 0;
+      c.el.scrollLeft = c.pos;
+    });
+    iniciado = true;
+  }
+  function paso(t){
+    if(!visible){ ultimo = 0; return; }
+    var dt = ultimo ? Math.min(t - ultimo, 100) / 1000 : 0;
+    ultimo = t;
+    var ahora = Date.now();
+    carriles.forEach(function(c){
+      if(ahora < c.quieto) return;
+      var m = mitad(c);
+      if(!m) return;
+      c.pos += c.dir * VEL * dt;
+      if(c.pos >= m) c.pos -= m;
+      if(c.pos <= 0) c.pos += m;
+      c.el.scrollLeft = c.pos;
+    });
+    requestAnimationFrame(paso);
+  }
+  var io = new IntersectionObserver(function(es){
+    var antes = visible;
+    visible = es[0].isIntersecting;
+    if(visible && !iniciado) iniciar();
+    if(visible && !antes) requestAnimationFrame(paso);
+  });
+  io.observe(cinta);
+}
 document.querySelectorAll('.voces-grid').forEach(function(g){ window.armarCintaVoces(g); });
