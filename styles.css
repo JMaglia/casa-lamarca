@@ -1870,3 +1870,12 @@ html{ scroll-behavior: smooth; }
 @media (max-width: 620px){
   .voces-cinta .voces-card{ width: 236px; max-width: 236px; }
 }
+
+/* La foto del jefe (dorso de la foto que gira, home y Lamarca) */
+.flip-dorso.ph--photo img{ object-position: center 30%; }
+.flip-etiqueta{
+  position:absolute; left:50%; bottom:14px; transform: translateX(-50%) rotate(-2deg);
+  background: var(--bg); color: var(--ink); white-space:nowrap;
+  font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:600; font-size: .95rem;
+  padding: 7px 14px; border-radius: 999px; box-shadow: 0 8px 18px -10px rgba(35,38,31,.45);
+}

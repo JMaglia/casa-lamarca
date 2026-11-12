@@ -188,10 +188,24 @@
       var on = card.classList.toggle('is-flipped');
       card.setAttribute('aria-pressed', on ? 'true' : 'false');
     }
-    card.addEventListener('click', toggle);
+    /* gira sola cada unos segundos mientras está a la vista; se frena
+       mientras el mouse está encima, y si la tocás arranca a contar de nuevo */
+    var CADA = 4500, timer = null, visible = false, encima = false;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function programar(){
+      clearTimeout(timer);
+      if(visible && !encima && !reduce) timer = setTimeout(function(){ toggle(); programar(); }, CADA);
+    }
+    card.addEventListener('click', function(){ toggle(); programar(); });
     card.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); programar(); }
     });
+    // solo el mouse de verdad (en el celu, tocar no cuenta como "encima")
+    card.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse'){ encima = true; programar(); } });
+    card.addEventListener('pointerleave', function(e){ if(e.pointerType === 'mouse'){ encima = false; programar(); } });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ visible = es[0].isIntersecting; programar(); }, { threshold: 0.4 }).observe(card);
+    }
   });
 })();
 
@@ -243,7 +257,7 @@ window.armarCintaVoces = function(grid, destino){
 
 /* Celu: cada fila va adentro de un carril con scroll de costado y se
    mueve sola cambiando ese scroll (no con una animación CSS). Si la
-   persona la toca, se frena y después sigue desde donde la dejó. */
+   persona la toca, se frena, y al soltarla sigue sola desde donde quedó. */
 function correrCarriles(cinta){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   cinta.classList.add('voces-cinta--carriles');
@@ -253,9 +267,11 @@ function correrCarriles(cinta){
     carril.className = 'voces-carril';
     fila.parentNode.insertBefore(carril, fila);
     carril.appendChild(fila);
-    var c = { el: carril, fila: fila, dir: n ? -1 : 1, pos: 0, quieto: 0 };
-    var soltar = function(){ c.quieto = Date.now() + 2500; c.pos = carril.scrollLeft; };
-    carril.addEventListener('touchstart', function(){ c.quieto = Infinity; }, {passive:true});
+    var c = { el: carril, fila: fila, dir: n ? -1 : 1, pos: 0, tocando: false, soltado: false, ultimoSL: 0, quietos: 0 };
+    // al soltar: espera solo a que termine el deslizamiento por inercia
+    // del iPhone y sigue sola desde donde quedó
+    var soltar = function(){ c.tocando = false; c.soltado = true; c.ultimoSL = carril.scrollLeft; c.quietos = 0; };
+    carril.addEventListener('touchstart', function(){ c.tocando = true; c.soltado = false; }, {passive:true});
     carril.addEventListener('touchend', soltar, {passive:true});
     carril.addEventListener('touchcancel', soltar, {passive:true});
     return c;
@@ -278,9 +294,15 @@ function correrCarriles(cinta){
     if(!visible){ ultimo = 0; return; }
     var dt = ultimo ? Math.min(t - ultimo, 100) / 1000 : 0;
     ultimo = t;
-    var ahora = Date.now();
     carriles.forEach(function(c){
-      if(ahora < c.quieto) return;
+      if(c.tocando) return;
+      if(c.soltado){
+        var sl = c.el.scrollLeft;
+        if(sl !== c.ultimoSL){ c.ultimoSL = sl; c.quietos = 0; return; }
+        if(++c.quietos < 3) return;
+        c.soltado = false;
+        c.pos = sl;
+      }
       var m = mitad(c);
       if(!m) return;
       c.pos += c.dir * VEL * dt;
