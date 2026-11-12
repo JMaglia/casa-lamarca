@@ -1429,11 +1429,10 @@ footer.site{ background: var(--sage-deep); color: var(--bg); padding-block: 44px
   .voces-cinta{
     display:flex; flex-direction:column; gap: 14px; overflow:hidden;
     margin-inline: calc(var(--wrap-pad) * -1); padding: 8px 0 18px;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    position:relative;
   }
-  .voces-fila{ display:flex; gap: 14px; width:max-content; align-items:flex-start; animation: voces-correr 48s linear infinite; }
-  .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 56s; }
+  .voces-fila{ display:flex; gap: 14px; width:max-content; align-items:flex-start; animation: voces-correr 90s linear infinite; }
+  .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 100s; }
   .voces-cinta .voces-card{ flex: 0 0 250px; padding: 20px 18px 18px; gap: 10px; transform:none !important; }
   .voces-cinta .voces-txt{ font-size: .88rem; }
   .voces-cinta .voces-quote{ display:none; }
@@ -1447,7 +1446,7 @@ footer.site{ background: var(--sage-deep); color: var(--bg); padding-block: 44px
 @media (max-width: 400px){ .voces-cinta{ margin-inline: -16px; } }
 /* si el celu pide menos movimiento: la cinta no corre, se desliza con el dedo */
 @media (max-width: 620px) and (prefers-reduced-motion: reduce){
-  .voces-cinta{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+  .voces-cinta{ overflow-x:auto; }
   .voces-fila{ animation:none; padding-inline: var(--wrap-pad); }
 }
 
@@ -1815,17 +1814,16 @@ html{ scroll-behavior: smooth; }
   .voces-cinta{
     display:flex; flex-direction:column; gap: 20px; overflow:hidden;
     margin-inline: calc(50% - 50vw); padding: 8px 0 26px;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-            mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    position:relative;
   }
-  .voces-fila{ display:flex; gap: 20px; width:max-content; align-items:flex-start; animation: voces-correr 70s linear infinite; }
-  .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 80s; }
+  .voces-fila{ display:flex; gap: 20px; width:max-content; align-items:flex-start; animation: voces-correr 120s linear infinite; }
+  .voces-fila--vuelta{ animation-direction: reverse; animation-duration: 135s; }
   .voces-cinta .voces-card{ flex: 0 0 360px; transform:none !important; }
   .voces-cinta .voces-txt{ display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; } /* filas parejas */
   .voces-loose{ margin-top: 10px; }
 }
 @media (min-width: 621px) and (prefers-reduced-motion: reduce){
-  .voces-cinta{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+  .voces-cinta{ overflow-x:auto; }
   .voces-fila{ animation:none; }
 }
 
@@ -1867,6 +1865,20 @@ html{ scroll-behavior: smooth; }
   .mazo--libre .mazo-body p{ -webkit-line-clamp:3; }
 }
 
-/* reseñas: que el navegador del celu prepare las filas de antemano (en
-   iPhone, con la máscara de los bordes, a veces tardaban en dibujarse) */
-.voces-fila{ will-change: transform; transform: translateZ(0); backface-visibility:hidden; }
+/* Reseñas: los bordes se desvanecen con dos degradés encima (antes era
+   una máscara: en iPhone, una máscara sobre algo animado hacía que la
+   cinta dejara de moverse o que la segunda fila no se dibujara). */
+.voces-cinta::before, .voces-cinta::after{
+  content:''; position:absolute; top:0; bottom:0; width: 9%; z-index:2; pointer-events:none;
+}
+.voces-cinta::before{ left:0; background: linear-gradient(90deg, var(--bg), transparent); }
+.voces-cinta::after{ right:0; background: linear-gradient(270deg, var(--bg), transparent); }
+
+/* Talleres en el celu: vuelven los pétalos de fondo, atrás de las cards */
+@media (max-width: 620px){
+  .mazo--libre .mazo-sticky{ position:relative; padding-bottom: 36px; }
+  .mazo--libre .mazo-petalos{
+    display:block; inset: 0 calc(var(--wrap-pad) * -1); width: calc(100% + 2 * var(--wrap-pad)); z-index:0; opacity:.9;
+  }
+  .mazo--libre .mazo-head, .mazo--libre .mazo-viewport{ position:relative; z-index:1; }
+}
