@@ -261,7 +261,12 @@ function correrCarriles(cinta){
     return c;
   });
   var visible = false, ultimo = 0, iniciado = false;
-  function mitad(c){ return c.fila.scrollWidth / 2; }
+  // dónde arranca la segunda tanda de tarjetas (no se usa el ancho total
+  // de la fila: Safari a veces lo calcula mal)
+  function mitad(c){
+    var h = c.fila.children, k = h.length / 2;
+    return h[k] ? h[k].offsetLeft - h[0].offsetLeft : 0;
+  }
   function iniciar(){
     carriles.forEach(function(c){
       c.pos = c.dir < 0 ? mitad(c) : 0;

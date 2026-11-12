@@ -1861,3 +1861,12 @@ html{ scroll-behavior: smooth; }
   .mazo-glow{ filter:none; }
   .mazo-card-link{ will-change: transform, opacity; backface-visibility:hidden; }
 }
+
+/* Reseñas: ancho fijo de cada tarjeta. Safari calculaba el largo de la
+   fila como si cada reseña fuera en una sola línea (una fila de 10.000px
+   con las tarjetas al principio y el resto vacío): por eso la segunda
+   fila arrancaba en la parte vacía y la primera "dejaba de pasar". */
+.voces-cinta .voces-card{ width: 360px; max-width: 360px; min-width: 0; }
+@media (max-width: 620px){
+  .voces-cinta .voces-card{ width: 236px; max-width: 236px; }
+}
