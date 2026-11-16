@@ -1876,3 +1876,28 @@ html{ scroll-behavior: smooth; }
   font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:600; font-size: .95rem;
   padding: 7px 14px; border-radius: 999px; box-shadow: 0 8px 18px -10px rgba(35,38,31,.45);
 }
+
+/* Talleres en el celu: el panel con los pétalos ocupa todo el ancho de la
+   pantalla (sin margen a los costados ni esquinas redondeadas), y los
+   pétalos llegan hasta el borde (solo se desvanecen arriba y abajo). */
+@media (max-width: 620px){
+  .mazo-sticky{ margin-inline: calc(var(--wrap-pad) * -1); border-radius:0; }
+  .mazo-petalos{
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+    -webkit-mask-composite: source-over; mask-composite: add;
+  }
+}
+
+/* Página de un taller en el celu (taller.html): mismo criterio que los
+   heros de Cumpleaños y Alquilá (.hero-celu): título más chico, todo más
+   junto y los dos botones uno al lado del otro. En PC no cambia nada. */
+@media (max-width: 620px){
+  .taller-celu .hero-grid{ gap: 28px; }
+  .taller-celu .eyebrow{ margin-bottom: 4px; }
+  .taller-celu #tallerFechaHora{ margin-top: 6px; font-size: 1rem; font-weight:600; color: var(--ink); }
+  .taller-celu #tallerDescripcion{ margin-top: 12px !important; font-size: .98rem; line-height: 1.55; }
+  .taller-celu #tallerPrecio{ margin-top: 12px !important; font-size: 1.15rem; }
+  .taller-celu .btns{ margin-top: 16px; }
+  .taller-celu #tallerComidaFoto{ margin-top: 12px !important; }
+}
