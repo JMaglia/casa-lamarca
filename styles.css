@@ -1841,17 +1841,14 @@ html{ scroll-behavior: smooth; }
 .voces-cinta::before{ left:0; background: linear-gradient(90deg, var(--bg), transparent); }
 .voces-cinta::after{ right:0; background: linear-gradient(270deg, var(--bg), transparent); }
 
-/* Reseñas en el celu: cada fila es un carril con scroll de costado que
-   script.js va corriendo solo (el iPhone dibuja mucho mejor un scroll
-   que una fila larguísima animada con CSS, que era lo que fallaba).
-   También se puede deslizar con el dedo. */
+/* Reseñas en el celu: cada fila va en un carril y script.js la mueve con
+   transform (y con el dedo se arrastra de costado; ver correrCarriles). */
 @media (max-width: 620px){
   .voces-cinta--carriles .voces-carril{
-    overflow-x:auto; overflow-y:hidden; scrollbar-width:none; -webkit-overflow-scrolling: touch;
+    overflow:hidden; touch-action: pan-y;
     padding: 2px 0 12px; margin-bottom: -12px; /* que no se corte la sombra */
   }
-  .voces-cinta--carriles .voces-carril::-webkit-scrollbar{ display:none; }
-  .voces-cinta--carriles .voces-fila{ animation:none; }
+  .voces-cinta--carriles .voces-fila{ animation:none; will-change: transform; }
 }
 
 /* Talleres en el celu: más fluido. El resplandor de fondo ya es un

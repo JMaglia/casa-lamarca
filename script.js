@@ -255,9 +255,12 @@ window.armarCintaVoces = function(grid, destino){
   if(window.matchMedia && window.matchMedia('(max-width: 620px)').matches) correrCarriles(cinta);
 };
 
-/* Celu: cada fila va adentro de un carril con scroll de costado y se
-   mueve sola cambiando ese scroll (no con una animación CSS). Si la
-   persona la toca, se frena, y al soltarla sigue sola desde donde quedó. */
+/* Celu: cada fila va adentro de un carril y se mueve sola con transform
+   (que el iPhone dibuja con decimales, bien suave; antes se movía con el
+   scroll del carril, que va de a píxel entero y se veía a pocos fps).
+   Con el dedo se arrastra de costado (con inercia); al soltarla, cuando
+   frena, sigue sola desde donde quedó. El scroll vertical de la página no
+   se toca (touch-action: pan-y). */
 function correrCarriles(cinta){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   cinta.classList.add('voces-cinta--carriles');
@@ -267,11 +270,28 @@ function correrCarriles(cinta){
     carril.className = 'voces-carril';
     fila.parentNode.insertBefore(carril, fila);
     carril.appendChild(fila);
-    var c = { el: carril, fila: fila, dir: n ? -1 : 1, pos: 0, tocando: false, soltado: false, ultimoSL: 0, quietos: 0 };
-    // al soltar: espera solo a que termine el deslizamiento por inercia
-    // del iPhone y sigue sola desde donde quedó
-    var soltar = function(){ c.tocando = false; c.soltado = true; c.ultimoSL = carril.scrollLeft; c.quietos = 0; };
-    carril.addEventListener('touchstart', function(){ c.tocando = true; c.soltado = false; }, {passive:true});
+    var c = { el: carril, fila: fila, dir: n ? -1 : 1, pos: 0, tocando: false, v: 0,
+              x0: 0, y0: 0, pos0: 0, eje: null, xUlt: 0, tUlt: 0 };
+    carril.addEventListener('touchstart', function(e){
+      var t = e.touches[0];
+      c.tocando = true; c.eje = null; c.v = 0;
+      c.x0 = c.xUlt = t.clientX; c.y0 = t.clientY; c.pos0 = c.pos; c.tUlt = performance.now();
+    }, {passive:true});
+    carril.addEventListener('touchmove', function(e){
+      if(!c.tocando) return;
+      var t = e.touches[0], dx = t.clientX - c.x0, dy = t.clientY - c.y0;
+      if(!c.eje){ if(Math.abs(dx) < 6 && Math.abs(dy) < 6) return; c.eje = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; }
+      if(c.eje !== 'x') return;
+      var ahora = performance.now(), dt = ahora - c.tUlt;
+      if(dt > 0) c.v = c.v * 0.6 + ((c.xUlt - t.clientX) / dt) * 0.4; // px por ms
+      c.xUlt = t.clientX; c.tUlt = ahora;
+      c.pos = c.pos0 - dx;
+      pintar(c);
+    }, {passive:true});
+    var soltar = function(){
+      c.tocando = false;
+      if(c.eje !== 'x' || performance.now() - c.tUlt > 80) c.v = 0;
+    };
     carril.addEventListener('touchend', soltar, {passive:true});
     carril.addEventListener('touchcancel', soltar, {passive:true});
     return c;
@@ -283,32 +303,35 @@ function correrCarriles(cinta){
     var h = c.fila.children, k = h.length / 2;
     return h[k] ? h[k].offsetLeft - h[0].offsetLeft : 0;
   }
+  function pintar(c){
+    var m = c.m || (c.m = mitad(c));
+    if(!m) return;
+    c.pos = ((c.pos % m) + m) % m;
+    c.fila.style.transform = 'translate3d(' + (-c.pos) + 'px,0,0)';
+  }
   function iniciar(){
     carriles.forEach(function(c){
-      c.pos = c.dir < 0 ? mitad(c) : 0;
-      c.el.scrollLeft = c.pos;
+      c.m = mitad(c);
+      c.pos = c.dir < 0 ? c.m / 2 : 0;
+      pintar(c);
     });
     iniciado = true;
   }
+  window.addEventListener('resize', function(){ carriles.forEach(function(c){ c.m = 0; }); });
   function paso(t){
     if(!visible){ ultimo = 0; return; }
-    var dt = ultimo ? Math.min(t - ultimo, 100) / 1000 : 0;
+    var dt = ultimo ? Math.min(t - ultimo, 100) : 0; // ms
     ultimo = t;
     carriles.forEach(function(c){
       if(c.tocando) return;
-      if(c.soltado){
-        var sl = c.el.scrollLeft;
-        if(sl !== c.ultimoSL){ c.ultimoSL = sl; c.quietos = 0; return; }
-        if(++c.quietos < 3) return;
-        c.soltado = false;
-        c.pos = sl;
+      if(Math.abs(c.v) > 0.02){            // inercia después de soltar
+        c.pos += c.v * dt;
+        c.v *= Math.pow(0.995, dt);
+      } else {
+        c.v = 0;
+        c.pos += c.dir * VEL * dt / 1000;
       }
-      var m = mitad(c);
-      if(!m) return;
-      c.pos += c.dir * VEL * dt;
-      if(c.pos >= m) c.pos -= m;
-      if(c.pos <= 0) c.pos += m;
-      c.el.scrollLeft = c.pos;
+      pintar(c);
     });
     requestAnimationFrame(paso);
   }
