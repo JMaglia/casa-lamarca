@@ -132,12 +132,54 @@
     measure();
     measureStickyTop();
     measureBand();
+    armarCSS();
     onScroll();
   }
   measure();
   measureStickyTop();
   measureBand();
   window.addEventListener('resize', onResize);
+
+  /* CELU: el movimiento de las cards lo hace el navegador, atado al scroll
+     (animation-timeline), sin pasar por el JS en cada cuadro: queda tan
+     fluido como el scroll mismo. El JS solo arma, una vez, las animaciones
+     de cada card con la misma fórmula de render(), y después se encarga de
+     lo liviano (contador, puntitos, color de fondo). Si el navegador no lo
+     soporta, sigue todo como antes. */
+  var modoCSS = esCelu && !reduceMotion && !!(window.CSS && CSS.supports &&
+    CSS.supports('animation-timeline: view()') && CSS.supports('animation-range: contain 10px contain 20px'));
+  var hojaMazo = null;
+  function valoresCard(i, center){
+    var offset = i - center, dist = Math.abs(offset);
+    var scale = Math.max(0.8, 1 - dist * 0.12);
+    var opacity = Math.max(0, 1 - dist * 0.65);
+    return 'transform: translate3d(0, calc(-50% + ' + (offset * spacing).toFixed(2) + 'px), 0) scale(' + scale.toFixed(4) + ');' +
+           ' opacity: ' + opacity.toFixed(4) + '; z-index: ' + Math.max(1, 100 - Math.round(dist * 10)) + ';';
+  }
+  function armarCSS(){
+    if(!modoCSS) return;
+    measure();
+    var scrollable = track.offsetHeight - sticky.offsetHeight;
+    // el tramo en que el panel está pegado, medido desde que el track toca
+    // el borde de arriba de la pantalla (inicio del rango "contain")
+    var ini = -stickyTop, fin = scrollable - stickyTop;
+    var K = Math.max(1, (n - 1) * 8), css = '';
+    cards.forEach(function(card, i){
+      css += '@keyframes mazo-c' + i + '{';
+      for(var k = 0; k <= K; k++){
+        css += (k / K * 100).toFixed(3) + '%{' + valoresCard(i, k / K * (n - 1)) + '}';
+      }
+      css += '}';
+      card.style.transform = ''; card.style.opacity = ''; card.style.zIndex = ''; card.style.filter = '';
+      card.style.animation = 'mazo-c' + i + ' 1s linear both';
+      card.style.animationTimeline = '--mazo';
+      card.style.animationRange = 'contain ' + ini + 'px contain ' + fin + 'px';
+    });
+    if(!hojaMazo){ hojaMazo = document.createElement('style'); document.head.appendChild(hojaMazo); }
+    hojaMazo.textContent = css;
+    track.style.setProperty('view-timeline', '--mazo block');
+  }
+  armarCSS();
 
   var hintHidden = false;
   var target = 0, current = 0, activeIndex = -1, raf = null;
@@ -156,7 +198,7 @@
       hintHidden = true;
       hint.classList.add('is-hidden');
     }
-    if(reduceMotion){ current = target; render(current); return; }
+    if(reduceMotion || modoCSS){ current = target; render(current); return; }
     if(!raf) raf = requestAnimationFrame(tick);
   }
 
@@ -174,8 +216,13 @@
   function render(progress){
     var center = progress * (n - 1);
     var idx = Math.round(center);
+    if(modoCSS && idx === activeIndex) return; // el movimiento lo hace el navegador
 
     cards.forEach(function(card, i){
+      var isActive = i === idx;
+      card.style.pointerEvents = isActive ? 'auto' : 'none';
+      card.tabIndex = isActive ? 0 : -1;
+      if(modoCSS) return;
       var offset = i - center;
       var dist = Math.abs(offset);
       var ty = offset * spacing;
@@ -187,9 +234,6 @@
       if(!esCelu) card.style.filter = blur > 0.05 ? 'blur(' + blur + 'px)' : 'none';
       var z = String(Math.max(1, 100 - Math.round(dist * 10)));
       if(card.style.zIndex !== z) card.style.zIndex = z;
-      var isActive = i === idx;
-      card.style.pointerEvents = isActive ? 'auto' : 'none';
-      card.tabIndex = isActive ? 0 : -1;
     });
 
     if(idx !== activeIndex){
