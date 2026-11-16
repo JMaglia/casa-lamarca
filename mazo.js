@@ -36,6 +36,10 @@
   var glowColors = ['var(--sage)', 'var(--coral)', 'var(--ochre)', 'var(--sage-deep)'];
   function setGlow(i){
     if(!glowEl) return;
+    /* en el celu el resplandor queda fijo: redibujar ese degradé enorme
+       justo cuando cambia el taller (a mitad de camino entre dos cards)
+       era lo que daba el tirón */
+    if(esCelu && glowEl.style.background) return;
     glowEl.style.background = 'radial-gradient(circle, ' + glowColors[i % glowColors.length] + ' 0%, transparent 70%)';
   }
   setGlow(0);
