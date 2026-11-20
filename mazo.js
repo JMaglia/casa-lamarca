@@ -150,14 +150,16 @@
      de cada card con la misma fórmula de render(), y después se encarga de
      lo liviano (contador, puntitos, color de fondo). Si el navegador no lo
      soporta, sigue todo como antes. */
-  /* APAGADO: en el iPhone, cuando el scroll con envión está por frenar,
-     Safari "corrige" la posición de estas animaciones y las cards pegan un
-     salto para abajo y para arriba en un cuadro (es un problema de Safari,
-     no de la página). Queda el código por si en otra versión lo arreglan. */
-  var USAR_ANIMACION_CSS = false;
+  /* Las animaciones van atadas al scroll de TODA la página (scroll(root)),
+     no a la posición del mazo (view-timeline). Con la versión anterior, en
+     iPhone, al frenar el envión Safari recalculaba la posición del mazo y
+     las cards pegaban un salto de un cuadro. Así no hay nada que recalcular:
+     el JS calcula una vez en qué tramo del scroll de la página pasan las
+     cards (y lo actualiza si cambia el alto de lo que hay arriba). */
+  var USAR_ANIMACION_CSS = true;
   var modoCSS = USAR_ANIMACION_CSS && esCelu && !reduceMotion && !!(window.CSS && CSS.supports &&
-    CSS.supports('animation-timeline: view()') && CSS.supports('animation-range: contain 10px contain 20px'));
-  var hojaMazo = null;
+    CSS.supports('animation-timeline: scroll(root)') && CSS.supports('animation-range: 10px 20px'));
+  var hojaMazo = null, spacingArmado = 0, rangoArmado = '';
   function valoresCard(i, center){
     var offset = i - center, dist = Math.abs(offset);
     var scale = Math.max(0.8, 1 - dist * 0.12);
@@ -165,30 +167,49 @@
     return 'transform: translate3d(0, calc(-50% + ' + (offset * spacing).toFixed(2) + 'px), 0) scale(' + scale.toFixed(4) + ');' +
            ' opacity: ' + opacity.toFixed(4) + ';';
   }
+  // tramo del scroll de la página (en px) en el que el panel está pegado
+  function rangoMazo(){
+    var scrollable = track.offsetHeight - sticky.offsetHeight;
+    var ini = track.getBoundingClientRect().top + window.pageYOffset - stickyTop;
+    return Math.round(ini) + 'px ' + Math.round(ini + scrollable) + 'px';
+  }
   function armarCSS(){
     if(!modoCSS) return;
     measure();
-    var scrollable = track.offsetHeight - sticky.offsetHeight;
-    // el tramo en que el panel está pegado, medido desde que el track toca
-    // el borde de arriba de la pantalla (inicio del rango "contain")
-    var ini = -stickyTop, fin = scrollable - stickyTop;
-    var K = Math.max(1, (n - 1) * 8), css = '';
-    cards.forEach(function(card, i){
-      css += '@keyframes mazo-c' + i + '{';
-      for(var k = 0; k <= K; k++){
-        css += (k / K * 100).toFixed(3) + '%{' + valoresCard(i, k / K * (n - 1)) + '}';
-      }
-      css += '}';
-      card.style.transform = ''; card.style.opacity = ''; card.style.zIndex = ''; card.style.filter = '';
-      card.style.animation = 'mazo-c' + i + ' 1s linear both';
-      card.style.animationTimeline = '--mazo';
-      card.style.animationRange = 'contain ' + ini + 'px contain ' + fin + 'px';
-    });
-    if(!hojaMazo){ hojaMazo = document.createElement('style'); document.head.appendChild(hojaMazo); }
-    hojaMazo.textContent = css;
-    track.style.setProperty('view-timeline', '--mazo block');
+    if(spacing !== spacingArmado){            // keyframes: solo si cambió el tamaño de las cards
+      spacingArmado = spacing;
+      var K = Math.max(1, (n - 1) * 8), css = '';
+      cards.forEach(function(card, i){
+        css += '@keyframes mazo-c' + i + '{';
+        for(var k = 0; k <= K; k++){
+          css += (k / K * 100).toFixed(3) + '%{' + valoresCard(i, k / K * (n - 1)) + '}';
+        }
+        css += '}';
+      });
+      if(!hojaMazo){ hojaMazo = document.createElement('style'); document.head.appendChild(hojaMazo); }
+      hojaMazo.textContent = css;
+      cards.forEach(function(card, i){
+        card.style.transform = ''; card.style.opacity = ''; card.style.filter = '';
+        card.style.animation = 'mazo-c' + i + ' 1s linear both';
+        card.style.animationTimeline = 'scroll(root block)';
+      });
+    }
+    actualizarRango();
+  }
+  function actualizarRango(){
+    if(!modoCSS) return;
+    var r = rangoMazo();
+    if(r === rangoArmado) return;
+    rangoArmado = r;
+    cards.forEach(function(card){ card.style.animationRange = r; });
   }
   armarCSS();
+  /* si cambia el alto de algo de arriba (fotos que cargan, talleres que
+     llegan de la planilla, fuentes), el tramo se corre: se recalcula */
+  if(modoCSS){
+    if(window.ResizeObserver) new ResizeObserver(actualizarRango).observe(document.body);
+    window.addEventListener('load', actualizarRango);
+  }
 
   var hintHidden = false;
   var target = 0, current = 0, activeIndex = -1, raf = null;
