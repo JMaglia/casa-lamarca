@@ -158,7 +158,7 @@
     var scale = Math.max(0.8, 1 - dist * 0.12);
     var opacity = Math.max(0, 1 - dist * 0.65);
     return 'transform: translate3d(0, calc(-50% + ' + (offset * spacing).toFixed(2) + 'px), 0) scale(' + scale.toFixed(4) + ');' +
-           ' opacity: ' + opacity.toFixed(4) + '; z-index: ' + Math.max(1, 100 - Math.round(dist * 10)) + ';';
+           ' opacity: ' + opacity.toFixed(4) + ';';
   }
   function armarCSS(){
     if(!modoCSS) return;
@@ -220,7 +220,18 @@
   function render(progress){
     var center = progress * (n - 1);
     var idx = Math.round(center);
-    if(modoCSS && idx === activeIndex) return; // el movimiento lo hace el navegador
+    if(modoCSS){
+      /* qué card va adelante lo decide el JS, con margen: cambia recién
+         cuando la siguiente ya pasó bastante más de la mitad. Antes lo
+         decidía la animación justo en la mitad, y con el dedo quieto ahí
+         (el iPhone mueve el scroll fracciones de píxel) las dos cards se
+         pasaban adelante y atrás todo el tiempo: ese era el tirón. */
+      if(activeIndex >= 0 && Math.abs(center - activeIndex) < 0.7) idx = activeIndex;
+      if(idx === activeIndex) return; // el movimiento lo hace el navegador
+      cards.forEach(function(card, i){
+        card.style.zIndex = String(Math.max(1, 100 - Math.abs(i - idx) * 10));
+      });
+    }
 
     cards.forEach(function(card, i){
       var isActive = i === idx;
