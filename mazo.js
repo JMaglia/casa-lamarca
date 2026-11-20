@@ -150,7 +150,12 @@
      de cada card con la misma fórmula de render(), y después se encarga de
      lo liviano (contador, puntitos, color de fondo). Si el navegador no lo
      soporta, sigue todo como antes. */
-  var modoCSS = esCelu && !reduceMotion && !!(window.CSS && CSS.supports &&
+  /* APAGADO: en el iPhone, cuando el scroll con envión está por frenar,
+     Safari "corrige" la posición de estas animaciones y las cards pegan un
+     salto para abajo y para arriba en un cuadro (es un problema de Safari,
+     no de la página). Queda el código por si en otra versión lo arreglan. */
+  var USAR_ANIMACION_CSS = false;
+  var modoCSS = USAR_ANIMACION_CSS && esCelu && !reduceMotion && !!(window.CSS && CSS.supports &&
     CSS.supports('animation-timeline: view()') && CSS.supports('animation-range: contain 10px contain 20px'));
   var hojaMazo = null;
   function valoresCard(i, center){
@@ -207,7 +212,9 @@
   }
 
   function tick(){
-    current += (target - current) * (esCelu ? 0.25 : 0.12);
+    /* en el celu las cards van exactamente donde indica el scroll, en el
+       mismo cuadro (sin suavizado que las deje atrasadas) */
+    current += (target - current) * (esCelu ? 1 : 0.12);
     if(Math.abs(target - current) < 0.0006) current = target;
     render(current);
     if(current !== target){
@@ -220,17 +227,19 @@
   function render(progress){
     var center = progress * (n - 1);
     var idx = Math.round(center);
-    if(modoCSS){
+    if(modoCSS || esCelu){
       /* qué card va adelante lo decide el JS, con margen: cambia recién
          cuando la siguiente ya pasó bastante más de la mitad. Antes lo
          decidía la animación justo en la mitad, y con el dedo quieto ahí
          (el iPhone mueve el scroll fracciones de píxel) las dos cards se
          pasaban adelante y atrás todo el tiempo: ese era el tirón. */
       if(activeIndex >= 0 && Math.abs(center - activeIndex) < 0.7) idx = activeIndex;
-      if(idx === activeIndex) return; // el movimiento lo hace el navegador
-      cards.forEach(function(card, i){
-        card.style.zIndex = String(Math.max(1, 100 - Math.abs(i - idx) * 10));
-      });
+      if(modoCSS){
+        if(idx === activeIndex) return; // el movimiento lo hace el navegador
+        cards.forEach(function(card, i){
+          card.style.zIndex = String(Math.max(1, 100 - Math.abs(i - idx) * 10));
+        });
+      }
     }
 
     cards.forEach(function(card, i){
@@ -247,7 +256,7 @@
       card.style.transform = 'translate3d(0, calc(-50% + ' + ty + 'px), 0) scale(' + scale + ')';
       card.style.opacity = String(opacity);
       if(!esCelu) card.style.filter = blur > 0.05 ? 'blur(' + blur + 'px)' : 'none';
-      var z = String(Math.max(1, 100 - Math.round(dist * 10)));
+      var z = String(Math.max(1, esCelu ? 100 - Math.abs(i - idx) * 10 : 100 - Math.round(dist * 10)));
       if(card.style.zIndex !== z) card.style.zIndex = z;
     });
 
