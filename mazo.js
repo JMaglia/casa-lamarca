@@ -208,10 +208,29 @@
       hint.classList.add('is-hidden');
     }
     if(reduceMotion || modoCSS){ current = target; render(current); return; }
+    ultimoScroll = performance.now();
     if(!raf) raf = requestAnimationFrame(tick);
   }
 
-  function tick(){
+  /* celu: mientras haya scroll (incluido el envión), las cards se ubican en
+     CADA cuadro leyendo la posición real en ese momento, en vez de esperar
+     el evento de scroll (que en el iPhone no llega en todos los cuadros y
+     hacía que se vieran a pocos fps) */
+  var ultimoScroll = 0;
+  function progresoActual(){
+    var scrollable = track.offsetHeight - sticky.offsetHeight;
+    var scrolled = stickyTop - track.getBoundingClientRect().top;
+    return scrollable > 0 ? Math.min(1, Math.max(0, scrolled / scrollable)) : 0;
+  }
+
+  function tick(t){
+    if(esCelu){
+      target = progresoActual();
+      if(target !== current){ current = target; render(current); }
+      // sigue midiendo un rato después del último evento (el envión)
+      raf = (t || performance.now()) - ultimoScroll < 250 ? requestAnimationFrame(tick) : null;
+      return;
+    }
     /* en el celu las cards van exactamente donde indica el scroll, en el
        mismo cuadro (sin suavizado que las deje atrasadas) */
     current += (target - current) * (esCelu ? 1 : 0.12);
@@ -242,11 +261,18 @@
       }
     }
 
+    var cambio = idx !== activeIndex;
     cards.forEach(function(card, i){
       var isActive = i === idx;
-      card.style.pointerEvents = isActive ? 'auto' : 'none';
-      card.tabIndex = isActive ? 0 : -1;
+      if(cambio){
+        card.style.pointerEvents = isActive ? 'auto' : 'none';
+        card.tabIndex = isActive ? 0 : -1;
+      }
       if(modoCSS) return;
+      // las que están lejos y ya quedaron invisibles no se vuelven a tocar
+      var lejos = Math.abs(i - center) > 2.2;
+      if(lejos && card._oculta) return;
+      card._oculta = lejos;
       var offset = i - center;
       var dist = Math.abs(offset);
       var ty = offset * spacing;
