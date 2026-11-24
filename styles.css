@@ -377,7 +377,7 @@ header.site.nav-float + main .cumple-hero{ padding-top: clamp(124px, 15vw, 148px
 
 .ambiente--privado{
   grid-column: 1 / -1; flex-direction: row;
-  background: var(--sage-deep); border-color: var(--sage-deep); color:#fff;
+  background: var(--sage-deep); border:0; color:#fff; /* sin borde: quedaba una línea verde alrededor de la foto */
 }
 .ambiente--privado .ambiente-foto{ flex: 0 0 44%; aspect-ratio: auto; min-height: 320px; }
 .ambiente--privado .ambiente-foto--ph{ background: radial-gradient(circle at 30% 25%, var(--sage) 0%, color-mix(in srgb, var(--sage-deep) 80%, #000) 85%); }
