@@ -2,8 +2,19 @@
    recibe .is-visible la primera vez que entra en pantalla, y queda así
    para siempre (no se re-oculta si volvés a scrollear para arriba). */
 (function(){
-  var els = document.querySelectorAll('.reveal');
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
   if(!els.length) return;
+  /* "Tres planes" (home): sus cards aparecen apenas carga la página, con
+     su animación normal y en cadena, aunque todavía estén cortadas abajo
+     de la pantalla (si esperaban a entrar, quedaba un hueco en blanco
+     abajo del título). */
+  var alCargar = els.filter(function(el){ return el.closest('.tres-planes'); });
+  els = els.filter(function(el){ return alCargar.indexOf(el) < 0; });
+  if(alCargar.length){
+    setTimeout(function(){
+      alCargar.forEach(function(el){ el.classList.add('is-visible'); });
+    }, 350);
+  }
   if(!('IntersectionObserver' in window)){
     els.forEach(function(el){ el.classList.add('is-visible'); });
     return;
@@ -15,11 +26,7 @@
         io.unobserve(entry.target);
       }
     });
-  /* arranca un poquito ANTES de entrar en pantalla: así, cuando el
-     elemento asoma, ya está apareciendo, y no queda un hueco en blanco
-     abajo de los títulos (en iPhone la barra de abajo tapa el borde de la
-     pantalla, y lo que estaba "entrando" quedaba escondido detrás) */
-  }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
   els.forEach(function(el){ io.observe(el); });
 })();
 
