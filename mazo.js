@@ -122,6 +122,8 @@
      da lo mismo cuántos talleres haya. Más chico = cambia más rápido. */
   var PASO_POR_CARD = 200;
   function sizeTrack(){
+    // versión C: el mazo no queda pegado; la página scrollea normal
+    if(modoPasos){ track.style.height = sticky.offsetHeight + 'px'; return; }
     track.style.height = (sticky.offsetHeight + (n - 1) * PASO_POR_CARD) + 'px';
   }
   sizeTrack();
@@ -175,6 +177,39 @@
   if(modoElegido === 'b' || modoElegido === 'c') USAR_ANIMACION_CSS = false;
   var modoPasos = esCelu && modoElegido === 'c';
   if(modoPasos) scroller.classList.add('mazo--pasos');
+
+  /* VERSIÓN C: el mazo NO depende del scroll. La página baja normal, y las
+     cards se pasan deslizando de costado sobre el mazo, o con las flechas.
+     La animación la hace el CSS (transition), así que va fluida. */
+  var pasoActual = 0;
+  function irA(i){
+    pasoActual = Math.max(0, Math.min(n - 1, i));
+    current = target = n > 1 ? pasoActual / (n - 1) : 0;
+    render(current);
+    if(navTxt) navTxt.textContent = (pasoActual + 1) + ' de ' + n;
+    if(navPrev) navPrev.disabled = pasoActual === 0;
+    if(navNext) navNext.disabled = pasoActual === n - 1;
+  }
+  var navTxt = null, navPrev = null, navNext = null;
+  if(modoPasos){
+    sizeTrack();
+    var nav = document.createElement('div');
+    nav.className = 'mazo-nav';
+    nav.innerHTML = '<button type="button" aria-label="Taller anterior">&#8249;</button>' +
+      '<span></span><button type="button" aria-label="Taller siguiente">&#8250;</button>';
+    navPrev = nav.children[0]; navTxt = nav.children[1]; navNext = nav.children[2];
+    navPrev.addEventListener('click', function(){ irA(pasoActual - 1); });
+    navNext.addEventListener('click', function(){ irA(pasoActual + 1); });
+    var vp = document.getElementById('mazoViewport') || list;
+    vp.parentNode.insertBefore(nav, vp.nextSibling);
+    // deslizar de costado sobre el mazo: izquierda = siguiente, derecha = anterior
+    var x0 = 0, y0 = 0, t0 = 0;
+    vp.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, {passive:true});
+    vp.addEventListener('touchend', function(e){
+      var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3 && Date.now() - t0 < 800) irA(pasoActual + (dx < 0 ? 1 : -1));
+    }, {passive:true});
+  }
   if(esCelu && !reduceMotion && /talleres/.test(location.pathname)){
     var actual = modoElegido || (USAR_ANIMACION_CSS ? 'a' : 'b');
     var barra = document.createElement('div');
@@ -257,8 +292,7 @@
       hint.classList.add('is-hidden');
     }
     if(reduceMotion || modoCSS){ current = target; render(current); return; }
-    // versión C: se ubica directo en la card elegida; la transición la anima el CSS
-    if(modoPasos){ if(target !== current){ current = target; render(current); } return; }
+    if(modoPasos) return; // versión C: las cards no dependen del scroll (ver irA)
     ultimoScroll = performance.now();
     if(!raf) raf = requestAnimationFrame(tick);
   }
@@ -346,6 +380,7 @@
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  if(modoPasos){ irA(0); }
   onScroll();
   render(target);
 })();
