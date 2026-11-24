@@ -15,10 +15,11 @@
         io.unobserve(entry.target);
       }
     });
-  /* aparece apenas el borde de arriba asoma en pantalla (antes esperaba a
-     que se viera un 15% del elemento: con las cards altas del celu quedaba
-     un hueco en blanco abajo del título hasta scrollear bastante) */
-  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+  /* arranca un poquito ANTES de entrar en pantalla: así, cuando el
+     elemento asoma, ya está apareciendo, y no queda un hueco en blanco
+     abajo de los títulos (en iPhone la barra de abajo tapa el borde de la
+     pantalla, y lo que estaba "entrando" quedaba escondido detrás) */
+  }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
   els.forEach(function(el){ io.observe(el); });
 })();
 
