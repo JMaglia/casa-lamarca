@@ -157,6 +157,34 @@
      el JS calcula una vez en qué tramo del scroll de la página pasan las
      cards (y lo actualiza si cambia el alto de lo que hay arriba). */
   var USAR_ANIMACION_CSS = true;
+  /* ...salvo en iPhone/iPad: Safari (y todos los navegadores de iPhone, que
+     usan Safari por dentro) mete un salto de un cuadro cuando frena el
+     envión. Ahí, por defecto, lo mueve el JS. */
+  var esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if(esIOS) USAR_ANIMACION_CSS = false;
+
+  /* COMPARACIÓN TEMPORAL (solo celu): ?mazo=a / b / c en la dirección, o los
+     botones que aparecen arriba del mazo, eligen cómo se mueve:
+       a = lo mueve Safari (fluido, en iPhone puede dar un salto al frenar)
+       b = lo mueve el código (sin salto, menos fluido)
+       c = pasa de a una card, con una animación suave
+     Cuando se decida, se saca esto y queda solo la opción elegida. */
+  var modoElegido = (location.search.match(/[?&]mazo=([abc])/) || [])[1] || '';
+  if(modoElegido === 'a') USAR_ANIMACION_CSS = true;
+  if(modoElegido === 'b' || modoElegido === 'c') USAR_ANIMACION_CSS = false;
+  var modoPasos = esCelu && modoElegido === 'c';
+  if(modoPasos) scroller.classList.add('mazo--pasos');
+  if(esCelu && !reduceMotion && /talleres/.test(location.pathname)){
+    var actual = modoElegido || (USAR_ANIMACION_CSS ? 'a' : 'b');
+    var barra = document.createElement('div');
+    barra.className = 'mazo-comparar';
+    barra.innerHTML = '<span>Versión:</span>' +
+      [['a', 'A · Safari'], ['b', 'B · Código'], ['c', 'C · De a una']].map(function(o){
+        return '<a href="?mazo=' + o[0] + '#losTalleresQueHacemos"' + (o[0] === actual ? ' class="is-actual"' : '') + '>' + o[1] + '</a>';
+      }).join('');
+    scroller.parentNode.insertBefore(barra, scroller);
+  }
   var modoCSS = USAR_ANIMACION_CSS && esCelu && !reduceMotion && !!(window.CSS && CSS.supports &&
     CSS.supports('animation-timeline: scroll(root)') && CSS.supports('animation-range: 10px 20px'));
   var hojaMazo = null, spacingArmado = 0, rangoArmado = '';
@@ -222,13 +250,15 @@
     /* el scroll elige a qué taller ir, pero el carrusel no se queda a
        mitad de camino: apenas pasás la mitad, va directo y completo al
        siguiente (la animación la hace tick(), siempre hasta el final) */
-    if(n > 1 && !esCelu) target = Math.round(target * (n - 1)) / (n - 1);
+    if(n > 1 && (!esCelu || modoPasos)) target = Math.round(target * (n - 1)) / (n - 1);
     moveBand(scrolled, scrollable);
     if(!hintHidden && scrolled > 4 && hint){
       hintHidden = true;
       hint.classList.add('is-hidden');
     }
     if(reduceMotion || modoCSS){ current = target; render(current); return; }
+    // versión C: se ubica directo en la card elegida; la transición la anima el CSS
+    if(modoPasos){ if(target !== current){ current = target; render(current); } return; }
     ultimoScroll = performance.now();
     if(!raf) raf = requestAnimationFrame(tick);
   }
