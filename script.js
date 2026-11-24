@@ -15,7 +15,10 @@
         io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  /* aparece apenas el borde de arriba asoma en pantalla (antes esperaba a
+     que se viera un 15% del elemento: con las cards altas del celu quedaba
+     un hueco en blanco abajo del título hasta scrollear bastante) */
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
   els.forEach(function(el){ io.observe(el); });
 })();
 
