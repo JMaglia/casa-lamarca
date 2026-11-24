@@ -4,16 +4,28 @@
 (function(){
   var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
   if(!els.length) return;
-  /* "Tres planes" (home): sus cards aparecen apenas carga la página, con
-     su animación normal y en cadena, aunque todavía estén cortadas abajo
-     de la pantalla (si esperaban a entrar, quedaba un hueco en blanco
-     abajo del título). */
-  var alCargar = els.filter(function(el){ return el.closest('.tres-planes'); });
-  els = els.filter(function(el){ return alCargar.indexOf(el) < 0; });
-  if(alCargar.length){
-    setTimeout(function(){
-      alCargar.forEach(function(el){ el.classList.add('is-visible'); });
-    }, 350);
+  /* "Tres planes" (home): la primera card aparece apenas carga la página;
+     las otras dos, una a una a medida que bajás, apenas asoman (no hace
+     falta que se vean enteras). Sin la demora en cadena del resto. */
+  var planes = els.filter(function(el){ return el.closest('.tres-planes'); });
+  els = els.filter(function(el){ return planes.indexOf(el) < 0; });
+  planes.forEach(function(el){ el.style.transitionDelay = '0ms'; });
+  if(planes.length){
+    setTimeout(function(){ planes[0].classList.add('is-visible'); }, 350);
+    var resto = planes.slice(1);
+    if('IntersectionObserver' in window){
+      var ioPlanes = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            ioPlanes.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px 4% 0px' });
+      resto.forEach(function(el){ ioPlanes.observe(el); });
+    } else {
+      resto.forEach(function(el){ el.classList.add('is-visible'); });
+    }
   }
   if(!('IntersectionObserver' in window)){
     els.forEach(function(el){ el.classList.add('is-visible'); });
