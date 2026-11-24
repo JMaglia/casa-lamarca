@@ -170,7 +170,7 @@
      botones que aparecen arriba del mazo, eligen cómo se mueve:
        a = lo mueve Safari (fluido, en iPhone puede dar un salto al frenar)
        b = lo mueve el código (sin salto, menos fluido)
-       c = pasa de a una card, con una animación suave
+       c = carrusel de costado nativo (se pasa deslizando el dedo)
      Cuando se decida, se saca esto y queda solo la opción elegida. */
   var modoElegido = (location.search.match(/[?&]mazo=([abc])/) || [])[1] || '';
   if(modoElegido === 'a') USAR_ANIMACION_CSS = true;
@@ -178,44 +178,48 @@
   var modoPasos = esCelu && modoElegido === 'c';
   if(modoPasos) scroller.classList.add('mazo--pasos');
 
-  /* VERSIÓN C: el mazo NO depende del scroll. La página baja normal, y las
-     cards se pasan deslizando de costado sobre el mazo, o con las flechas.
-     La animación la hace el CSS (transition), así que va fluida. */
-  var pasoActual = 0;
-  function irA(i){
-    pasoActual = Math.max(0, Math.min(n - 1, i));
-    current = target = n > 1 ? pasoActual / (n - 1) : 0;
-    render(current);
-    if(navTxt) navTxt.textContent = (pasoActual + 1) + ' de ' + n;
-    if(navPrev) navPrev.disabled = pasoActual === 0;
-    if(navNext) navNext.disabled = pasoActual === n - 1;
+  /* VERSIÓN C: carrusel de costado NATIVO. Las cards van una al lado de la
+     otra y se pasan deslizando el dedo: ese deslizamiento (con su inercia y
+     el acomodarse en la card más cercana al soltar) lo hace el celu solo,
+     con scroll-snap del CSS. El JS solo actualiza el "3 de 11" y las flechas.
+     El mazo no queda pegado: la página baja normal. */
+  var navTxt = null, navPrev = null, navNext = null, vpC = null;
+  function pasoCarrusel(){
+    var c0 = cards[0], c1 = cards[1];
+    return c1 ? c1.offsetLeft - c0.offsetLeft : (c0 ? c0.offsetWidth : 1);
   }
-  var navTxt = null, navPrev = null, navNext = null;
+  function indiceCarrusel(){
+    return Math.max(0, Math.min(n - 1, Math.round(vpC.scrollLeft / pasoCarrusel())));
+  }
+  function actualizarNav(){
+    var i = indiceCarrusel();
+    navTxt.textContent = (i + 1) + ' de ' + n;
+    navPrev.disabled = i === 0;
+    navNext.disabled = i === n - 1;
+  }
   if(modoPasos){
     sizeTrack();
+    vpC = document.getElementById('mazoViewport') || list;
     var nav = document.createElement('div');
     nav.className = 'mazo-nav';
     nav.innerHTML = '<button type="button" aria-label="Taller anterior">&#8249;</button>' +
       '<span></span><button type="button" aria-label="Taller siguiente">&#8250;</button>';
     navPrev = nav.children[0]; navTxt = nav.children[1]; navNext = nav.children[2];
-    navPrev.addEventListener('click', function(){ irA(pasoActual - 1); });
-    navNext.addEventListener('click', function(){ irA(pasoActual + 1); });
-    var vp = document.getElementById('mazoViewport') || list;
-    vp.parentNode.insertBefore(nav, vp.nextSibling);
-    // deslizar de costado sobre el mazo: izquierda = siguiente, derecha = anterior
-    var x0 = 0, y0 = 0, t0 = 0;
-    vp.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, {passive:true});
-    vp.addEventListener('touchend', function(e){
-      var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
-      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3 && Date.now() - t0 < 800) irA(pasoActual + (dx < 0 ? 1 : -1));
+    navPrev.addEventListener('click', function(){ vpC.scrollBy({ left: -pasoCarrusel(), behavior: 'smooth' }); });
+    navNext.addEventListener('click', function(){ vpC.scrollBy({ left: pasoCarrusel(), behavior: 'smooth' }); });
+    vpC.parentNode.insertBefore(nav, vpC.nextSibling);
+    var navRaf = null;
+    vpC.addEventListener('scroll', function(){
+      if(!navRaf) navRaf = requestAnimationFrame(function(){ navRaf = null; actualizarNav(); });
     }, {passive:true});
+    actualizarNav();
   }
   if(esCelu && !reduceMotion && /talleres/.test(location.pathname)){
     var actual = modoElegido || (USAR_ANIMACION_CSS ? 'a' : 'b');
     var barra = document.createElement('div');
     barra.className = 'mazo-comparar';
     barra.innerHTML = '<span>Versión:</span>' +
-      [['a', 'A · Safari'], ['b', 'B · Código'], ['c', 'C · De a una']].map(function(o){
+      [['a', 'A · Safari'], ['b', 'B · Código'], ['c', 'C · Carrusel']].map(function(o){
         return '<a href="?mazo=' + o[0] + '#losTalleresQueHacemos"' + (o[0] === actual ? ' class="is-actual"' : '') + '>' + o[1] + '</a>';
       }).join('');
     scroller.parentNode.insertBefore(barra, scroller);
@@ -292,7 +296,7 @@
       hint.classList.add('is-hidden');
     }
     if(reduceMotion || modoCSS){ current = target; render(current); return; }
-    if(modoPasos) return; // versión C: las cards no dependen del scroll (ver irA)
+    if(modoPasos) return; // versión C: carrusel nativo, no depende del scroll de la página
     ultimoScroll = performance.now();
     if(!raf) raf = requestAnimationFrame(tick);
   }
@@ -329,6 +333,7 @@
   }
 
   function render(progress){
+    if(modoPasos) return; // versión C: las cards las acomoda el CSS (carrusel)
     var center = progress * (n - 1);
     var idx = Math.round(center);
     if(modoCSS || esCelu){
@@ -380,7 +385,6 @@
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  if(modoPasos){ irA(0); }
   onScroll();
   render(target);
 })();

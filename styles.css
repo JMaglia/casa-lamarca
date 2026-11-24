@@ -1908,10 +1908,27 @@ html{ scroll-behavior: smooth; }
 .mazo-comparar span{ color: var(--ink-soft); margin-right:2px; }
 .mazo-comparar a{ padding:6px 10px; border-radius:999px; border:1px solid var(--line); color: var(--ink); text-decoration:none; background:#fff; }
 .mazo-comparar a.is-actual{ background: var(--ink); color:#fff; border-color: var(--ink); }
-.mazo--pasos .mazo-card-link{
-  transition: transform .5s cubic-bezier(.22,.7,.2,1), opacity .5s ease;
+/* versión C: carrusel de costado nativo (solo celu) */
+@media (max-width: 620px){
+  .mazo--pasos .mazo-track{ height:auto !important; }
+  .mazo--pasos .mazo-sticky{ position:relative; top:auto; height:auto !important; padding: 26px 0 30px; }
+  .mazo--pasos .mazo-viewport{
+    width:100%; height:auto; overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type: x mandatory; scrollbar-width:none; -webkit-overflow-scrolling: touch;
+    padding: 8px 0 22px;
+  }
+  .mazo--pasos .mazo-viewport::-webkit-scrollbar{ display:none; }
+  .mazo--pasos .mazo-list{
+    position:static; display:flex; gap:14px; width:max-content;
+    padding-inline: calc((100vw - min(78vw, 300px)) / 2);
+  }
+  .mazo--pasos .mazo-card-link{
+    position:relative; top:auto; left:auto; right:auto;
+    flex:0 0 min(78vw, 300px); width:min(78vw, 300px);
+    transform:none !important; opacity:1 !important; filter:none !important; pointer-events:auto !important;
+    scroll-snap-align:center; scroll-snap-stop: always; will-change:auto;
+  }
 }
-.mazo--pasos .mazo-viewport{ touch-action: pan-y; }
 .mazo-nav{ position:relative; z-index:3; display:flex; align-items:center; justify-content:center; gap:18px; margin-top:4px; }
 .mazo-nav span{ min-width:64px; text-align:center; font-size:.85rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .mazo-nav button{
