@@ -1902,13 +1902,7 @@ html{ scroll-behavior: smooth; }
   .taller-celu #tallerComidaFoto{ margin-top: 12px !important; }
 }
 
-/* COMPARACIÓN TEMPORAL del mazo en el celu (ver mazo.js): botones A/B/C
-   arriba del mazo y la transición de la versión C. Se saca al decidir. */
-.mazo-comparar{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin: 0 0 14px; font-size:.78rem; }
-.mazo-comparar span{ color: var(--ink-soft); margin-right:2px; }
-.mazo-comparar a{ padding:6px 10px; border-radius:999px; border:1px solid var(--line); color: var(--ink); text-decoration:none; background:#fff; }
-.mazo-comparar a.is-actual{ background: var(--ink); color:#fff; border-color: var(--ink); }
-/* versión C: carrusel de costado nativo (solo celu) */
+/* Mazo en el celu: carrusel de costado nativo (ver mazo.js) */
 @media (max-width: 620px){
   .mazo--pasos .mazo-track{ height:auto !important; }
   .mazo--pasos .mazo-sticky{ position:relative; top:auto; height:auto !important; padding: 26px 0 30px; }

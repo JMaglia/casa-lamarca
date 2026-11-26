@@ -166,16 +166,12 @@
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if(esIOS) USAR_ANIMACION_CSS = false;
 
-  /* COMPARACIÓN TEMPORAL (solo celu): ?mazo=a / b / c en la dirección, o los
-     botones que aparecen arriba del mazo, eligen cómo se mueve:
-       a = lo mueve Safari (fluido, en iPhone puede dar un salto al frenar)
-       b = lo mueve el código (sin salto, menos fluido)
-       c = carrusel de costado nativo (se pasa deslizando el dedo)
-     Cuando se decida, se saca esto y queda solo la opción elegida. */
-  var modoElegido = (location.search.match(/[?&]mazo=([abc])/) || [])[1] || '';
-  if(modoElegido === 'a') USAR_ANIMACION_CSS = true;
-  if(modoElegido === 'b' || modoElegido === 'c') USAR_ANIMACION_CSS = false;
-  var modoPasos = esCelu && modoElegido === 'c';
+  /* CELU: el mazo es un carrusel de costado nativo (ver abajo). Se probaron
+     también las cards pasando con el scroll (movidas por Safari o por el
+     código) y quedó esta: es la única fluida y sin saltos en iPhone. Las
+     animaciones atadas al scroll quedan solo para referencia (no se usan). */
+  var modoPasos = esCelu;
+  if(modoPasos) USAR_ANIMACION_CSS = false;
   if(modoPasos) scroller.classList.add('mazo--pasos');
 
   /* VERSIÓN C: carrusel de costado NATIVO. Las cards van una al lado de la
@@ -213,16 +209,6 @@
       if(!navRaf) navRaf = requestAnimationFrame(function(){ navRaf = null; actualizarNav(); });
     }, {passive:true});
     actualizarNav();
-  }
-  if(esCelu && !reduceMotion && /talleres/.test(location.pathname)){
-    var actual = modoElegido || (USAR_ANIMACION_CSS ? 'a' : 'b');
-    var barra = document.createElement('div');
-    barra.className = 'mazo-comparar';
-    barra.innerHTML = '<span>Versión:</span>' +
-      [['a', 'A · Safari'], ['b', 'B · Código'], ['c', 'C · Carrusel']].map(function(o){
-        return '<a href="?mazo=' + o[0] + '#losTalleresQueHacemos"' + (o[0] === actual ? ' class="is-actual"' : '') + '>' + o[1] + '</a>';
-      }).join('');
-    scroller.parentNode.insertBefore(barra, scroller);
   }
   var modoCSS = USAR_ANIMACION_CSS && esCelu && !reduceMotion && !!(window.CSS && CSS.supports &&
     CSS.supports('animation-timeline: scroll(root)') && CSS.supports('animation-range: 10px 20px'));
