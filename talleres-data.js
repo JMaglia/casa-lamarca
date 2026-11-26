@@ -217,8 +217,8 @@ var TALLERES_COMIDA = {
   "picada": "La picada del taller"
 };
 var TALLERES_COMIDA_FOTOS = {
-  "merienda": "img/comida-merienda.jpg",
-  "picada": "img/comida-picada.jpg"
+  "merienda": "img/comida-merienda.webp",
+  "picada": "img/comida-picada.webp"
 };
 
 /* Foto fija según "categoria" (modo ?id=, Sheet) o "tipo" (modo
@@ -228,21 +228,21 @@ var TALLERES_COMIDA_FOTOS = {
    está escrito ahí. Un taller nuevo: se agrega su foto acá y ya
    está (se muestra sola, en Talleres y acá). */
 var TALLERES_FOTOS = {
-  "Cerámica": "img/mazo-ceramica.jpg",
-  "Terrarios": "img/mazo-terrarios.jpg",
-  "Velas rústicas": "img/mazo-velas.jpg",
-  "Arte y vino": "img/mazo-arte.jpg",
-  "Estampado 3D": "img/mazo-estampado3d.jpg",
-  "Tote bags Painting": "img/mazo-totebags.jpg",
-  "Cuadros con Flores Prensadas": "img/mazo-cuadrosflores.jpg",
-  "Carteras Sin Costura": "img/mazo-carteras.jpg",
-  "Charms Party": "img/mazo-charms.jpg",
-  "Arte en Piezas de Cerámica": "img/mazo-arteceramica.jpg",
-  "Arte y Jardinería": "img/mazo-jardineria.jpg",
+  "Cerámica": "img/mazo-ceramica.webp",
+  "Terrarios": "img/mazo-terrarios.webp",
+  "Velas rústicas": "img/mazo-velas.webp",
+  "Arte y vino": "img/mazo-arte.webp",
+  "Estampado 3D": "img/mazo-estampado3d.webp",
+  "Tote bags Painting": "img/mazo-totebags.webp",
+  "Cuadros con Flores Prensadas": "img/mazo-cuadrosflores.webp",
+  "Carteras Sin Costura": "img/mazo-carteras.webp",
+  "Charms Party": "img/mazo-charms.webp",
+  "Arte en Piezas de Cerámica": "img/mazo-arteceramica.webp",
+  "Arte y Jardinería": "img/mazo-jardineria.webp",
   /* alias viejos (por si quedó algún evento cargado con la categoría
      genérica de antes, "Velas" o "Arte" en vez del nombre completo) */
-  "Velas": "img/mazo-velas.jpg",
-  "Arte": "img/mazo-arte.jpg"
+  "Velas": "img/mazo-velas.webp",
+  "Arte": "img/mazo-arte.webp"
 };
 
 var MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
