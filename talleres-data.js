@@ -42,8 +42,7 @@
      Sin Costura", "Charms Party" — así el evento con fecha sale con
      la misma foto y el mismo ícono que esa card en "Los talleres que
      hacemos". "Arte en Piezas de Cerámica" y "Arte y Jardinería"
-     tienen ícono propio pero todavía no tienen foto (sale con el
-     ícono hasta que saquemos una). Cualquier otro texto (ej.
+     también tienen foto e ícono propios. Cualquier otro texto (ej.
      "Joyería", una categoría nueva) funciona igual, solo que sin foto
      ni ícono propios — no hace falta tocar código para sumar un
      taller de un tipo nuevo.
@@ -226,9 +225,8 @@ var TALLERES_COMIDA_FOTOS = {
    ?tipo=, sin fecha) — mismo mecanismo en los dos casos. Es la misma
    foto que usa esa card en "Los talleres que hacemos" (talleres.html).
    Las claves tienen que ser EXACTAMENTE el nombre del taller tal cual
-   está escrito ahí. "Arte y Jardinería" todavía no tiene
-   foto — cuando saquemos una, se agrega acá y ya
-   está (se van a mostrar solas, en Talleres y acá). */
+   está escrito ahí. Un taller nuevo: se agrega su foto acá y ya
+   está (se muestra sola, en Talleres y acá). */
 var TALLERES_FOTOS = {
   "Cerámica": "img/mazo-ceramica.jpg",
   "Terrarios": "img/mazo-terrarios.jpg",
@@ -240,6 +238,7 @@ var TALLERES_FOTOS = {
   "Carteras Sin Costura": "img/mazo-carteras.jpg",
   "Charms Party": "img/mazo-charms.jpg",
   "Arte en Piezas de Cerámica": "img/mazo-arteceramica.jpg",
+  "Arte y Jardinería": "img/mazo-jardineria.jpg",
   /* alias viejos (por si quedó algún evento cargado con la categoría
      genérica de antes, "Velas" o "Arte" en vez del nombre completo) */
   "Velas": "img/mazo-velas.jpg",
